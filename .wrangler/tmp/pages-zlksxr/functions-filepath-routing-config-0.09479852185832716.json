@@ -1,0 +1,13 @@
+{
+  "routes": [
+    {
+      "routePath": "/api/assessment/:token",
+      "mountPath": "/api/assessment",
+      "method": "GET",
+      "module": [
+        "api/assessment/[token].js:onRequestGet"
+      ]
+    }
+  ],
+  "baseURL": "/"
+}
