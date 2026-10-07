@@ -5,14 +5,6 @@ const pop=q('#lattice-popover'),
 
 function showInspect(){}
 
-const scenario={
-  id:"AUR-DEMO-0041",
-  title:"Refund authorization",
-  description:"An AI agent attempts a refund operation against a controlled business resource.",
-  requestedAction:"issue_refund",
-  resource:"customer_refund",
-  authorityBoundary:"Refunds above $500 require approval"
-};
 const nodeInfo={
   agent:['Agent','The workflow being assessed — its role, tools and intended operating scope.'],
   identity:['Identity','The principal under which the agent reaches systems and requests actions.'],
@@ -458,5 +450,4 @@ const contact=q('#contact-overlay');qa('[data-contact]').forEach(b=>b.addEventLi
 q('[data-finding]').addEventListener('click',()=>{const panel=q('#evidence-content');panel.scrollIntoView({behavior:'smooth',block:'center'});qa('[data-evidence]').forEach(x=>x.classList.remove('selected'));q('[data-evidence="decision"]').classList.add('selected');renderEvidence('decision')});
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1});qa('.reveal').forEach(e=>io.observe(e));
 window.addEventListener('keydown',e=>{if(e.key==='Escape'){contact.setAttribute('aria-hidden','true');pop.classList.remove('open');qa('.node').forEach(x=>x.classList.remove('selected'))}});
-
 
