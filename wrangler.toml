@@ -5,4 +5,4 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "DB"
 database_name = "aurelis-authority"
-database_id = "REPLACE_WITH_NEW_D1_DATABASE_ID"
+database_id = "9409cc56-5113-4910-af66-cf29d45466b2"
