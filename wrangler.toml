@@ -1,0 +1,8 @@
+name = "aurelis-authority"
+compatibility_date = "2026-10-07"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "aurelis-authority"
+database_id = "REPLACE_WITH_NEW_D1_DATABASE_ID"
