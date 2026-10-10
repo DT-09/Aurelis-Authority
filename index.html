@@ -1,107 +1,764 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Aurelis Authority â€” independent AI agent authority assurance.">
-<title>Aurelis Authority â€” AI Agent Authority Assurance</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Libre+Bodoni:opsz,wght@6..96,500;6..96,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/src/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f4">
+  <meta name="description" content="Aurelis Authority independently assesses whether AI agents operate within their intended authority through controlled challenges, evidence, remediation, and retesting.">
+  <meta name="color-scheme" content="light">
+
+  <title>Aurelis Authority — AI Agent Authority Assurance</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;450;500;550;600;650;700&family=Libre+Bodoni:opsz,wght@6..96,500;6..96,600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/src/styles.css">
 </head>
+
 <body>
-<div class="wave-field" aria-hidden="true"><span class="wave wave-1"></span><span class="wave wave-2"></span><span class="wave wave-3"></span></div>
-<header class="nav">
-  <a class="brand" href="#top" aria-label="Aurelis Authority home"><span class="logo" aria-hidden="true"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="21"></circle><path d="M8 28c5-10 10-16 15-8 5 8 9 8 17-5"></path></svg></span><span class="wordmark"><b>AURELIS</b><small>AUTHORITY</small></span></a>
-  <nav><a href="#model">Authority</a><a href="#method">Methodology</a><a href="#evidence">Evidence</a><a href="#trust">Trust</a></nav>
-  <button class="contact-trigger" data-contact>Assessment inquiry</button>
-</header>
-<main id="top">
-<section class="hero section"><div class="hero-copy reveal"><p class="eyebrow">INDEPENDENT AI AGENT AUTHORITY ASSURANCE</p><h1>Know what your <em>AI agent</em> can actually do.</h1><p class="lead">Aurelis assesses whether an AI agent's observed authority matches the authority it is intended to have â€” then documents the evidence, remediation and retest.</p><div class="actions"><a class="button primary" href="#challenge">See the assessment</a><a class="button secondary" href="#model">Explore the authority model</a></div></div><div class="hero-mark" aria-hidden="true"><div class="hero-ring"></div><div class="hero-core"><span>AUTHORITY</span><b>TESTED</b><i>WITH EVIDENCE</i></div></div></section>
+  <a class="skip-link" href="#main">Skip to content</a>
 
-<section id="model" class="section model"><div class="section-head reveal"><p class="eyebrow">01 / AUTHORITY MODEL</p><h2>Authority is a relationship, not a permission list.</h2><p>An agent's effective authority emerges from identity, resource, action, policy and context. Aurelis examines those relationships before testing where the boundary can break.</p></div>
-<div class="lattice-layout"><div class="lattice-stage" id="lattice-stage"><div class="lattice" id="lattice" role="application" aria-label="Interactive seven-node authority model">
-  <div class="lattice-lines" id="line-layer" aria-hidden="true"></div>
-  <button class="node n-agent" data-node="agent"><span class="node-face"><b>01</b><strong>AGENT</strong><small>assessed workflow</small></span></button>
-  <button class="node n-identity" data-node="identity"><span class="node-face"><b>02</b><strong>IDENTITY</strong><small>acting principal</small></span></button>
-  <button class="node n-resource" data-node="resource"><span class="node-face"><b>03</b><strong>RESOURCE</strong><small>reachable asset</small></span></button>
-  <button class="node n-action" data-node="action"><span class="node-face"><b>04</b><strong>ACTION</strong><small>requested operation</small></span></button>
-  <button class="node n-policy" data-node="policy"><span class="node-face"><b>05</b><strong>POLICY</strong><small>required control</small></span></button>
-  <button class="node n-context" data-node="context"><span class="node-face"><b>06</b><strong>CONTEXT</strong><small>conditions</small></span></button>
-  <button class="node n-decision" data-node="decision"><span class="node-face"><b>07</b><strong>DECISION</strong><small>allow / deny / escalate</small></span></button>
-</div><div class="lattice-popover" id="lattice-popover" aria-hidden="true"><span id="pop-kicker">AUTHORITY MODEL</span><strong id="pop-title">Agent</strong><p id="pop-copy"></p></div><div class="lattice-hint">DRAG TO ROTATE <i>â€¢</i> SELECT A NODE</div></div></div>
-<div class="authority-proof"><div><span>DECLARED</span><strong>What the agent is intended to be allowed to do.</strong></div><div><span>OBSERVED</span><strong>What it can actually attempt under controlled challenge.</strong></div><div><span>CONSEQUENCE</span><strong>What the difference means for the business.</strong></div></div>
-</section>
-
-<section id="method" class="section method"><div class="section-head reveal"><p class="eyebrow">02 / ASSESSMENT METHODOLOGY</p><h2>From declared authority to tested evidence.</h2></div><div class="method-line"><article><span>01</span><h3>Discover</h3><p>Map the agent, identity, resources, tools and dependencies.</p></article><article><span>02</span><h3>Define</h3><p>Establish the intended authority and decision conditions.</p></article><article><span>03</span><h3>Challenge</h3><p>Test consequential and failure-path behavior.</p></article><article><span>04</span><h3>Analyze</h3><p>Compare expected decisions with observed behavior.</p></article><article><span>05</span><h3>Remediate</h3><p>Translate findings into specific control changes.</p></article><article><span>06</span><h3>Retest</h3><p>Verify whether the affected boundary now holds.</p></article></div></section>
-
-<section id="challenge" class="section challenge"><div class="section-head reveal"><p class="eyebrow">03 / CONTROLLED CHALLENGE</p><h2>Test the boundary where it matters.</h2><p>The public interaction is illustrative. A client assessment uses an agreed scope and controlled environment.</p></div><div class="challenge-ui"><div class="scenario-list"><button class="scenario active" data-scenario="refund">Issue financial refund</button><button class="scenario" data-scenario="data">Access restricted customer data</button><button class="scenario" data-scenario="tool">Invoke an unauthorized tool</button><button class="scenario" data-scenario="approval">Bypass human approval</button><button class="scenario" data-scenario="revoked">Act after authorization is revoked</button><button class="run-test" id="run-test">Run controlled test <span>â†’</span></button></div><div class="trace"><div class="trace-title"><span>ILLUSTRATIVE CONTROLLED TEST</span><strong id="scenario-title">Issue $4,500 refund</strong></div><div class="trace-flow"><div class="trace-step" data-step="identity"><b>IDENTITY</b><span>verified</span></div><div class="trace-step" data-step="authority"><b>AUTHORITY</b><span>threshold $500</span></div><div class="trace-step" data-step="policy"><b>POLICY</b><span>approval required</span></div><div class="trace-step fail" data-step="boundary"><b>BOUNDARY</b><span id="trace-result">not satisfied</span></div><div class="trace-step" data-step="decision"><b>DECISION</b><span id="decision">DENY</span></div></div><div class="trace-status" id="trace-status">Ready for controlled execution.</div></div></div></section>
-
-<section id="findings" class="section findings"><div class="section-head reveal"><p class="eyebrow">04 / FINDINGS</p><h2>Find the gap between intended and observed authority.</h2></div><div class="finding-card"><div class="finding-severity">HIGH</div><div><p class="finding-id">AUTH-007</p><h3>Excessive Financial Authority</h3><p>The declared boundary requires approval above a configured threshold. The illustrative challenge shows how an observed capability can exceed that intended control.</p></div><div class="finding-meta"><span>EXPECTED <b>DENY</b></span><span>OBSERVED <b>ALLOW</b></span><button class="inspect" data-finding>View evidence â†’</button></div></div></section>
-
-<section id="evidence" class="section evidence"><div class="section-head reveal"><p class="eyebrow">05 / EVIDENCE</p><h2>Follow the decision, not the headline.</h2><p>Each conclusion can be traced from the acting identity through the authority condition to the resulting decision.</p></div><div class="evidence-layout"><div class="decision-chain"><button class="selected" data-evidence="identity">Identity</button><span>â†’</span><button data-evidence="authority">Authority</button><span>â†’</span><button data-evidence="resource">Resource</button><span>â†’</span><button data-evidence="action">Action</button><span>â†’</span><button data-evidence="policy">Policy</button><span>â†’</span><button data-evidence="decision">Decision</button></div><div class="evidence-panel"><p class="eyebrow">EVIDENCE TRACE</p><div id="evidence-content"><h3>Identity assertion</h3><p>The execution identity is established before authority is evaluated.</p><dl><dt>State</dt><dd>Verified</dd><dt>Assessment</dt><dd>AUR-DEMO-0041</dd></dl></div></div></div></section>
-
-<section class="section report"><div class="report-sheet reveal"><div><p class="eyebrow">06 / ASSURANCE REPORT</p><h2>A conclusion your organization can act on.</h2><p>The deliverable records scope, controls, tests, findings, evidence, remediation and retesting â€” rather than reducing assurance to a generic score.</p></div><div class="report-pages"><div><span>01</span>EXECUTIVE CONCLUSION</div><div><span>02</span>CONTROL ASSESSMENT</div><div><span>03</span>TEST RESULTS</div><div><span>04</span>FINDINGS & EVIDENCE</div><div><span>05</span>REMEDIATION</div><div><span>06</span>RETEST DETERMINATION</div></div></div></section>
-
-<section id="trust" class="section trust"><div class="section-head reveal"><p class="eyebrow">07 / ASSURANCE PRINCIPLES</p><h2>Evidence first. Scope defined. Results retestable.</h2><p>Aurelis is designed to make an assurance conclusion inspectable rather than dependent on trust in a score or claim.</p></div><div class="trust-grid"><article><span>01</span><h3>Independent</h3><p>Assessment compares observed behavior with the authority the organization intended to grant.</p></article><article><span>02</span><h3>Evidence-led</h3><p>Findings are tied to test conditions, expected decisions and observed behavior.</p></article><article><span>03</span><h3>Controlled</h3><p>Challenges are scoped to the agreed assessment and controlled execution conditions.</p></article><article><span>04</span><h3>Retestable</h3><p>Remediation can be followed by targeted retesting to establish whether the boundary holds.</p></article></div><div class="scope-note"><b>Scope of assurance</b><p>An assessment establishes evidence within its defined scope and conditions. It is not a guarantee of behavior outside those conditions.</p></div></section>
-
-<section class="section final-cta"><div class="cta-inner"><p class="eyebrow">08 / ASSESSMENT INQUIRY</p><h2>Give Aurelis one agent. We will assess its authority boundary.</h2><p>Start with one consequential workflow. Define what the agent should be allowed to do. Aurelis tests whether that boundary holds.</p><button class="button primary" data-contact>Start an assessment inquiry</button></div></section>
-</main>
-<footer class="site-footer">
-  <div class="footer-inner">
-
-    <div class="footer-brand">
-      <div class="footer-lockup">
-        <span class="footer-aurelis">AURELIS</span>
-        <span class="footer-authority">AUTHORITY</span>
-      </div>
-      <p>Independent assessment of whether AI agents operate within their intended authority.</p>
-    </div>
-
-    <div class="footer-nav">
-      <div class="footer-column">
-        <span class="footer-label">AUTHORITY MODEL</span>
-        <a href="#authority-model">Agent</a>
-        <a href="#authority-model">Identity</a>
-        <a href="#authority-model">Resource</a>
-        <a href="#authority-model">Action</a>
-        <a href="#authority-model">Policy</a>
-        <a href="#authority-model">Context</a>
-        <a href="#authority-model">Decision</a>
-      </div>
-
-      <div class="footer-column">
-        <span class="footer-label">METHOD</span>
-        <a href="#methodology">Discover</a>
-        <a href="#methodology">Define</a>
-        <a href="#methodology">Challenge</a>
-        <a href="#methodology">Analyze</a>
-        <a href="#methodology">Remediate</a>
-        <a href="#methodology">Retest</a>
-      </div>
-
-      <div class="footer-column">
-        <span class="footer-label">ASSURANCE</span>
-        <a href="#evidence">Evidence Trace</a>
-        <a href="#findings">Findings</a>
-        <a href="#report">Assurance Report</a>
-        <a href="#trust">Trust</a>
-      </div>
-    </div>
-
-    <div class="footer-cta">
-      <span class="footer-label">ASSESSMENT INQUIRY</span>
-      <a class="footer-inquiry" href="#assessment">Request an Assessment <span>↗</span></a>
-    </div>
-
+  <div class="wave-field" aria-hidden="true">
+    <span class="wave wave-1"></span>
+    <span class="wave wave-2"></span>
+    <span class="wave wave-3"></span>
   </div>
 
-  <div class="footer-bottom">
-    <span>Authority · Evidence · Retest</span>
-    <span>© 2026 Aurelis Authority</span>
-    <span>Independent AI Agent Authority Assurance</span>
-  </div>
-</footer>
-<div class="overlay" id="contact-overlay" aria-hidden="true"><div class="backdrop" data-close></div><div class="contact-modal" role="dialog" aria-modal="true"><button class="close" data-close>Ã—</button><p class="eyebrow">AURELIS</p><h2>Contact Aurelis</h2><p>For assessment enquiries, technical discussions, or collaboration.</p><div class="contact-options"><button data-email><span>Email</span><small>Choose your mail service</small></button><a href="https://wa.me/" target="_blank" rel="noopener"><span>WhatsApp</span><small>Direct correspondence</small></a><a href="https://github.com/DT-09" target="_blank" rel="noopener"><span>GitHub</span><small>Technical work and public materials</small></a></div><div class="mail-choice" id="mail-choice"><p>Choose your preferred service</p><div><a href="https://mail.google.com/mail/?view=cm&fs=1" target="_blank" rel="noopener">Gmail â†—</a><a href="https://proton.me/mail" target="_blank" rel="noopener">Proton Mail â†—</a></div></div></div></div>
-<script type="module" src="/src/app.js"></script>
-</body></html>
+  <header class="nav">
+    <a class="brand" href="#top" aria-label="Aurelis Authority home">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="21" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M8 28C13 18 18 12 23 20S32 28 40 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="23" cy="20" r="2" fill="currentColor"/>
+        </svg>
+      </span>
 
+      <span class="wordmark">
+        <b>AURELIS</b>
+        <small>AUTHORITY</small>
+      </span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#model">Authority</a>
+      <a href="#method">Methodology</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#trust">Principles</a>
+    </nav>
+
+    <button class="contact-trigger nav-contact" type="button" data-contact>
+      Assessment inquiry
+      <span aria-hidden="true">↗</span>
+    </button>
+  </header>
+
+  <main id="main">
+    <section class="hero section" id="top">
+      <div class="hero-copy reveal">
+        <div class="eyebrow-row">
+          <span class="status-dot" aria-hidden="true"></span>
+          <p class="eyebrow">INDEPENDENT AI AGENT ASSURANCE</p>
+        </div>
+
+        <h1>
+          Know what your
+          <em>AI agent</em>
+          can actually do.
+        </h1>
+
+        <p class="lead">
+          Intended permissions tell only part of the story. Aurelis
+          assesses whether an agent's observed capabilities match its
+          intended authority, then documents the evidence, remediation
+          and retest.
+        </p>
+
+        <div class="actions">
+          <a class="button primary" href="#challenge">
+            Explore an assessment
+            <span aria-hidden="true">↗</span>
+          </a>
+
+          <a class="button secondary" href="#model">
+            Understand the model
+          </a>
+        </div>
+
+        <div class="hero-meta">
+          <span>AUTHORITY</span>
+          <span class="meta-divider" aria-hidden="true"></span>
+          <span>CONTROL</span>
+          <span class="meta-divider" aria-hidden="true"></span>
+          <span>EVIDENCE</span>
+        </div>
+      </div>
+
+      <div class="hero-mark" aria-label="Authority assurance visualization">
+        <div class="hero-orbit orbit-one"></div>
+        <div class="hero-orbit orbit-two"></div>
+        <div class="hero-ring">
+          <span class="ring-point point-one"></span>
+          <span class="ring-point point-two"></span>
+          <span class="ring-point point-three"></span>
+        </div>
+
+        <div class="hero-core">
+          <span>AUTHORITY</span>
+          <b>TESTED</b>
+          <i>WITH EVIDENCE</i>
+        </div>
+
+        <div class="hero-annotation annotation-one">
+          <span class="annotation-dot"></span>
+          DECLARED SCOPE
+        </div>
+
+        <div class="hero-annotation annotation-two">
+          <span class="annotation-dot"></span>
+          OBSERVED BEHAVIOR
+        </div>
+
+        <div class="hero-annotation annotation-three">
+          DECISION TRACE / 001
+        </div>
+      </div>
+    </section>
+
+    <section class="section model" id="model">
+      <div class="section-head reveal">
+        <p class="eyebrow">01 / THE AUTHORITY MODEL</p>
+
+        <h2>
+          Authority is a relationship,
+          <em>not a permission list.</em>
+        </h2>
+
+        <p>
+          An agent's effective authority emerges from the relationship
+          between its identity, reachable resources, requested actions,
+          governing policies and execution context. Each relationship
+          matters when evaluating the final decision.
+        </p>
+      </div>
+
+      <div class="lattice-layout">
+        <div class="lattice-stage" id="lattice-stage">
+          <div
+            class="lattice"
+            id="lattice"
+            role="group"
+            aria-label="Interactive authority model. Select a node to inspect its role."
+          >
+            <div class="lattice-lines" id="line-layer" aria-hidden="true"></div>
+
+            <button class="node n-agent" data-node="agent" type="button" aria-pressed="false">
+              <span class="node-face">
+                <b>01</b>
+                <strong>AGENT</strong>
+                <small>assessed workflow</small>
+              </span>
+            </button>
+
+            <button class="node n-identity" data-node="identity" type="button" aria-pressed="false">
+              <span class="node-face">
+                <b>02</b>
+                <strong>IDENTITY</strong>
+                <small>acting principal</small>
+              </span>
+            </button>
+
+            <button class="node n-resource" data-node="resource" type="button" aria-pressed="false">
+              <span class="node-face">
+                <b>03</b>
+                <strong>RESOURCE</strong>
+                <small>reachable asset</small>
+              </span>
+            </button>
+
+            <button class="node n-action" data-node="action" type="button" aria-pressed="false">
+              <span class="node-face">
+                <b>04</b>
+                <strong>ACTION</strong>
+                <small>requested operation</small>
+              </span>
+            </button>
+
+            <button class="node n-policy" data-node="policy" type="button" aria-pressed="false">
+              <span class="node-face">
+                <b>05</b>
+                <strong>POLICY</strong>
+                <small>required control</small>
+              </span>
+            </button>
+
+            <button class="node n-context" data-node="context" type="button" aria-pressed="false">
+              <span class="node-face">
+                <b>06</b>
+                <strong>CONTEXT</strong>
+                <small>execution conditions</small>
+              </span>
+            </button>
+
+            <button class="node n-decision" data-node="decision" type="button" aria-pressed="false">
+              <span class="node-face">
+                <b>07</b>
+                <strong>DECISION</strong>
+                <small>allow / deny / escalate</small>
+              </span>
+            </button>
+          </div>
+
+          <div class="lattice-popover" id="lattice-popover" aria-live="polite" aria-hidden="true">
+            <span id="pop-kicker">AUTHORITY MODEL</span>
+            <strong id="pop-title">Agent</strong>
+            <p id="pop-copy"></p>
+          </div>
+
+          <div class="lattice-hint">
+            SELECT A NODE
+            <span aria-hidden="true">/</span>
+            EXPLORE THE MODEL
+          </div>
+        </div>
+      </div>
+
+      <div class="authority-proof">
+        <article>
+          <span>01 / DECLARED</span>
+          <strong>What the agent is intended to be allowed to do.</strong>
+          <p>Document the expected authority boundary.</p>
+        </article>
+
+        <article>
+          <span>02 / OBSERVED</span>
+          <strong>What the agent can actually attempt under test.</strong>
+          <p>Evaluate behavior against defined conditions.</p>
+        </article>
+
+        <article>
+          <span>03 / CONSEQUENCE</span>
+          <strong>What the difference means for the organization.</strong>
+          <p>Connect findings to controls and remediation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section method" id="method">
+      <div class="section-head reveal">
+        <p class="eyebrow">02 / ASSESSMENT METHODOLOGY</p>
+
+        <h2>
+          From declared authority
+          <em>to tested evidence.</em>
+        </h2>
+
+        <p>
+          A structured assessment connects the intended control to a
+          reproducible challenge, a documented result and a targeted retest.
+        </p>
+      </div>
+
+      <div class="method-line">
+        <article>
+          <span>01</span>
+          <h3>Discover</h3>
+          <p>Map the agent, execution identity, resources, tools and dependencies.</p>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h3>Define</h3>
+          <p>Establish the intended authority and the conditions governing each decision.</p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>Challenge</h3>
+          <p>Evaluate consequential actions, boundary conditions and failure paths.</p>
+        </article>
+
+        <article>
+          <span>04</span>
+          <h3>Analyze</h3>
+          <p>Compare expected decisions with observed behavior and supporting evidence.</p>
+        </article>
+
+        <article>
+          <span>05</span>
+          <h3>Remediate</h3>
+          <p>Translate confirmed findings into specific, actionable control changes.</p>
+        </article>
+
+        <article>
+          <span>06</span>
+          <h3>Retest</h3>
+          <p>Repeat targeted challenges to determine whether the affected boundary holds.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section challenge" id="challenge">
+      <div class="section-head reveal">
+        <p class="eyebrow">03 / CONTROLLED CHALLENGE</p>
+
+        <h2>
+          Test the boundary
+          <em>where it matters.</em>
+        </h2>
+
+        <p>
+          Explore illustrative authorization scenarios. These interactions
+          demonstrate the assessment concept; they do not execute against
+          a real AI agent or establish actual security findings.
+        </p>
+      </div>
+
+      <div class="challenge-ui">
+        <div class="scenario-list">
+          <div class="scenario-heading">
+            <span>SCENARIO LIBRARY</span>
+            <span>05 TEST CASES</span>
+          </div>
+
+          <button class="scenario active" data-scenario="refund" type="button" aria-pressed="true">
+            <span class="scenario-number">01</span>
+            <span class="scenario-name">Issue financial refund</span>
+            <span class="scenario-arrow" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="scenario" data-scenario="data" type="button" aria-pressed="false">
+            <span class="scenario-number">02</span>
+            <span class="scenario-name">Access restricted data</span>
+            <span class="scenario-arrow" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="scenario" data-scenario="tool" type="button" aria-pressed="false">
+            <span class="scenario-number">03</span>
+            <span class="scenario-name">Invoke an unauthorized tool</span>
+            <span class="scenario-arrow" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="scenario" data-scenario="approval" type="button" aria-pressed="false">
+            <span class="scenario-number">04</span>
+            <span class="scenario-name">Bypass human approval</span>
+            <span class="scenario-arrow" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="scenario" data-scenario="revoked" type="button" aria-pressed="false">
+            <span class="scenario-number">05</span>
+            <span class="scenario-name">Act after access revocation</span>
+            <span class="scenario-arrow" aria-hidden="true">↗</span>
+          </button>
+
+          <button class="run-test" id="run-test" type="button">
+            Run illustrative test
+            <span aria-hidden="true">→</span>
+          </button>
+
+          <p class="scenario-disclaimer">
+            SIMULATION ONLY / NO EXTERNAL EXECUTION
+          </p>
+        </div>
+
+        <div class="trace">
+          <div class="trace-title">
+            <div>
+              <span>ILLUSTRATIVE CONTROL TRACE</span>
+              <strong id="scenario-title">Issue $4,500 refund</strong>
+            </div>
+
+            <span class="demo-badge">DEMO</span>
+          </div>
+
+          <div class="trace-flow">
+            <div class="trace-step" data-step="identity">
+              <b>IDENTITY</b>
+              <span>Verified</span>
+            </div>
+
+            <div class="trace-step" data-step="authority">
+              <b>AUTHORITY</b>
+              <span>Threshold $500</span>
+            </div>
+
+            <div class="trace-step" data-step="policy">
+              <b>POLICY</b>
+              <span>Approval required</span>
+            </div>
+
+            <div class="trace-step fail" data-step="boundary">
+              <b>BOUNDARY</b>
+              <span id="trace-result">Not satisfied</span>
+            </div>
+
+            <div class="trace-step" data-step="decision">
+              <b>DECISION</b>
+              <span id="decision">DENY</span>
+            </div>
+          </div>
+
+          <div class="trace-status" id="trace-status" role="status" aria-live="polite">
+            Illustrative scenario ready. Run the test to inspect its decision trace.
+          </div>
+
+          <div class="trace-disclaimer">
+            <span class="status-dot" aria-hidden="true"></span>
+            All results are simulated examples, not observed agent behavior.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section findings" id="findings">
+      <div class="section-head reveal">
+        <p class="eyebrow">04 / FINDINGS</p>
+
+        <h2>
+          Find the gap between
+          <em>intended and observed authority.</em>
+        </h2>
+
+        <p>
+          A finding should explain the violated boundary, its supporting
+          evidence, the expected behavior and the remediation required.
+        </p>
+      </div>
+
+      <article class="finding-card">
+        <div class="finding-severity">
+          <span class="severity-dot" aria-hidden="true"></span>
+          EXAMPLE
+        </div>
+
+        <div class="finding-content">
+          <p class="finding-id">ILLUSTRATIVE / AUTH-007</p>
+
+          <h3>Excessive Financial Authority</h3>
+
+          <p>
+            In this hypothetical example, an agent attempts a refund above
+            the configured threshold without the required approval. A real
+            finding would require verified test evidence and an established
+            assessment scope.
+          </p>
+        </div>
+
+        <div class="finding-meta">
+          <span>EXPECTED <b>DENY</b></span>
+          <span>HYPOTHETICAL <b>ALLOW</b></span>
+
+          <button class="inspect" type="button" data-finding>
+            Inspect example
+            <span aria-hidden="true">↗</span>
+          </button>
+        </div>
+      </article>
+    </section>
+
+    <section class="section evidence" id="evidence">
+      <div class="section-head reveal">
+        <p class="eyebrow">05 / EVIDENCE</p>
+
+        <h2>
+          Follow the decision,
+          <em>not the headline.</em>
+        </h2>
+
+        <p>
+          A defensible conclusion connects the acting identity, requested
+          action, target resource, applicable policy and final decision.
+        </p>
+      </div>
+
+      <div class="evidence-layout">
+        <div class="decision-chain" aria-label="Evidence trace stages">
+          <button class="selected" data-evidence="identity" type="button" aria-pressed="true">Identity</button>
+          <span aria-hidden="true">→</span>
+          <button data-evidence="authority" type="button" aria-pressed="false">Authority</button>
+          <span aria-hidden="true">→</span>
+          <button data-evidence="resource" type="button" aria-pressed="false">Resource</button>
+          <span aria-hidden="true">→</span>
+          <button data-evidence="action" type="button" aria-pressed="false">Action</button>
+          <span aria-hidden="true">→</span>
+          <button data-evidence="policy" type="button" aria-pressed="false">Policy</button>
+          <span aria-hidden="true">→</span>
+          <button data-evidence="decision" type="button" aria-pressed="false">Decision</button>
+        </div>
+
+        <div class="evidence-panel">
+          <div class="evidence-panel-top">
+            <p class="eyebrow">EVIDENCE TRACE</p>
+            <span class="demo-badge">ILLUSTRATIVE</span>
+          </div>
+
+          <div id="evidence-content" aria-live="polite">
+            <h3>Identity assertion</h3>
+
+            <p>
+              The execution identity is established before the requested
+              action is evaluated against the intended authority boundary.
+            </p>
+
+            <dl>
+              <dt>State</dt>
+              <dd>Verified in example</dd>
+
+              <dt>Reference</dt>
+              <dd>AUR-DEMO-0041</dd>
+
+              <dt>Evidence</dt>
+              <dd>Illustrative trace only</dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section report" id="report">
+      <div class="report-sheet reveal">
+        <div class="report-copy">
+          <p class="eyebrow">06 / ASSURANCE REPORT</p>
+
+          <h2>
+            A conclusion your organization
+            <em>can act on.</em>
+          </h2>
+
+          <p>
+            The assessment deliverable documents the scope, controls,
+            challenges, findings, evidence, remediation and retesting
+            determination. It does not reduce assurance to a generic score.
+          </p>
+
+          <a class="text-link" href="#assessment">
+            Discuss an assessment
+            <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+
+        <div class="report-pages">
+          <div><span>01</span>EXECUTIVE CONCLUSION</div>
+          <div><span>02</span>CONTROL ASSESSMENT</div>
+          <div><span>03</span>TEST RESULTS</div>
+          <div><span>04</span>FINDINGS &amp; EVIDENCE</div>
+          <div><span>05</span>REMEDIATION PLAN</div>
+          <div><span>06</span>RETEST DETERMINATION</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section trust" id="trust">
+      <div class="section-head reveal">
+        <p class="eyebrow">07 / ASSURANCE PRINCIPLES</p>
+
+        <h2>
+          Evidence first.
+          <em>Scope defined. Results retestable.</em>
+        </h2>
+
+        <p>
+          An assurance conclusion should be inspectable, traceable to its
+          evidence and explicit about the conditions under which it holds.
+        </p>
+      </div>
+
+      <div class="trust-grid">
+        <article>
+          <span>01</span>
+          <h3>Independent</h3>
+          <p>
+            Compare observed behavior with the authority the organization
+            intended to grant.
+          </p>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h3>Evidence-led</h3>
+          <p>
+            Connect findings to defined test conditions, expected decisions
+            and observed results.
+          </p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>Controlled</h3>
+          <p>
+            Execute challenges within an agreed scope and controlled
+            assessment environment.
+          </p>
+        </article>
+
+        <article>
+          <span>04</span>
+          <h3>Retestable</h3>
+          <p>
+            Repeat targeted tests after remediation to evaluate whether the
+            affected boundary now holds.
+          </p>
+        </article>
+      </div>
+
+      <div class="scope-note">
+        <b>Scope of assurance</b>
+
+        <p>
+          An assessment supports conclusions only within its defined scope,
+          tested configurations and execution conditions. It does not
+          guarantee behavior outside those conditions.
+        </p>
+      </div>
+    </section>
+
+    <section class="section final-cta" id="assessment">
+      <div class="cta-inner reveal">
+        <p class="eyebrow">08 / ASSESSMENT INQUIRY</p>
+
+        <h2>
+          Start with one agent.
+          <em>Establish its authority boundary.</em>
+        </h2>
+
+        <p>
+          Identify a consequential workflow, define what the agent should
+          be allowed to do, and determine how that boundary can be tested.
+        </p>
+
+        <button class="button primary" type="button" data-contact>
+          Start an assessment inquiry
+          <span aria-hidden="true">↗</span>
+        </button>
+
+        <span class="cta-note">SCOPE FIRST / EVIDENCE ALWAYS</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a class="footer-lockup" href="#top" aria-label="Aurelis Authority home">
+          <span class="footer-aurelis">AURELIS</span>
+          <span class="footer-authority">AUTHORITY</span>
+        </a>
+
+        <p>
+          Independent assessment of whether AI agents operate within
+          their intended authority.
+        </p>
+      </div>
+
+      <div class="footer-nav">
+        <div class="footer-column">
+          <span class="footer-label">AUTHORITY MODEL</span>
+          <a href="#model">Agent</a>
+          <a href="#model">Identity</a>
+          <a href="#model">Resource</a>
+          <a href="#model">Action</a>
+          <a href="#model">Policy</a>
+          <a href="#model">Context</a>
+          <a href="#model">Decision</a>
+        </div>
+
+        <div class="footer-column">
+          <span class="footer-label">METHODOLOGY</span>
+          <a href="#method">Discover</a>
+          <a href="#method">Define</a>
+          <a href="#method">Challenge</a>
+          <a href="#method">Analyze</a>
+          <a href="#method">Remediate</a>
+          <a href="#method">Retest</a>
+        </div>
+
+        <div class="footer-column">
+          <span class="footer-label">ASSURANCE</span>
+          <a href="#evidence">Evidence trace</a>
+          <a href="#findings">Findings</a>
+          <a href="#report">Assurance report</a>
+          <a href="#trust">Principles</a>
+        </div>
+      </div>
+
+      <div class="footer-cta">
+        <span class="footer-label">ASSESSMENT INQUIRY</span>
+
+        <button class="footer-inquiry" type="button" data-contact>
+          Request an assessment
+          <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>Authority · Evidence · Retest</span>
+      <span>© 2026 Aurelis Authority</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <div class="overlay" id="contact-overlay" aria-hidden="true">
+    <div class="backdrop" data-close></div>
+
+    <div
+      class="contact-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="contact-title"
+      aria-describedby="contact-description"
+    >
+      <button class="close" type="button" data-close aria-label="Close contact dialog">
+        ×
+      </button>
+
+      <p class="eyebrow">AURELIS / CORRESPONDENCE</p>
+
+      <h2 id="contact-title">Contact Aurelis</h2>
+
+      <p id="contact-description">
+        For assessment enquiries, technical discussions and collaboration.
+        Choose a correspondence channel below.
+      </p>
+
+      <div class="contact-options">
+        <button type="button" data-email>
+          <span>Email</span>
+          <small>Choose your mail service</small>
+        </button>
+
+        <a href="https://github.com/DT-09" target="_blank" rel="noopener noreferrer">
+          <span>GitHub</span>
+          <small>Public technical work</small>
+        </a>
+      </div>
+
+      <div class="mail-choice" id="mail-choice" hidden>
+        <p>Choose your preferred service</p>
+
+        <div>
+          <a href="https://mail.google.com/mail/" target="_blank" rel="noopener noreferrer">
+            Gmail ↗
+          </a>
+
+          <a href="https://proton.me/mail" target="_blank" rel="noopener noreferrer">
+            Proton Mail ↗
+          </a>
+        </div>
+
+        <small>
+          Configure the official contact email and recipient before
+          using these links for assessment enquiries.
+        </small>
+      </div>
+
+      <p class="contact-note">
+        No assessment is initiated by opening this dialog.
+      </p>
+    </div>
+  </div>
+
+  <script type="module" src="/src/app.js"></script>
+</body>
+</html>
