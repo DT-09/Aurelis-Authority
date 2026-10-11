@@ -1,9 +1,7 @@
-﻿const q=s=>document.querySelector(s), qa=s=>[...document.querySelectorAll(s)];
+const q=s=>document.querySelector(s), qa=s=>[...document.querySelectorAll(s)];
 const pop=q('#lattice-popover'),
       lattice=q('#lattice'),
       stage=q('#lattice-stage');
-
-function showInspect(){}
 
 const scenario={
   id:"AUR-DEMO-0041",
@@ -13,6 +11,7 @@ const scenario={
   resource:"customer_refund",
   authorityBoundary:"Refunds above $500 require approval"
 };
+
 const nodeInfo={
   agent:['Agent','The workflow being assessed — its role, tools and intended operating scope.'],
   identity:['Identity','The principal under which the agent reaches systems and requests actions.'],
@@ -23,433 +22,282 @@ const nodeInfo={
   decision:['Decision','The resulting determination: allow, deny, constrain or escalate.']
 };
 
-/*
- * AURELIS AUTHORITY MODEL
- *
- * This is deliberately a spatial authority system rather than
- * a flowchart, polygon, or rigid lattice.
- */
-
-const authorityPositions={
-  agent:{x:50,y:18,z:120},
-  identity:{x:23,y:37,z:20},
-  resource:{x:77,y:37,z:20},
-  action:{x:50,y:47,z:155},
-  policy:{x:27,y:67,z:55},
-  context:{x:73,y:67,z:55},
-  decision:{x:50,y:84,z:190}
-};
-
 const authorityRelationships=[
-  ['agent','identity'],
-  ['agent','resource'],
-  ['agent','action'],
-  ['identity','action'],
-  ['resource','action'],
-  ['policy','action'],
-  ['context','action'],
-  ['identity','policy'],
-  ['resource','policy'],
-  ['resource','context'],
-  ['policy','decision'],
-  ['context','decision'],
+  ['agent','identity'],['agent','resource'],['agent','action'],
+  ['identity','action'],['resource','action'],['policy','action'],
+  ['context','action'],['identity','policy'],['resource','policy'],
+  ['resource','context'],['policy','decision'],['context','decision'],
   ['action','decision']
 ];
 
 if(lattice && stage){
-
-  /*
-   * Make the visual self-contained so the model does not depend
-   * on fragile assumptions in the old lattice CSS.
-   */
   if(!document.querySelector('#authority-model-runtime-style')){
     const style=document.createElement('style');
     style.id='authority-model-runtime-style';
     style.textContent=`
       #lattice-stage{
-        position:relative;
+        position:relative!important;
+        display:block!important;
         width:100%;
-        min-height:620px;
-        perspective:1400px;
+        min-height:0!important;
+        height:auto!important;
+        padding:24px 12px;
         overflow:hidden;
-        cursor:grab;
-        touch-action:none;
+        perspective:none!important;
+        cursor:default!important;
+        touch-action:auto!important;
+        box-sizing:border-box;
       }
-
-      #lattice-stage.is-dragging{
-        cursor:grabbing;
-      }
-
       #lattice{
-        position:absolute;
-        inset:0;
-        transform-style:preserve-3d;
-        transform:rotateX(-7deg) rotateY(0deg);
-        transition:transform .08s linear;
+        position:relative!important;
+        inset:auto!important;
+        display:grid!important;
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        grid-template-rows:auto auto auto auto;
+        grid-template-areas:
+          ". agent ."
+          "identity action resource"
+          "policy . context"
+          ". decision .";
+        gap:20px 10px;
+        width:100%;
+        height:auto!important;
+        min-height:0!important;
+        padding:18px 0 24px;
+        transform:none!important;
+        transform-style:flat!important;
+        box-sizing:border-box;
       }
-
-      .authority-runtime-line{
-        position:absolute;
-        height:1px;
-        transform-origin:0 50%;
-        background:rgba(192,154,98,.30);
-        pointer-events:none;
-        transform-style:preserve-3d;
-      }
-
-      .authority-runtime-line.is-related{
-        background:rgba(36,90,104,.72);
-      }
-
-      .authority-runtime-node{
-        position:absolute;
-        transform:
-          translate(-50%,-50%)
-          translateZ(var(--authority-z));
-        transform-style:preserve-3d;
-        border:0;
-        padding:0;
-        background:none;
-        color:#E9E2D2;
+      #lattice > .node{
+        position:relative!important;
+        inset:auto!important;
+        left:auto!important;
+        top:auto!important;
+        transform:none!important;
+        display:flex!important;
+        align-items:center;
+        justify-content:center;
+        width:100%!important;
+        min-width:0!important;
+        min-height:92px;
+        margin:0!important;
+        padding:12px 5px!important;
+        border:1px solid rgba(192,154,98,.35)!important;
+        border-radius:4px;
+        background:rgba(192,154,98,.035)!important;
+        color:#E9E2D2!important;
         cursor:pointer;
-        text-align:center;
-        z-index:5;
-        min-width:105px;
+        box-sizing:border-box;
+        z-index:2;
       }
-
-      .authority-runtime-node .node-point{
-        display:block;
-        width:13px;
-        height:13px;
-        margin:0 auto 12px;
-        border:1px solid rgba(192,154,98,.85);
-        border-radius:50%;
-        background:#101313;
-        box-shadow:0 0 0 5px rgba(192,154,98,.055);
-        transition:
-          transform .25s ease,
-          box-shadow .25s ease,
-          border-color .25s ease;
+      #lattice > .n-agent{grid-area:agent}
+      #lattice > .n-identity{grid-area:identity}
+      #lattice > .n-resource{grid-area:resource}
+      #lattice > .n-action{grid-area:action}
+      #lattice > .n-policy{grid-area:policy}
+      #lattice > .n-context{grid-area:context}
+      #lattice > .n-decision{grid-area:decision}
+      #lattice > .node .node-face{
+        display:flex!important;
+        flex-direction:column;
+        align-items:center;
+        gap:7px;
       }
-
-      .authority-runtime-node .node-label{
-        display:block;
-        font-family:inherit;
-        font-size:11px;
-        letter-spacing:.20em;
-        font-weight:600;
-        white-space:nowrap;
-      }
-
-      .authority-runtime-node .node-role{
-        display:block;
-        margin-top:6px;
-        font-size:10px;
-        letter-spacing:.06em;
-        color:#A8A49A;
-        opacity:.82;
-        white-space:nowrap;
-      }
-
-      .authority-runtime-node[data-node="decision"] .node-point{
-        width:17px;
-        height:17px;
-        border-color:#245A68;
-        box-shadow:0 0 0 7px rgba(36,90,104,.09);
-      }
-
-      .authority-runtime-node.is-selected .node-point{
-        transform:scale(1.35);
-        border-color:#C09A62;
-        box-shadow:
-          0 0 0 7px rgba(192,154,98,.09),
-          0 0 24px rgba(192,154,98,.12);
-      }
-
-      .authority-runtime-node.is-related .node-label{
-        color:#C09A62;
-      }
-
-      .authority-runtime-detail{
-        position:absolute;
-        left:50%;
-        bottom:22px;
-        width:min(360px,calc(100% - 40px));
-        transform:translateX(-50%) translateY(8px);
-        padding:16px 18px;
-        border:1px solid rgba(192,154,98,.20);
-        background:rgba(8,10,10,.92);
-        backdrop-filter:blur(10px);
-        opacity:0;
-        pointer-events:none;
-        transition:opacity .22s ease,transform .22s ease;
-        z-index:20;
-      }
-
-      .authority-runtime-detail.is-open{
-        opacity:1;
-        transform:translateX(-50%) translateY(0);
-      }
-
-      .authority-runtime-detail .detail-kicker{
-        font-size:9px;
-        letter-spacing:.18em;
+      #lattice > .node .node-face b{
         color:#A9824F;
-        margin-bottom:7px;
+        font-size:10px;
+        letter-spacing:.12em;
       }
-
-      .authority-runtime-detail .detail-title{
-        font-family:inherit;
-        font-size:20px;
-        letter-spacing:.04em;
-        color:#E9E2D2;
-        margin-bottom:7px;
+      #lattice > .node .node-face strong{
+        font-size:11px;
+        letter-spacing:.1em;
       }
-
-      .authority-runtime-detail .detail-copy{
-        font-size:12px;
-        line-height:1.55;
+      #lattice > .node .node-face small{
         color:#A8A49A;
+        font-size:10px;
+        line-height:1.4;
       }
-
-      @media(max-width:700px){
-        #lattice-stage{
-          min-height:540px;
-        }
-
-        .authority-runtime-node{
-          min-width:80px;
-        }
-
-        .authority-runtime-node .node-label{
-          font-size:9px;
-          letter-spacing:.14em;
-        }
-
-        .authority-runtime-node .node-role{
-          display:none;
-        }
+      #lattice > .node.is-selected{
+        border-color:#C09A62!important;
+        background:rgba(192,154,98,.12)!important;
+      }
+      #lattice > .node.is-related{
+        border-color:rgba(36,90,104,.9)!important;
+      }
+      #line-layer{
+        position:absolute!important;
+        inset:0!important;
+        width:100%!important;
+        height:100%!important;
+        pointer-events:none!important;
+        overflow:visible;
+        z-index:1;
+      }
+      #lattice-popover{
+        position:relative!important;
+        inset:auto!important;
+        display:none;
+        width:100%!important;
+        max-width:none!important;
+        margin-top:8px;
+        padding:16px;
+        border:1px solid rgba(192,154,98,.3);
+        background:#0b0d0d;
+        box-sizing:border-box;
+      }
+      #lattice-popover.is-open{display:block!important}
+      #pop-kicker{
+        display:block;
+        margin-bottom:8px;
+        color:#A9824F;
+        font-size:10px;
+        letter-spacing:.16em;
+      }
+      #pop-title{
+        display:block;
+        margin-bottom:8px;
+        color:#E9E2D2;
+        font-size:18px;
+      }
+      #pop-copy{
+        margin:0;
+        color:#A8A49A;
+        font-size:13px;
+        line-height:1.6;
+      }
+      .lattice-hint{
+        position:relative!important;
+        inset:auto!important;
+        margin-top:8px;
+        text-align:center;
+        color:#A8A49A;
+        font-size:10px;
+        letter-spacing:.12em;
+      }
+      @media(max-width:480px){
+        #lattice{gap:12px 6px;padding:12px 0}
+        #lattice > .node{min-height:82px;padding:8px 2px!important}
+        #lattice > .node .node-face strong{font-size:9px}
+        #lattice > .node .node-face small{font-size:9px}
       }
     `;
     document.head.appendChild(style);
   }
 
-  lattice.innerHTML='';
-  lattice.style.transform='rotateX(-7deg) rotateY(0deg)';
-
-  const lines=document.createElement('div');
-  lines.className='authority-runtime-lines';
-  lines.style.cssText='position:absolute;inset:0;transform-style:preserve-3d;';
-
-  const nodes=document.createElement('div');
-  nodes.className='authority-runtime-nodes';
-  nodes.style.cssText='position:absolute;inset:0;transform-style:preserve-3d;';
-
-  const detail=document.createElement('div');
-  detail.className='authority-runtime-detail';
-  detail.setAttribute('aria-hidden','true');
-
-  lattice.appendChild(lines);
-  lattice.appendChild(nodes);
-  stage.appendChild(detail);
-
+  const lineLayer=q('#line-layer');
+  const popTitle=q('#pop-title');
+  const popCopy=q('#pop-copy');
   let selected=null;
-  let dragging=false;
-  let lastX=0;
-  let lastY=0;
-  let rotationX=-7;
-  let rotationY=0;
+
+  if(lineLayer){
+    lineLayer.innerHTML='';
+    lineLayer.style.display='block';
+  }
+
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('width','100%');
+  svg.setAttribute('height','100%');
+  svg.style.cssText='position:absolute;inset:0;overflow:visible';
+  if(lineLayer) lineLayer.appendChild(svg);
 
   const nodeEls={};
-
-  function render(){
-
-    lattice.style.transform=
-      `rotateX(${rotationX}deg) rotateY(${rotationY}deg)`;
-
-    Object.entries(nodeEls).forEach(([id,el])=>{
-      const p=authorityPositions[id];
-
-      el.style.left=`${p.x}%`;
-      el.style.top=`${p.y}%`;
-      el.style.setProperty('--authority-z',`${p.z}px`);
-
-      el.classList.toggle('is-selected',id===selected);
-
-      const related=
-        selected &&
-        (id===selected ||
-         authorityRelationships.some(pair=>
-           pair.includes(selected) && pair.includes(id)
-         ));
-
-      el.classList.toggle('is-related',Boolean(related));
+  ['agent','identity','resource','action','policy','context','decision'].forEach(id=>{
+    const el=lattice.querySelector(`[data-node="${id}"]`);
+    if(!el) return;
+    nodeEls[id]=el;
+    el.setAttribute('aria-pressed','false');
+    el.addEventListener('click',event=>{
+      event.stopPropagation();
+      selectAuthorityNode(id);
     });
+  });
 
-    lines.innerHTML='';
+  function drawRelationships(){
+    if(!lineLayer || !svg) return;
+    svg.replaceChildren();
 
-    const rect=stage.getBoundingClientRect();
+    const bounds=lattice.getBoundingClientRect();
+    if(!bounds.width || !bounds.height) return;
+
+    svg.setAttribute('viewBox',`0 0 ${bounds.width} ${bounds.height}`);
 
     authorityRelationships.forEach(([a,b])=>{
-      const p1=authorityPositions[a];
-      const p2=authorityPositions[b];
+      const first=nodeEls[a],second=nodeEls[b];
+      if(!first || !second) return;
 
-      const x1=rect.width*p1.x/100;
-      const y1=rect.height*p1.y/100;
-      const x2=rect.width*p2.x/100;
-      const y2=rect.height*p2.y/100;
+      const r1=first.getBoundingClientRect();
+      const r2=second.getBoundingClientRect();
+      const x1=r1.left+r1.width/2-bounds.left;
+      const y1=r1.top+r1.height/2-bounds.top;
+      const x2=r2.left+r2.width/2-bounds.left;
+      const y2=r2.top+r2.height/2-bounds.top;
 
-      const dx=x2-x1;
-      const dy=y2-y1;
-      const length=Math.sqrt(dx*dx+dy*dy);
-      const angle=Math.atan2(dy,dx)*180/Math.PI;
-
-      const line=document.createElement('div');
-      line.className='authority-runtime-line';
-
-      if(
-        selected &&
-        (
-          a===selected ||
-          b===selected
-        )
-      ){
-        line.classList.add('is-related');
-      }
-
-      line.style.left=`${x1}px`;
-      line.style.top=`${y1}px`;
-      line.style.width=`${length}px`;
-      line.style.transform=`rotate(${angle}deg) translateZ(0)`;
-
-      lines.appendChild(line);
+      const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1',x1);
+      line.setAttribute('y1',y1);
+      line.setAttribute('x2',x2);
+      line.setAttribute('y2',y2);
+      line.setAttribute('stroke',
+        selected && (a===selected || b===selected)
+          ? 'rgba(36,120,135,.95)'
+          : 'rgba(192,154,98,.32)');
+      line.setAttribute('stroke-width','1.2');
+      svg.appendChild(line);
     });
   }
 
   function selectAuthorityNode(id){
-
     const info=nodeInfo[id];
     if(!info) return;
-
     selected=id;
 
-    detail.innerHTML=`
-      <div class="detail-kicker">AUTHORITY MODEL</div>
-      <div class="detail-title">${info[0]}</div>
-      <div class="detail-copy">${info[1]}</div>
-    `;
+    Object.entries(nodeEls).forEach(([key,el])=>{
+      const related=key===id || authorityRelationships.some(
+        pair=>pair.includes(id) && pair.includes(key)
+      );
+      el.classList.toggle('is-selected',key===id);
+      el.classList.toggle('is-related',related && key!==id);
+      el.setAttribute('aria-pressed',String(key===id));
+    });
 
-    detail.classList.add('is-open');
-    detail.setAttribute('aria-hidden','false');
-
-    render();
+    if(popTitle) popTitle.textContent=info[0];
+    if(popCopy) popCopy.textContent=info[1];
+    if(pop){
+      pop.classList.add('is-open');
+      pop.setAttribute('aria-hidden','false');
+    }
+    requestAnimationFrame(drawRelationships);
   }
 
   function clearAuthoritySelection(){
-
     selected=null;
-    detail.classList.remove('is-open');
-    detail.setAttribute('aria-hidden','true');
-
-    render();
+    Object.values(nodeEls).forEach(el=>{
+      el.classList.remove('is-selected','is-related');
+      el.setAttribute('aria-pressed','false');
+    });
+    if(pop){
+      pop.classList.remove('is-open');
+      pop.setAttribute('aria-hidden','true');
+    }
+    requestAnimationFrame(drawRelationships);
   }
 
-  AUTHORITY_NODES:
-  ['agent','identity','resource','action','policy','context','decision']
-    .forEach(id=>{
-      const info=nodeInfo[id];
-
-      const button=document.createElement('button');
-      button.type='button';
-      button.className='authority-runtime-node';
-      button.dataset.node=id;
-      button.setAttribute('aria-label',info[0]);
-
-      button.innerHTML=`
-        <span class="node-point"></span>
-        <span class="node-label">${info[0].toUpperCase()}</span>
-        <span class="node-role">${info[1].split('.')[0]}</span>
-      `;
-
-      button.addEventListener('click',event=>{
-        event.stopPropagation();
-        selectAuthorityNode(id);
-      });
-
-      nodes.appendChild(button);
-      nodeEls[id]=button;
-    });
-
-  /*
-   * Preserve compatibility with the original test suite/API.
-   */
   window.showInspect=function(id){
-    if(id && nodeInfo[id]){
-      selectAuthorityNode(id);
-    }else if(!id){
-      clearAuthoritySelection();
-    }
+    if(id && nodeInfo[id]) selectAuthorityNode(id);
+    else clearAuthoritySelection();
   };
 
-  stage.addEventListener('pointerdown',event=>{
-    if(event.target.closest('.authority-runtime-node') ||
-       event.target.closest('.authority-runtime-detail')){
-      return;
-    }
-
-    dragging=true;
-    lastX=event.clientX;
-    lastY=event.clientY;
-    stage.classList.add('is-dragging');
-
-    try{
-      stage.setPointerCapture(event.pointerId);
-    }catch{}
-  });
-
-  stage.addEventListener('pointermove',event=>{
-    if(!dragging) return;
-
-    const dx=event.clientX-lastX;
-    const dy=event.clientY-lastY;
-
-    rotationY+=dx*.22;
-    rotationX-=dy*.14;
-
-    rotationX=Math.max(-25,Math.min(25,rotationX));
-
-    lastX=event.clientX;
-    lastY=event.clientY;
-
-    render();
-  });
-
-  stage.addEventListener('pointerup',event=>{
-    dragging=false;
-    stage.classList.remove('is-dragging');
-
-    try{
-      stage.releasePointerCapture(event.pointerId);
-    }catch{}
-  });
-
-  stage.addEventListener('pointercancel',()=>{
-    dragging=false;
-    stage.classList.remove('is-dragging');
-  });
-
   stage.addEventListener('click',event=>{
-    if(
-      event.target===stage ||
-      event.target===lattice ||
-      event.target===lines ||
-      event.target===nodes
-    ){
-      clearAuthoritySelection();
-    }
+    if(event.target===stage) clearAuthoritySelection();
   });
 
-  render();
+  if('ResizeObserver' in window){
+    new ResizeObserver(()=>requestAnimationFrame(drawRelationships)).observe(lattice);
+  }else{
+    window.addEventListener('resize',drawRelationships);
+  }
+
+  requestAnimationFrame(drawRelationships);
 }
 const evidence={identity:['Identity assertion','The execution identity is established before authority is evaluated.','State','Verified','Assessment','AUR-DEMO-0041'],authority:['Authority definition','The declared permission boundary is compared with the requested operation.','Declared','Refunds above $500 require approval','Result','Boundary challenged'],resource:['Resource scope','The requested asset is evaluated against the permitted resource scope.','Resource','Payment / refund','Scope','Assigned customer'],action:['Action request','The consequential operation is identified before policy evaluation.','Operation','refund.create','Amount','$4,500'],policy:['Policy evaluation','The applicable policy determines the expected decision under this context.','Version','3.2','Expected','DENY'],decision:['Decision comparison','Observed capability is compared with the expected policy outcome.','Expected','DENY','Observed','ALLOW']};
 function renderEvidence(key){const d=evidence[key];q('#evidence-content').innerHTML=`<h3>${d[0]}</h3><p>${d[1]}</p><dl><dt>${d[2]}</dt><dd>${d[3]}</dd><dt>${d[4]}</dt><dd>${d[5]}</dd></dl>`}
