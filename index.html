@@ -76,7 +76,7 @@
         </p>
 
         <div class="actions">
-          <a class="button primary" href="#challenge">
+          <a class="button primary gold-cta" href="#challenge">
             Explore an assessment
             <span aria-hidden="true">↗</span>
           </a>
@@ -95,34 +95,30 @@
         </div>
       </div>
 
-      <div class="hero-mark" aria-label="Authority assurance visualization">
-        <div class="hero-orbit orbit-one"></div>
-        <div class="hero-orbit orbit-two"></div>
-        <div class="hero-ring">
-          <span class="ring-point point-one"></span>
-          <span class="ring-point point-two"></span>
-          <span class="ring-point point-three"></span>
-        </div>
 
-        <div class="hero-core">
-          <span>AUTHORITY</span>
-          <b>TESTED</b>
-          <i>WITH EVIDENCE</i>
+      <div class="hero-evidence-panel reveal" aria-label="Illustrative authority trace">
+        <div class="hero-panel-top">
+          <span>ILLUSTRATIVE AUTHORITY TRACE</span>
+          <span class="demo-badge">DEMO</span>
         </div>
-
-        <div class="hero-annotation annotation-one">
-          <span class="annotation-dot"></span>
-          DECLARED SCOPE
+        <div class="hero-panel-intro">
+          <span class="hero-panel-index">TRACE / 001</span>
+          <h2>Refund authorization</h2>
+          <p>A structured example of how a consequential action can be evaluated against a declared boundary.</p>
         </div>
-
-        <div class="hero-annotation annotation-two">
-          <span class="annotation-dot"></span>
-          OBSERVED BEHAVIOR
+        <div class="hero-evidence-row">
+          <span>01 / DECLARED SCOPE</span>
+          <strong>Refunds above $500 require approval</strong>
         </div>
-
-        <div class="hero-annotation annotation-three">
-          DECISION TRACE / 001
+        <div class="hero-evidence-row">
+          <span>02 / OBSERVED EXAMPLE</span>
+          <strong>Requested refund: $4,500</strong>
         </div>
+        <div class="hero-evidence-row">
+          <span>03 / POLICY DECISION</span>
+          <strong class="hero-decision">DENY <small>Approval not recorded in this example</small></strong>
+        </div>
+        <p class="hero-panel-note">Illustrative data only. No live agent was assessed.</p>
       </div>
     </section>
 
@@ -143,85 +139,24 @@
         </p>
       </div>
 
-      <div class="lattice-layout">
-        <div class="lattice-stage" id="lattice-stage">
-          <div
-            class="lattice"
-            id="lattice"
-            role="group"
-            aria-label="Interactive authority model. Select a node to inspect its role."
-          >
-            <div class="lattice-lines" id="line-layer" aria-hidden="true"></div>
 
-            <button class="node n-agent" data-node="agent" type="button" aria-pressed="false">
-              <span class="node-face">
-                <b>01</b>
-                <strong>AGENT</strong>
-                <small>assessed workflow</small>
-              </span>
-            </button>
-
-            <button class="node n-identity" data-node="identity" type="button" aria-pressed="false">
-              <span class="node-face">
-                <b>02</b>
-                <strong>IDENTITY</strong>
-                <small>acting principal</small>
-              </span>
-            </button>
-
-            <button class="node n-resource" data-node="resource" type="button" aria-pressed="false">
-              <span class="node-face">
-                <b>03</b>
-                <strong>RESOURCE</strong>
-                <small>reachable asset</small>
-              </span>
-            </button>
-
-            <button class="node n-action" data-node="action" type="button" aria-pressed="false">
-              <span class="node-face">
-                <b>04</b>
-                <strong>ACTION</strong>
-                <small>requested operation</small>
-              </span>
-            </button>
-
-            <button class="node n-policy" data-node="policy" type="button" aria-pressed="false">
-              <span class="node-face">
-                <b>05</b>
-                <strong>POLICY</strong>
-                <small>required control</small>
-              </span>
-            </button>
-
-            <button class="node n-context" data-node="context" type="button" aria-pressed="false">
-              <span class="node-face">
-                <b>06</b>
-                <strong>CONTEXT</strong>
-                <small>execution conditions</small>
-              </span>
-            </button>
-
-            <button class="node n-decision" data-node="decision" type="button" aria-pressed="false">
-              <span class="node-face">
-                <b>07</b>
-                <strong>DECISION</strong>
-                <small>allow / deny / escalate</small>
-              </span>
-            </button>
-          </div>
-
-          <div class="lattice-popover" id="lattice-popover" aria-live="polite" aria-hidden="true">
-            <span id="pop-kicker">AUTHORITY MODEL</span>
-            <strong id="pop-title">Agent</strong>
-            <p id="pop-copy"></p>
-          </div>
-
-          <div class="lattice-hint">
-            SELECT A NODE
-            <span aria-hidden="true">/</span>
-            EXPLORE THE MODEL
-          </div>
-        </div>
+      <div class="authority-process" aria-label="Authority assessment stages">
+        <article class="process-step">
+          <span>01 / DEFINE</span><h3>Declared scope</h3>
+          <p>Establish permitted actions, resources and approval boundaries.</p>
+        </article>
+        <article class="process-step">
+          <span>02 / CHALLENGE</span><h3>Observed behavior</h3>
+          <p>Evaluate behavior against explicit conditions and expected outcomes.</p>
+        </article>
+        <article class="process-step">
+          <span>03 / TRACE</span><h3>Decision evidence</h3>
+          <p>Connect the requested action, applicable policy and decision.</p>
+        </article>
+        <article class="process-step">
+          <span>04 / RETEST</span><h3>Remediation review</h3>
+          <p>Repeat a challenge after a change and record the resulting evidence.</p>
+        </article>
       </div>
 
       <div class="authority-proof">
@@ -627,7 +562,7 @@
           be allowed to do, and determine how that boundary can be tested.
         </p>
 
-        <button class="button primary" type="button" data-contact>
+        <button class="button primary gold-cta" type="button" data-contact>
           Start an assessment inquiry
           <span aria-hidden="true">↗</span>
         </button>
@@ -637,65 +572,49 @@
     </section>
   </main>
 
+
   <footer class="site-footer">
-    <div class="footer-inner">
+    <div class="footer-main">
       <div class="footer-brand">
         <a class="footer-lockup" href="#top" aria-label="Aurelis Authority home">
           <span class="footer-aurelis">AURELIS</span>
           <span class="footer-authority">AUTHORITY</span>
         </a>
-
-        <p>
-          Independent assessment of whether AI agents operate within
-          their intended authority.
-        </p>
+        <p>Independent assessment of whether AI agents operate within their intended authority.</p>
       </div>
-
-      <div class="footer-nav">
+      <nav class="footer-links" aria-label="Footer navigation">
         <div class="footer-column">
-          <span class="footer-label">AUTHORITY MODEL</span>
-          <a href="#model">Agent</a>
-          <a href="#model">Identity</a>
-          <a href="#model">Resource</a>
-          <a href="#model">Action</a>
-          <a href="#model">Policy</a>
-          <a href="#model">Context</a>
-          <a href="#model">Decision</a>
+          <span class="footer-label">ASSESSMENT</span>
+          <a href="#model">Authority model</a>
+          <a href="#method">Methodology</a>
+          <a href="#challenge">Controlled challenges</a>
         </div>
-
         <div class="footer-column">
-          <span class="footer-label">METHODOLOGY</span>
-          <a href="#method">Discover</a>
-          <a href="#method">Define</a>
-          <a href="#method">Challenge</a>
-          <a href="#method">Analyze</a>
-          <a href="#method">Remediate</a>
-          <a href="#method">Retest</a>
-        </div>
-
-        <div class="footer-column">
-          <span class="footer-label">ASSURANCE</span>
-          <a href="#evidence">Evidence trace</a>
+          <span class="footer-label">EVIDENCE</span>
           <a href="#findings">Findings</a>
+          <a href="#evidence">Evidence trace</a>
           <a href="#report">Assurance report</a>
-          <a href="#trust">Principles</a>
         </div>
-      </div>
-
-      <div class="footer-cta">
-        <span class="footer-label">ASSESSMENT INQUIRY</span>
-
+        <div class="footer-column">
+          <span class="footer-label">PRINCIPLES</span>
+          <a href="#trust">Assurance principles</a>
+          <a href="#assessment">Assessment scope</a>
+          <a href="#top">Back to top</a>
+        </div>
+      </nav>
+      <div class="footer-contact">
+        <span class="footer-label">CORRESPONDENCE</span>
+        <p>For assessment enquiries and technical discussions.</p>
         <button class="footer-inquiry" type="button" data-contact>
-          Request an assessment
-          <span aria-hidden="true">↗</span>
+          Contact Aurelis <span aria-hidden="true">↗</span>
         </button>
+        <a href="mailto:dhairytopia@gmail.com">dhairytopia@gmail.com</a>
+        <a href="https://github.com/DT-09/" target="_blank" rel="noopener noreferrer">GitHub / DT-09</a>
       </div>
     </div>
-
     <div class="footer-bottom">
-      <span>Authority Â· Evidence Â· Retest</span>
-      <span>Â© 2026 Aurelis Authority</span>
-      <a href="#top">Back to top </a>
+      <span>Authority · Evidence · Retest</span>
+      <span>© 2026 Aurelis Authority</span>
     </div>
   </footer>
 
@@ -710,7 +629,7 @@
       aria-describedby="contact-description"
     >
       <button class="close" type="button" data-close aria-label="Close contact dialog">
-        Ã—
+        ×
       </button>
 
       <p class="eyebrow">AURELIS / CORRESPONDENCE</p>

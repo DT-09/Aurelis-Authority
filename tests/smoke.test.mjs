@@ -3,4 +3,4 @@ const html=await readFile('index.html','utf8');const css=await readFile('src/sty
 test('required sections exist',()=>{for(const id of ['model','method','challenge','evidence','trust'])assert.match(html,new RegExp(`id="${id}"`))});
 test('contact flow exists',()=>{assert.match(html,/data-contact/);assert.match(html,/data-email/);assert.match(html,/mail-choice/);assert.match(html,/mailto:dhairytopia@gmail\.com/);assert.match(html,/github\.com\/DT-09/)});
 test('responsive and reduced motion rules exist',()=>{assert.match(css,/@media\(max-width:680px\)/);assert.match(css,/prefers-reduced-motion/)});
-test('interaction code exists',()=>{for(const token of ['nodeInfo','showInspect','scenario','data-evidence','IntersectionObserver'])assert.match(js,new RegExp(token))});
+test('interaction code exists',()=>{for(const token of ['scenario','data-evidence','run-test','renderEvidence','IntersectionObserver'])assert.match(js,new RegExp(token))});
