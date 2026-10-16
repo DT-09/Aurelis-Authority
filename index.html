@@ -457,9 +457,14 @@
         <div>
           <p class="eyebrow">REPRODUCIBLE SAMPLE RUN</p>
           <h3>Inspect the evidence artifact.</h3>
-          <p>This report is generated from deterministic local fixtures. It shows the report structure and expected-versus-observed logic; it does not claim a live agent was tested.</p>
+          <p>This artifact comes from an actual run of the deliberately vulnerable demo agent against in-memory mock tools. It records the attempted call, gateway observation, execution trace, expected result, remediation, and a second run with enforcement enabled. The mock tools never contact external systems or change real data.</p>
+          <p><b>Baseline:</b> the agent attempts all five actions; the mock gateway accepts them because enforcement is disabled. <b>Retest:</b> the same cases run with the enforcement gate enabled. Results are derived from each execution response, not manually assigned.</p>
+          <p><b>Reproduce locally:</b> clone the repository, run <code>npm test</code>, then <code>npm run demo:assessment</code>. The command writes <code>artifacts/sample-assessment.json</code>. Node.js 20 or later recommended; no third-party packages or credentials are required.</p>
         </div>
-        <a class="button secondary" href="/sample-assessment.json" target="_blank" rel="noopener noreferrer">Open sample JSON <span aria-hidden="true">↗</span></a>
+        <div class="sample-report-actions">
+          <a class="button primary gold-cta" href="/sample-assessment.json" target="_blank" rel="noopener noreferrer">Inspect raw evidence JSON <span aria-hidden="true">↗</span></a>
+          <a class="button secondary" href="https://github.com/DT-09/Aurelis-Authority" target="_blank" rel="noopener noreferrer">Reproduce from source <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
     </section>
 

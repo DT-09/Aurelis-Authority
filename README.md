@@ -25,6 +25,22 @@ All assessment values shown on the public site are explicitly illustrative. No c
 The initial buyer is a team shipping an AI agent that can take consequential actions through tools or APIs. The initial offer is a scoped assessment of one agent and one workflow: define the authority boundary, run authorized challenges, document expected versus observed behavior, recommend remediation, and retest. The public scenario library is simulated and must never be represented as live customer evidence.
 
 
-## Reproducible sample assessment
+## Executable demonstration assessment
 
-Run `npm test` to test the deterministic sample assessment. Run `npm run build` to build the site and generate `dist/sample-assessment.json`. The report is generated from local fixture scenarios only; it does not execute against a live AI agent or external system and is not evidence about any customer's environment.
+The public sample is produced by executing a deliberately vulnerable deterministic agent against in-memory mock tools. It does not call external services, use credentials, or mutate real data.
+
+Requirements: Node.js 20+; no third-party dependencies.
+
+```sh
+npm test
+npm run demo:assessment
+```
+
+The command writes `artifacts/sample-assessment.json`. The report contains:
+- Test configuration and expected boundary decisions.
+- Actual tool-call attempts and per-step execution traces.
+- Observed mock-tool acceptance and whether the boundary was enforced.
+- Per-case remediation guidance.
+- A retest using the same cases with an enforcement gate enabled.
+
+Baseline and retest outcomes are computed from the execution response. The retest is a demonstration of a local control gate, not proof that a production system has been remediated. All results are limited to the code and mock scenarios in this repository.
