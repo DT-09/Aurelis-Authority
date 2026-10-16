@@ -1,8 +1,10 @@
-// Executable, deterministic demo agent. All tools are in-memory mocks: no network, credentials, or external side effects.
+// Executable demonstration agent. All tool calls terminate at in-memory mock tools.
+import { invokeMockTool } from "./policy-gateway.mjs";
+
 export const demoConfig = {
   environment: "aurelis-local-mock-tools",
   agent: "vulnerable-demo-agent",
-  version: "1.0.0",
+  version: "1.1.0",
   externalNetwork: false,
   externalSideEffects: false,
   scenarios: [
@@ -14,33 +16,51 @@ export const demoConfig = {
   ]
 };
 
-function policyAllows(s) {
-  switch (s.action) {
-    case "refund.create": return s.args.amount <= 500 || Boolean(s.args.approvalToken);
-    case "customer_record.read": return s.args.scope !== "restricted" || s.args.taskAuthorization === true;
-    case "admin.deleteUser": return false;
-    case "purchase.submit": return s.args.amount <= 1000 || Boolean(s.args.approval);
-    case "invoice.send": return s.args.identityStatus !== "revoked";
-    default: return false;
-  }
-}
-
 export function executeDemoAgent(scenario, { enforcePolicy = false, runId = "local-run" } = {}) {
   const trace = [];
-  const push = (event, details = {}) => trace.push({ sequence: trace.length + 1, event, timestamp: new Date().toISOString(), ...details });
-  push("agent.received", { scenarioId: scenario.id, agent: enforcePolicy ? "hardened-demo-agent" : demoConfig.agent });
-  // Deliberately vulnerable behavior: the agent always attempts the requested tool call.
+  const push = (event, details = {}) => trace.push({
+    sequence: trace.length + 1,
+    event,
+    timestamp: new Date().toISOString(),
+    ...details
+  });
+
+  push("agent.received", {
+    scenarioId: scenario.id,
+    agent: enforcePolicy ? "demo-agent-with-enforcement" : demoConfig.agent
+  });
+  // In both modes, the agent attempts the action. Enforcement must happen after this point
+  // but before a mock tool accepts it.
   push("agent.tool_call_attempted", { action: scenario.action, args: scenario.args });
-  const policyAllowed = policyAllows(scenario);
-  push("gateway.policy_evaluated", { enforcementEnabled: enforcePolicy, policyAllows: policyAllowed, expected: scenario.expected });
-  const blocked = enforcePolicy && !policyAllowed;
-  if (blocked) {
-    push("mock_tool.blocked", { action: scenario.action, reason: "policy_boundary_violation" });
-    return { runId, attempted: true, boundaryEnforced: true, toolAccepted: false, observed: "DENY", sideEffect: false, trace };
+  const gateway = invokeMockTool(scenario, { enforcePolicy });
+  push("gateway.policy_evaluated", {
+    enforcementEnabled: enforcePolicy,
+    checks: gateway.checks,
+    reason: gateway.reason
+  });
+  if (!gateway.accepted) {
+    push("mock_tool.blocked", {
+      action: scenario.action,
+      reason: gateway.reason,
+      toolReceivedAcceptedCall: false
+    });
+  } else {
+    push("mock_tool.accepted", {
+      action: scenario.action,
+      simulated: true,
+      enforcementEnabled: enforcePolicy
+    });
   }
-  // Mock tools record acceptance only; they never mutate business data or contact a real service.
-  push("mock_tool.accepted", { action: scenario.action, simulated: true });
-  return { runId, attempted: true, boundaryEnforced: false, toolAccepted: true, observed: "ALLOW", sideEffect: false, trace };
+
+  return {
+    runId,
+    attempted: true,
+    boundaryEnforced: gateway.boundaryEnforced,
+    toolAccepted: gateway.accepted,
+    observed: gateway.decision,
+    sideEffect: gateway.externalSideEffects,
+    trace
+  };
 }
 
 export function evaluateScenario(scenario, options = {}) {
