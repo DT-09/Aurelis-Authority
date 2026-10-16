@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f7f4">
+  <meta name="theme-color" content="#080a0a">
   <meta name="description" content="Aurelis Authority independently assesses whether AI agents operate within their intended authority through controlled challenges, evidence, remediation, and retesting.">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="dark">
 
   <title>Aurelis Authority — AI Agent Authority Assurance</title>
 
@@ -42,7 +42,7 @@
     </a>
 
     <nav class="nav-links" aria-label="Main navigation">
-      <a href="#model">Authority</a>
+      <a href="#why">Why it matters</a>
       <a href="#method">Methodology</a>
       <a href="#evidence">Evidence</a>
       <a href="#trust">Principles</a>
@@ -69,10 +69,7 @@
         </h1>
 
         <p class="lead">
-          Intended permissions tell only part of the story. Aurelis
-          assesses whether an agent's observed capabilities match its
-          intended authority, then documents the evidence, remediation
-          and retest.
+          AI agents can call tools, access data and change business records. A prompt or permission list alone does not show whether a real workflow respects its limits. Aurelis tests a defined boundary, documents what happened, and helps teams verify the fix.
         </p>
 
         <div class="actions">
@@ -122,6 +119,20 @@
       </div>
     </section>
 
+        <section class="section why" id="why">
+      <div class="section-head reveal">
+        <p class="eyebrow">WHY AUTHORITY TESTING MATTERS</p>
+        <h2>When an agent can act, <em>permission becomes a business risk.</em></h2>
+        <p>Teams need more than a reassuring answer from a model. They need to know whether the workflow blocks actions that exceed the authority it was given.</p>
+      </div>
+      <div class="why-grid">
+        <article><span class="why-index">01 / FINANCIAL ACTIONS</span><h3>Limits must hold at the point of action.</h3><p>A refund agent may be told to request approval above a threshold. The question is whether the execution path actually prevents an unapproved refund.</p><p class="why-trigger"><b>Useful before:</b> launching payments, refunds, purchasing or account changes.</p></article>
+        <article><span class="why-index">02 / DATA ACCESS</span><h3>Access must match the task.</h3><p>An agent may reach records or tools beyond what its current task requires. Testing checks whether the intended boundary is clear and enforced in the workflow under review.</p><p class="why-trigger"><b>Useful before:</b> connecting internal systems, customer records or new tools.</p></article>
+        <article><span class="why-index">03 / CHANGE &amp; RELEASE</span><h3>Updates can change behavior.</h3><p>A new model, tool, prompt or policy can alter the way an agent acts. Repeatable challenges help teams catch a boundary regression before release.</p><p class="why-trigger"><b>Useful before:</b> a production pilot, major integration or agent update.</p></article>
+      </div>
+      <div class="why-bottom"><div><p class="eyebrow">THE QUESTION AURELIS ANSWERS</p><h3>Does the tested workflow respect the authority we intended to grant?</h3></div><p>We define the boundary with your team, challenge it in an authorized test environment, document expected versus observed behavior, and retest agreed fixes. Findings are limited to the scope and conditions actually tested.</p></div>
+    </section>
+
     <section class="section model" id="model">
       <div class="section-head reveal">
         <p class="eyebrow">01 / THE AUTHORITY MODEL</p>
@@ -132,10 +143,7 @@
         </h2>
 
         <p>
-          An agent's effective authority emerges from the relationship
-          between its identity, reachable resources, requested actions,
-          governing policies and execution context. Each relationship
-          matters when evaluating the final decision.
+          The assessment connects the acting identity, requested operation, target resource, applicable rule and approval context. This makes the control boundary concrete enough to challenge and retest.
         </p>
       </div>
 
@@ -190,8 +198,7 @@
         </h2>
 
         <p>
-          A structured assessment connects the intended control to a
-          reproducible challenge, a documented result and a targeted retest.
+          The deliverable is not a generic safety score. It is a scoped record of what was tested, what the evidence supports, what needs to change, and whether the same challenge passes after remediation.
         </p>
       </div>
 
@@ -244,9 +251,7 @@
         </h2>
 
         <p>
-          Explore illustrative authorization scenarios. These interactions
-          demonstrate the assessment concept; they do not execute against
-          a real AI agent or establish actual security findings.
+          Explore a simulated failure path. This public walkthrough shows the shape of an assessment, not a live security test. Client findings require authorized execution and evidence from the agreed environment.
         </p>
       </div>
 
@@ -356,8 +361,7 @@
         </h2>
 
         <p>
-          A finding should explain the violated boundary, its supporting
-          evidence, the expected behavior and the remediation required.
+          A useful finding links a specific boundary violation to its business consequence, supporting execution evidence and a fix that can be retested. The example below is hypothetical.
         </p>
       </div>
 
@@ -402,8 +406,7 @@
         </h2>
 
         <p>
-          A defensible conclusion connects the acting identity, requested
-          action, target resource, applicable policy and final decision.
+          Evidence should let an engineering team reconstruct why a result was classified as a pass, failure or inconclusive. The trace below is illustrative; a client report must distinguish observed facts from assumptions and simulated data.
         </p>
       </div>
 
@@ -558,12 +561,11 @@
         </h2>
 
         <p>
-          Identify a consequential workflow, define what the agent should
-          be allowed to do, and determine how that boundary can be tested.
+          Bring one agent and one consequential workflow. We will scope the authority boundary, agree on the test conditions, and confirm deliverables and price before any assessment begins.
         </p>
 
         <button class="button primary gold-cta" type="button" data-contact>
-          Start an assessment inquiry
+          Request a scoped assessment
           <span aria-hidden="true">↗</span>
         </button>
 
