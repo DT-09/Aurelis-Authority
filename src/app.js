@@ -11,13 +11,16 @@ let activeScenario = "refund";
 let activeMode = "baseline";
 let assessmentCache = null;
 
-async function loadAssessment() {
-  if (assessmentCache) return assessmentCache;
-  const response = await fetch("/sample-assessment.json", {cache:"no-store"});
-  if (!response.ok) throw new Error("Assessment report unavailable (HTTP " + response.status + ").");
+async function runAssessment() {
+  const response = await fetch("/api/assessment", {
+    method: "POST",
+    headers: { "accept": "application/json" },
+    cache: "no-store"
+  });
+  if (!response.ok) throw new Error("Assessment run failed (HTTP " + response.status + ").");
   const report = await response.json();
   if (report.status !== "DEMONSTRATION_ONLY" || !Array.isArray(report.cases)) {
-    throw new Error("The published file is not a recognized demonstration assessment.");
+    throw new Error("The endpoint returned an unrecognized demonstration assessment.");
   }
   assessmentCache = report;
   return report;
@@ -50,7 +53,7 @@ function renderRecordedExecution(report) {
   q("#decision").textContent = run.observed || "UNKNOWN";
   q("#trace-status").textContent = (activeMode === "retest" ? "ENFORCED RETEST" : "VULNERABLE BASELINE") +
     " · Expected " + record.expected + " / Observed " + run.observed + " / " + run.outcome +
-    ". Build-generated demonstration record only; no live agent or external system was tested.";
+    ". Fresh isolated demonstration run; mock tools only, no live agent or external system tested.";
   const list = q("#execution-events");
   list.replaceChildren();
   trace.forEach(event => {
@@ -94,11 +97,11 @@ function selectScenario(id) {
   else {
     q("#trace-result").textContent = "Not yet loaded";
     q("#decision").textContent = "—";
-    q("#trace-status").textContent = "Scenario selected. Load the generated report to inspect its recorded baseline and retest.";
+    q("#trace-status").textContent = "Scenario selected. Run the isolated assessment to inspect its fresh baseline and retest.";
     q("#execution-events").replaceChildren();
     const li = document.createElement("li");
     li.className = "execution-empty";
-    li.textContent = "No trace loaded. Select “Load recorded execution”.";
+    li.textContent = "No trace yet. Select “Run isolated assessment”.";
     q("#execution-events").append(li);
     q("#trace-count").textContent = "NOT LOADED";
   }
@@ -109,9 +112,9 @@ qa("[data-run-mode]").forEach(button => button.addEventListener("click", () => s
 q("#run-test")?.addEventListener("click", async () => {
   const button = q("#run-test");
   button.disabled = true;
-  q("#trace-status").textContent = "Loading the published assessment record…";
+  q("#trace-status").textContent = "Executing the isolated mock assessment…";
   try {
-    const report = await loadAssessment();
+    const report = await runAssessment();
     renderRecordedExecution(report);
   } catch (error) {
     q("#trace-status").textContent = "Could not load the recorded assessment: " + error.message;
