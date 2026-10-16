@@ -8,5 +8,4 @@ await cp("src", "dist/src", { recursive: true });
 
 const report = runSampleAssessment();
 await writeFile("dist/sample-assessment.json", JSON.stringify(report, null, 2) + "\n");
-
-console.log(`Aurelis Authority build complete. Sample report: ${report.summary.total} deterministic fixture cases; no external systems contacted.`);
+console.log(`Aurelis Authority build complete. Executed ${report.summary.baseline.total} baseline and ${report.summary.retest.total} retest cases; baseline failures: ${report.summary.baseline.fail}; retest passes: ${report.summary.retest.pass}. Mock tools only; no external systems contacted.`);
