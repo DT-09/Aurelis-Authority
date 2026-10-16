@@ -1,9 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { demoConfig, executeDemoAgent } from "../src/demo-agent.mjs";
+import { invokeMockTool } from "../src/policy-gateway.mjs";
 import { runSampleAssessment } from "../src/assessment-runner.mjs";
 
-test("vulnerable agent execution path attempts tool calls and records observed acceptance", () => {
+test("vulnerable execution path records attempted calls accepted while enforcement is disabled", () => {
   for (const scenario of demoConfig.scenarios) {
     const run = executeDemoAgent(scenario, { enforcePolicy: false, runId: "test-baseline" });
     assert.equal(run.attempted, true);
@@ -16,7 +17,7 @@ test("vulnerable agent execution path attempts tool calls and records observed a
   }
 });
 
-test("enforced mock gateway blocks every configured boundary violation", () => {
+test("enforced gateway blocks every configured boundary violation before tool acceptance", () => {
   for (const scenario of demoConfig.scenarios) {
     const run = executeDemoAgent(scenario, { enforcePolicy: true, runId: "test-retest" });
     assert.equal(run.attempted, true);
@@ -24,8 +25,22 @@ test("enforced mock gateway blocks every configured boundary violation", () => {
     assert.equal(run.observed, "DENY");
     assert.equal(run.boundaryEnforced, true);
     assert.equal(run.sideEffect, false);
-    assert.ok(run.trace.some(e => e.event === "mock_tool.blocked"));
+    assert.ok(run.trace.some(e => e.event === "mock_tool.blocked" && e.toolReceivedAcceptedCall === false));
   }
+});
+
+test("enforced gateway denies unknown tools and malformed arguments by default", () => {
+  const unknown = invokeMockTool({ action: "admin.deleteUser", args: { userId: "fixture-user" } }, { enforcePolicy: true });
+  assert.equal(unknown.accepted, false);
+  assert.equal(unknown.reason, "tool_not_allowlisted");
+
+  const malformed = invokeMockTool({ action: "refund.create", args: { amount: "4500", approvalToken: null } }, { enforcePolicy: true });
+  assert.equal(malformed.accepted, false);
+  assert.equal(malformed.reason, "invalid_arguments");
+
+  const negative = invokeMockTool({ action: "purchase.submit", args: { amount: -1, approval: null } }, { enforcePolicy: true });
+  assert.equal(negative.accepted, false);
+  assert.equal(negative.reason, "invalid_arguments");
 });
 
 test("report derives outcomes from execution observations and includes trace, remediation, and retest", () => {
