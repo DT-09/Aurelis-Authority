@@ -1,1 +1,12 @@
-{"name":"aurelis-authority","version":"1.0.0","private":true,"type":"module","scripts":{"test":"node --test","build":"node scripts/build.mjs"},"devDependencies":{}}
+{
+  "name": "aurelis-authority",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test",
+    "build": "node scripts/build.mjs",
+    "demo:assessment": "node scripts/generate-sample-assessment.mjs"
+  },
+  "devDependencies": {}
+}
