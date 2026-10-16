@@ -46,7 +46,7 @@ function renderRecordedExecution(report) {
   q('[data-step="identity"] span').textContent = activeMode === "retest" ? "Enforced path" : "Vulnerable path";
   q('[data-step="authority"] span').textContent = record.boundary;
   q('[data-step="policy"] span').textContent = activeMode === "retest" ? "Enforcement enabled" : "Enforcement disabled";
-  q("#trace-result").textContent = run.execution?.toolAccepted ? "Accepted (mock)" : "Blocked (mock)";
+  q("#trace-result").textContent = (activeMode === "retest" ? run.toolAccepted : run.execution?.toolAccepted) ? "Accepted (mock)" : "Blocked (mock)";
   q("#decision").textContent = run.observed || "UNKNOWN";
   q("#trace-status").textContent = (activeMode === "retest" ? "ENFORCED RETEST" : "VULNERABLE BASELINE") +
     " · Expected " + record.expected + " / Observed " + run.observed + " / " + run.outcome +
