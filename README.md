@@ -23,3 +23,8 @@ All assessment values shown on the public site are explicitly illustrative. No c
 
 ## Commercial positioning
 The initial buyer is a team shipping an AI agent that can take consequential actions through tools or APIs. The initial offer is a scoped assessment of one agent and one workflow: define the authority boundary, run authorized challenges, document expected versus observed behavior, recommend remediation, and retest. The public scenario library is simulated and must never be represented as live customer evidence.
+
+
+## Reproducible sample assessment
+
+Run `npm test` to test the deterministic sample assessment. Run `npm run build` to build the site and generate `dist/sample-assessment.json`. The report is generated from local fixture scenarios only; it does not execute against a live AI agent or external system and is not evidence about any customer's environment.
