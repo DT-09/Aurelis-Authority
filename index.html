@@ -293,7 +293,7 @@
           </button>
 
           <button class="run-test" id="run-test" type="button">
-            Run illustrative test
+            Load recorded execution
             <span aria-hidden="true">↗</span>
           </button>
 
@@ -312,35 +312,30 @@
             <span class="demo-badge">DEMO</span>
           </div>
 
+          <div class="run-mode-switch" role="group" aria-label="Recorded execution mode">
+            <button class="mode-button selected" type="button" data-run-mode="baseline" aria-pressed="true">Vulnerable baseline</button>
+            <button class="mode-button" type="button" data-run-mode="retest" aria-pressed="false">Enforced retest</button>
+          </div>
+
           <div class="trace-flow">
-            <div class="trace-step" data-step="identity">
-              <b>IDENTITY</b>
-              <span>Verified</span>
-            </div>
-
-            <div class="trace-step" data-step="authority">
-              <b>AUTHORITY</b>
-              <span>Threshold $500</span>
-            </div>
-
-            <div class="trace-step" data-step="policy">
-              <b>POLICY</b>
-              <span>Approval required</span>
-            </div>
-
-            <div class="trace-step fail" data-step="boundary">
-              <b>BOUNDARY</b>
-              <span id="trace-result">Not satisfied</span>
-            </div>
-
-            <div class="trace-step" data-step="decision">
-              <b>DECISION</b>
-              <span id="decision">DENY</span>
-            </div>
+            <div class="trace-step" data-step="identity"><b>AGENT</b><span>Awaiting report</span></div>
+            <div class="trace-step" data-step="authority"><b>ATTEMPT</b><span>Awaiting report</span></div>
+            <div class="trace-step" data-step="policy"><b>GATEWAY</b><span>Awaiting report</span></div>
+            <div class="trace-step" data-step="boundary"><b>MOCK TOOL</b><span id="trace-result">Not yet loaded</span></div>
+            <div class="trace-step" data-step="decision"><b>OBSERVED</b><span id="decision">—</span></div>
           </div>
 
           <div class="trace-status" id="trace-status" role="status" aria-live="polite">
-            Illustrative scenario ready. Run the test to inspect its decision trace.
+            Select a scenario and load the generated assessment report to inspect its recorded execution.
+          </div>
+          <div class="execution-trace-wrap">
+            <div class="execution-trace-heading">
+              <span>RECORDED EXECUTION TRACE</span>
+              <span id="trace-count">NOT LOADED</span>
+            </div>
+            <ol class="execution-events" id="execution-events">
+              <li class="execution-empty">No trace loaded. Select “Load recorded execution”.</li>
+            </ol>
           </div>
 
           <div class="trace-disclaimer">

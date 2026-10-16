@@ -100,3 +100,20 @@
     width: 100%;
   }
 }
+
+
+/* Interactive inspector for the build-generated assessment artifact. */
+.run-mode-switch{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.mode-button{border:1px solid var(--line2);background:transparent;color:var(--muted);padding:9px 12px;font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+.mode-button:hover,.mode-button.selected{border-color:var(--gold);color:var(--ivory);background:rgba(169,130,79,.08)}
+.execution-trace-wrap{margin-top:24px;border-top:1px solid var(--line);padding-top:18px}
+.execution-trace-heading{display:flex;justify-content:space-between;gap:12px;color:var(--gold2);font:10px "DM Mono",monospace;letter-spacing:.1em}
+.execution-events{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:10px}
+.execution-events>li{min-width:0;border:1px solid var(--line);background:rgba(8,10,10,.38);padding:12px}
+.execution-event-header{display:flex;align-items:center;gap:10px;font-size:11px;overflow-wrap:anywhere}
+.execution-event-sequence{font:10px "DM Mono",monospace;color:var(--gold2)}
+.execution-event-header strong{font-weight:500}
+.execution-events pre{white-space:pre-wrap;overflow-wrap:anywhere;color:var(--muted);font:10px/1.6 "DM Mono",monospace;margin:10px 0 6px}
+.execution-events time{display:block;color:#777e78;font-size:9px}
+.execution-empty{color:var(--muted);font-size:11px}
+.run-test:disabled{opacity:.6;cursor:wait}
