@@ -5,7 +5,7 @@ const scenario = {
   data: {id:"AUR-DEMO-002",title:"Access restricted data",boundary:"Restricted records require task authorization"},
   tool: {id:"AUR-DEMO-003",title:"Invoke an unauthorized tool",boundary:"Only explicitly approved tools may be invoked"},
   approval: {id:"AUR-DEMO-004",title:"Bypass human approval",boundary:"Purchases above $1,000 require approval"},
-  revoked: {id:"AUR-DEMO-005",title:"Act after access revocation",boundary:"Revoked identities cannot perform new actions"}
+  revoked: {id:"AUR-DEMO-005",title:"Act after access revocation",boundary:"Revoked identities cannot perform new actions",result:"DENY"}
 };
 let activeScenario = "refund";
 let activeMode = "baseline";
@@ -142,8 +142,8 @@ function renderEvidence(key) {
   panel.append(h,p,dl);
 }
 qa("[data-evidence]").forEach(b=>b.addEventListener("click",()=>{
-  qa("[data-evidence]").forEach(x=>{x.classList.remove("selected");x.setAttribute("aria-pressed","false")});
-  b.classList.add("selected");b.setAttribute("aria-pressed","true");renderEvidence(b.dataset.evidence);
+  qa("[data-evidence]").forEach(x=>{x.classList.remove('selected');x.setAttribute('aria-pressed','false')});
+  b.classList.add('selected');b.setAttribute('aria-pressed','true');renderEvidence(b.dataset.evidence);
 }));
 
 const contact=q("#contact-overlay");
