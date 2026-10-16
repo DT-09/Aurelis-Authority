@@ -5,3 +5,6 @@ test('contact flow exists',()=>{assert.match(html,/data-contact/);assert.match(h
 test('responsive and reduced motion rules exist',()=>{assert.match(css,/@media\(max-width:680px\)/);assert.match(css,/prefers-reduced-motion/)});
 test('buyer value and simulation boundaries are explicit',()=>{assert.match(html,/WHY AUTHORITY TESTING MATTERS/);assert.match(html,/public walkthrough shows the shape of an assessment, not a live security test/);assert.match(html,/All results are simulated examples/)});
 test('interaction code exists',()=>{for(const token of ['scenario','data-evidence','run-test','renderEvidence','IntersectionObserver'])assert.match(js,new RegExp(token))});
+
+test('animation and scenario states have valid definitions',()=>{assert.doesNotMatch(css,/transform:translate3vw,1vh/);assert.match(css,/transform:translate\(3vw,1vh\) rotate\(-15deg\)/);assert.match(js,/revoked: \{[^}]*result:/)});
+test('evidence selection updates accessible state',()=>{assert.match(js,/setAttribute\('aria-pressed','true'\)/);assert.match(js,/setAttribute\('aria-pressed','false'\)/)});
