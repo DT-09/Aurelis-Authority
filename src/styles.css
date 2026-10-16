@@ -66,3 +66,5 @@
 .why-bottom h3{max-width:540px;margin-bottom:0}
 .why-bottom>p{max-width:580px}
 @media(max-width:760px){.why-grid{grid-template-columns:1fr}.why-grid article{border-right:0;border-bottom:1px solid var(--line);padding:24px}.why-grid article:last-child{border-bottom:0}.why-index{margin-bottom:12px}.why-bottom{grid-template-columns:1fr;gap:20px;padding:26px 0}}
+
+[hidden]{display:none!important}
