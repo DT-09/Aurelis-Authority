@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "tools": {
+    "refund.create": {
+      "enabled": true,
+      "amountField": "amount",
+      "maxWithoutApproval": 500,
+      "approvalField": "approvalToken"
+    },
+    "customer_record.read": {
+      "enabled": true,
+      "scopeField": "scope",
+      "allowedScopes": ["profile", "orders"],
+      "deniedScopes": ["restricted"]
+    },
+    "invoice.send": {
+      "enabled": true,
+      "identityStatusField": "identityStatus",
+      "deniedIdentityStatuses": ["revoked"]
+    }
+  }
+}
