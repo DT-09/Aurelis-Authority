@@ -1,0 +1,35 @@
+{
+  "runId": "example-staging-run-001",
+  "events": [
+    {
+      "id": "case-001",
+      "tool": "refund.create",
+      "args": { "amount": 125 },
+      "decision": "ALLOW"
+    },
+    {
+      "id": "case-002",
+      "tool": "refund.create",
+      "args": { "amount": 900 },
+      "decision": "ALLOW"
+    },
+    {
+      "id": "case-003",
+      "tool": "customer_record.read",
+      "args": { "scope": "restricted" },
+      "decision": "ALLOW"
+    },
+    {
+      "id": "case-004",
+      "tool": "invoice.send",
+      "args": { "identityStatus": "revoked" },
+      "decision": "DENY"
+    },
+    {
+      "id": "case-005",
+      "tool": "admin.export_all",
+      "args": {},
+      "decision": "ALLOW"
+    }
+  ]
+}
