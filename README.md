@@ -44,3 +44,16 @@ The command writes `artifacts/sample-assessment.json`. The report contains:
 - A retest using the same cases with an enforcement gate enabled.
 
 Baseline and retest outcomes are computed from the execution response. The retest is a demonstration of a local control gate, not proof that a production system has been remediated. All results are limited to the code and mock scenarios in this repository.
+
+## Authority trace regression checker
+
+A separate, dependency-free offline utility audits recorded agent tool-call decisions against a configured authority policy. It can identify unexpected ALLOW decisions for disabled tools, approval-gated amounts, restricted scopes, and revoked identities.
+
+Quick start:
+
+```sh
+npm test
+npm run authority:check -- --policy tools/authority-trace-check/examples/policy.json --trace tools/authority-trace-check/examples/trace.json
+```
+
+Read the [authority trace checker guide](tools/authority-trace-check/README.md) for the input contract, policy schema, CI usage, and limitations. It audits supplied traces only: it does not intercept or prevent actions, and a passing result is not a security certification.

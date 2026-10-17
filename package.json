@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node --test",
     "build": "node scripts/build.mjs",
-    "demo:assessment": "node scripts/generate-sample-assessment.mjs"
+    "demo:assessment": "node scripts/generate-sample-assessment.mjs",
+    "authority:check": "node tools/authority-trace-check/cli.mjs"
   },
   "devDependencies": {}
 }
