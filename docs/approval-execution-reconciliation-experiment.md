@@ -2,9 +2,9 @@
 
 ## Why this exists
 
-Microsoft Agent Framework issue [#7569](https://github.com/microsoft/agent-framework/issues/7569) reports a multi-approval resume where two tool calls are accepted but only one executes. This experiment tests a narrow detection idea: compare the set of accepted approval IDs with the execution records and flag missing, duplicate, unapproved, or mismatched calls.
+Microsoft Agent Framework issue [#7569](https://github.com/microsoft/agent-framework/issues/7569) reports a multi-approval resume where two tool calls are accepted but only one executes. Aurelis tests whether it can detect a mismatch by comparing accepted approval IDs against recorded execution IDs.
 
-This does **not** fix the upstream framework defect. It tests whether Aurelis can detect the discrepancy from exported records.
+This does **not** fix or reproduce the upstream framework defect. The checked-in fixture is synthetic and models the reported failure shape.
 
 ## Run
 
@@ -12,9 +12,19 @@ Requires Node.js 20+; no third-party packages.
 
 ```sh
 npm test
+npm run experiment:approval-reconciliation
 ```
 
-The unit tests use synthetic records only and have no network calls or external side effects.
+The experiment command prints a JSON comparison between Aurelis's existing decision-only audit and the approval/execution reconciliation detector. It exits nonzero if the fixture does not demonstrate the expected difference.
+
+## What the fixture demonstrates
+
+The fixture supplies two accepted approvals but only one execution record.
+
+- The existing decision-only audit returns `PASS` because the one recorded ALLOW event matches the supplied policy. It cannot infer an action that has no event.
+- The reconciliation detector returns `FAIL` and reports `APPROVED_CALL_NOT_EXECUTED` for the missing call ID.
+
+This demonstrates a **schema-level detection difference on synthetic data**, not yet a real-world product advantage.
 
 ## Input contract
 
@@ -34,14 +44,16 @@ The reconciliation function accepts two arrays:
 
 Expected finding: `APPROVED_CALL_NOT_EXECUTED` for `c2`.
 
-## What would count as evidence
+## What remains necessary for a real product claim
 
-- A valid baseline trace that contains both accepted approvals but only one execution.
-- The existing decision-only audit should not be represented as catching this by itself; it evaluates recorded ALLOW/DENY events, not missing call IDs.
-- Reconciliation should flag the missing ID while passing a complete one-to-one trace.
-- A real adapter must preserve stable call IDs across approval and execution events. If the framework omits or rewrites IDs, that is an integration limitation, not proof of a dropped action.
-- Before claiming product advantage, test against the actual affected framework version and its event export, and measure false positives on normal traces.
+- Capture a real trace from the affected framework/version that contains approval IDs and execution IDs.
+- Map those real events into this schema without inventing missing records.
+- Verify the detector flags the actual dropped call.
+- Run ordinary, complete approval flows and measure false positives.
+- Compare against the framework's own telemetry and available observability tooling.
+
+A real adapter must preserve stable call IDs across approval and execution events. If the framework omits or rewrites IDs, that is an integration limitation, not proof of a dropped action.
 
 ## Limitations
 
-This is a synthetic detection test, not an end-to-end reproduction of issue #7569 and not proof that a production incident or financial loss occurred. Missing records can reflect telemetry loss or schema mismatch as well as missing execution. It does not prevent duplicate side effects or provide exactly-once semantics.
+Missing execution records can reflect dropped work, incomplete telemetry, or an ID-mapping/schema error. This is post-run detection only: it does not prevent side effects, provide exactly-once semantics, establish production losses, or prove willingness to pay. No external systems are contacted by the fixture or tests.
