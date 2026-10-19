@@ -47,6 +47,11 @@ for (const file of files) {
   }
 
   if (capture.caseId === "two-accepted") {
+    const initialInterruptIds = [...(capture.initialInterruptIds || [])].sort();
+    if (JSON.stringify(initialInterruptIds) !== JSON.stringify(callIds)) {
+      console.error(`Initial AgentFrameworkAgent turn did not surface the expected interrupts: ${JSON.stringify(initialInterruptIds)}`);
+      failed = true;
+    }
     if (executionCount !== expectedCount) {
       console.error(`Expected ${expectedCount} actual executions on ${expectedRevision}, observed ${executionCount}`);
       failed = true;
