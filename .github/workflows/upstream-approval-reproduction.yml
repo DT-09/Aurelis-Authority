@@ -1,0 +1,57 @@
+name: Upstream approval-resume reproduction
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  upstream-runtime-reproduction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout Aurelis
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run Aurelis unit tests and build
+        run: |
+          npm test
+          npm run build
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Clone upstream Agent Framework
+        run: git clone https://github.com/microsoft/agent-framework.git upstream
+      - name: Reproduce on the reported affected commit
+        env:
+          UPSTREAM_SHA: d56e81357e5179b6f916b180c0cb34ea2e73c80b
+        run: |
+          git -C upstream checkout --detach "$UPSTREAM_SHA"
+          python -m pip install --upgrade pip
+          python -m pip install pytest pytest-asyncio -e upstream/python/packages/core -e upstream/python/packages/ag-ui
+          export PYTHONPATH="$PWD/upstream/python/packages/ag-ui/tests/ag_ui:$PWD/upstream/python/packages/ag-ui:$PWD/upstream/python/packages/core"
+          python experiments/repro_7569_runtime.py --revision affected --out-dir artifacts/affected
+          node scripts/verify-agui-runtime-repro.mjs artifacts/affected affected 1 c2
+      - name: Re-run against the post-fix upstream commit
+        env:
+          UPSTREAM_SHA: 809cc04f2d610bb48fa4274b6e7f0e96773d576d
+        run: |
+          git -C upstream checkout --detach "$UPSTREAM_SHA"
+          python -m pip install --force-reinstall -e upstream/python/packages/core -e upstream/python/packages/ag-ui
+          export PYTHONPATH="$PWD/upstream/python/packages/ag-ui/tests/ag_ui:$PWD/upstream/python/packages/ag-ui:$PWD/upstream/python/packages/core"
+          python experiments/repro_7569_runtime.py --revision fixed --out-dir artifacts/fixed
+          node scripts/verify-agui-runtime-repro.mjs artifacts/fixed fixed 2
+      - name: Upload raw runtime captures and Aurelis reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-agui-approval-reproduction
+          path: artifacts/
+          if-no-files-found: warn
