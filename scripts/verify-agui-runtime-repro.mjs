@@ -26,9 +26,11 @@ for (const file of files) {
     .map(item => item.id);
   const record = {
     revision: expectedRevision,
+    sourceCommit: capture.sourceCommit,
     caseId: capture.caseId,
+    initialInterruptIds: capture.initialInterruptIds,
     frameworkObservedExecutions: executionCount,
-    resultEvents: report.inputSummary.recognizedExecutionEvents,
+    resumeEventTypes: capture.resumeEventTypes,
     aurelisStatus: report.status,
     aurelisFindings: report.findings.map(item => ({ finding: item.finding, id: item.id })),
     missingIds
@@ -36,8 +38,18 @@ for (const file of files) {
   reports.push(record);
 
   if (capture.caseId === "two-accepted") {
+    const expectedCallIds = capture.initialToolCalls.map(call => call.id).sort();
+    const actualInterruptIds = [...(capture.initialInterruptIds || [])].sort();
+    if (JSON.stringify(actualInterruptIds) !== JSON.stringify(expectedCallIds)) {
+      console.error(`Initial runtime turn did not surface the expected two interrupts: ${JSON.stringify(actualInterruptIds)}`);
+      failed = true;
+    }
     if (executionCount !== expectedCount) {
       console.error(`Expected ${expectedCount} actual executions on ${expectedRevision}, observed ${executionCount}`);
+      failed = true;
+    }
+    if (capture.toolResultEvents.length !== expectedCount) {
+      console.error(`Expected ${expectedCount} result events on ${expectedRevision}, observed ${capture.toolResultEvents.length}`);
       failed = true;
     }
     if (expectedMissingId) {
