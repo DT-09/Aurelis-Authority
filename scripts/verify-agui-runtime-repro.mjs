@@ -24,12 +24,16 @@ for (const file of files) {
   const missingIds = report.findings
     .filter(item => item.finding === "APPROVED_CALL_NOT_EXECUTED")
     .map(item => item.id);
+  const callIds = capture.initialToolCalls.map(call => call.id).sort();
+  const approvalIds = capture.resolvedInterrupts.map(item => item.interruptId).sort();
   const record = {
     revision: expectedRevision,
     sourceCommit: capture.sourceCommit,
     caseId: capture.caseId,
-    initialInterruptIds: capture.initialInterruptIds,
+    initialToolCallIds: callIds,
+    resolvedApprovalIds: approvalIds,
     frameworkObservedExecutions: executionCount,
+    resultEventCount: capture.toolResultEvents.length,
     resumeEventTypes: capture.resumeEventTypes,
     aurelisStatus: report.status,
     aurelisFindings: report.findings.map(item => ({ finding: item.finding, id: item.id })),
@@ -37,13 +41,12 @@ for (const file of files) {
   };
   reports.push(record);
 
+  if (JSON.stringify(callIds) !== JSON.stringify(approvalIds)) {
+    console.error(`Initial tool-call batch and approval IDs differ in ${capture.caseId}`);
+    failed = true;
+  }
+
   if (capture.caseId === "two-accepted") {
-    const expectedCallIds = capture.initialToolCalls.map(call => call.id).sort();
-    const actualInterruptIds = [...(capture.initialInterruptIds || [])].sort();
-    if (JSON.stringify(actualInterruptIds) !== JSON.stringify(expectedCallIds)) {
-      console.error(`Initial runtime turn did not surface the expected two interrupts: ${JSON.stringify(actualInterruptIds)}`);
-      failed = true;
-    }
     if (executionCount !== expectedCount) {
       console.error(`Expected ${expectedCount} actual executions on ${expectedRevision}, observed ${executionCount}`);
       failed = true;
