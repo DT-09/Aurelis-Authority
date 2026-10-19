@@ -14,4 +14,5 @@ jobs:
         with:
           node-version: 22
       - run: npm test
+      - run: npm run experiment:approval-reconciliation
       - run: npm run build
