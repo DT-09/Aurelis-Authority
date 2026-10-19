@@ -1,0 +1,46 @@
+{
+  "caseId": "MAF-7569-SHAPED-SYNTHETIC-001",
+  "sourceReference": "https://github.com/microsoft/agent-framework/issues/7569",
+  "caseType": "synthetic_fixture_inspired_by_public_issue_not_upstream_reproduction",
+  "description": "Two tool calls are accepted, but only one execution record is present. This models the reported failure shape without claiming to reproduce Microsoft Agent Framework.",
+  "policy": {
+    "version": 1,
+    "tools": {
+      "orders.lookup": {
+        "enabled": true
+      },
+      "inventory.reserve": {
+        "enabled": true
+      }
+    }
+  },
+  "decisionTrace": [
+    {
+      "id": "call-orders-001",
+      "tool": "orders.lookup",
+      "args": {},
+      "decision": "ALLOW"
+    }
+  ],
+  "approvals": [
+    {
+      "callId": "call-orders-001",
+      "tool": "orders.lookup",
+      "status": "accepted"
+    },
+    {
+      "callId": "call-inventory-002",
+      "tool": "inventory.reserve",
+      "status": "accepted"
+    }
+  ],
+  "executions": [
+    {
+      "callId": "call-orders-001",
+      "tool": "orders.lookup",
+      "outcome": "success"
+    }
+  ],
+  "expectedFinding": "APPROVED_CALL_NOT_EXECUTED",
+  "expectedMissingCallId": "call-inventory-002"
+}
