@@ -31,7 +31,7 @@ jobs:
       - name: Run repository tests
         run: npm test
       - name: Run comparative enforcement test
-        run: node scripts/comparative-enforcement-test.mjs ./opa
+        run: node scripts/run-comparative-enforcement.mjs ./opa
       - name: Upload results
         if: always()
         uses: actions/upload-artifact@v4
