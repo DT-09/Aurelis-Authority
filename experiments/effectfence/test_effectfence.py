@@ -59,24 +59,35 @@ class EffectFenceTests(unittest.TestCase):
             self.fence.execute(action_key="send:case-2", action_type="send_message", payload={"body": "hello"}, effect=effect)
         self.assertEqual(calls, ["send:case-2"])
 
-    def test_concurrent_same_key_does_not_start_duplicate_local_effect(self):
+    def test_concurrent_same_key_fails_closed_without_duplicate_effect(self):
         calls = []
-        barrier = threading.Barrier(2)
+        effect_entered = threading.Event()
+        release_effect = threading.Event()
         outcomes = []
         def effect(key, payload):
             calls.append(key)
-            barrier.wait(timeout=2)
+            effect_entered.set()
+            if not release_effect.wait(timeout=3):
+                raise TimeoutError("test synchronization timed out")
             return {"ok": True}
         def run():
             try:
                 outcomes.append(self.fence.execute(action_key="job:1", action_type="create_job", payload={"x": 1}, effect=effect))
             except Exception as exc:
                 outcomes.append(exc)
-        a = threading.Thread(target=run)
-        b = threading.Thread(target=run)
-        a.start(); b.start(); a.join(4); b.join(4)
+        first = threading.Thread(target=run)
+        first.start()
+        self.assertTrue(effect_entered.wait(timeout=2), "first effect did not start")
+        second = threading.Thread(target=run)
+        second.start()
+        second.join(2)
+        release_effect.set()
+        first.join(3)
+        self.assertFalse(first.is_alive())
+        self.assertFalse(second.is_alive())
         self.assertEqual(len(calls), 1)
-        self.assertEqual(sum(isinstance(x, dict) for x in outcomes), 2)
+        self.assertEqual(sum(isinstance(x, dict) for x in outcomes), 1)
+        self.assertEqual(sum(isinstance(x, AmbiguousOutcome) for x in outcomes), 1)
 
 
 if __name__ == "__main__":
