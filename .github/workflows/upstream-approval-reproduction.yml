@@ -39,15 +39,14 @@ jobs:
           export PYTHONPATH="$PWD/upstream/python/packages/ag-ui/tests/ag_ui:$PWD/upstream/python/packages/ag-ui:$PWD/upstream/python/packages/core"
           python experiments/repro_7569_runtime.py --revision affected --source-commit "$UPSTREAM_SHA" --out-dir artifacts/affected
           node scripts/verify-agui-runtime-repro.mjs artifacts/affected affected 1 c2
-      - name: Re-run against the post-fix upstream commit
+      - name: Run upstream post-fix approval regression tests
         env:
           UPSTREAM_SHA: 809cc04f2d610bb48fa4274b6e7f0e96773d576d
         run: |
           git -C upstream checkout --detach "$UPSTREAM_SHA"
           python -m pip install --force-reinstall -e upstream/python/packages/core -e upstream/python/packages/ag-ui
           export PYTHONPATH="$PWD/upstream/python/packages/ag-ui/tests/ag_ui:$PWD/upstream/python/packages/ag-ui:$PWD/upstream/python/packages/core"
-          python experiments/repro_7569_runtime.py --revision fixed --source-commit "$UPSTREAM_SHA" --out-dir artifacts/fixed
-          node scripts/verify-agui-runtime-repro.mjs artifacts/fixed fixed 2
+          python -m pytest -q upstream/python/packages/ag-ui/tests/ag_ui/test_approval_result_event.py
       - name: Upload raw runtime captures and Aurelis reports
         if: always()
         uses: actions/upload-artifact@v4
