@@ -35,7 +35,7 @@ jobs:
         run: |
           git -C upstream checkout --detach "$UPSTREAM_SHA"
           python -m pip install --upgrade pip
-          python -m pip install pytest pytest-asyncio -e upstream/python/packages/core -e upstream/python/packages/ag-ui
+          python -m pip install httpx pytest pytest-asyncio -e upstream/python/packages/core -e upstream/python/packages/ag-ui
           export PYTHONPATH="$PWD/upstream/python/packages/ag-ui/tests/ag_ui:$PWD/upstream/python/packages/ag-ui:$PWD/upstream/python/packages/core"
           python experiments/repro_7569_runtime.py --revision affected --source-commit "$UPSTREAM_SHA" --out-dir artifacts/affected
           node scripts/verify-agui-runtime-repro.mjs artifacts/affected affected 1 c2
