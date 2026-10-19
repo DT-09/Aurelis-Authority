@@ -1,7 +1,9 @@
-"""End-to-end, deterministic reproduction of Microsoft Agent Framework issue #7569.
+"""Run the minimal AG-UI #7569 resume reproduction against upstream source.
 
-Runs the upstream AgentFrameworkAgent wrapper twice: first to obtain real approval
-interrupts, then to resume with both approvals. Tools only append to an in-memory list.
+This calls the actual upstream run_agent_stream implementation with deterministic local
+FunctionTools. The input contains the original assistant tool-call batch and both approval
+responses, matching the upstream issue's minimal reproducer. No hosted model or external
+side effects are used.
 """
 from __future__ import annotations
 
@@ -11,7 +13,8 @@ from pathlib import Path
 from typing import Any
 
 from agent_framework import AgentResponseUpdate, Content, FunctionTool
-from agent_framework_ag_ui._agent import AgentFrameworkAgent
+from agent_framework_ag_ui._agent import AgentConfig
+from agent_framework_ag_ui._agent_run import run_agent_stream
 from conftest import StubAgent
 
 
@@ -23,23 +26,6 @@ def event_to_dict(event: Any) -> dict[str, Any]:
     if isinstance(event, dict):
         return event
     return {"type": getattr(event, "type", type(event).__name__), "repr": repr(event)}
-
-
-def collect_interrupt_ids(events: list[dict[str, Any]]) -> list[str]:
-    ids: list[str] = []
-    for event in events:
-        outcome = event.get("outcome")
-        if not isinstance(outcome, dict):
-            continue
-        interrupts = outcome.get("interrupts", [])
-        if not isinstance(interrupts, list):
-            continue
-        for interrupt in interrupts:
-            if isinstance(interrupt, dict):
-                value = interrupt.get("id") or interrupt.get("interruptId")
-                if isinstance(value, str):
-                    ids.append(value)
-    return ids
 
 
 async def run_scenario(case_id: str, calls: list[dict[str, Any]], decisions: dict[str, bool]) -> dict[str, Any]:
@@ -65,33 +51,21 @@ async def run_scenario(case_id: str, calls: list[dict[str, Any]], decisions: dic
             )
         )
 
-    call_contents = [
-        Content.from_function_call(
-            call_id=call["id"],
-            name=call["name"],
-            arguments=call["arguments"],
-        )
-        for call in calls
-    ]
-    agent = StubAgent(
-        updates=[AgentResponseUpdate(contents=call_contents, role="assistant")],
-        default_options={"tools": tools},
-    )
-    agui_agent = AgentFrameworkAgent(agent, require_confirmation=False)
-    thread_id = f"aurelis-{case_id}"
-
-    initial_events: list[dict[str, Any]] = []
-    async for event in agui_agent.run({
-        "thread_id": thread_id,
-        "run_id": f"{case_id}-initial",
-        "messages": [{"role": "user", "content": f"Run scenario {case_id}"}],
-    }):
-        initial_events.append(event_to_dict(event))
-
-    # The model's next response is deterministic; no hosted model is contacted.
-    agent.updates = [
-        AgentResponseUpdate(contents=[Content.from_text(text="Resume completed.")], role="assistant")
-    ]
+    initial_tool_call_batch = {
+        "role": "assistant",
+        "content": "",
+        "tool_calls": [
+            {
+                "id": call["id"],
+                "type": "function",
+                "function": {
+                    "name": call["name"],
+                    "arguments": json.dumps(call["arguments"], sort_keys=True),
+                },
+            }
+            for call in calls
+        ],
+    }
     resolved_interrupts = [
         {
             "interruptId": call["id"],
@@ -100,34 +74,56 @@ async def run_scenario(case_id: str, calls: list[dict[str, Any]], decisions: dic
         }
         for call in calls
     ]
-    resume_events: list[dict[str, Any]] = []
-    async for event in agui_agent.run({
-        "thread_id": thread_id,
-        "run_id": f"{case_id}-resume",
-        "messages": [],
-        "resume": resolved_interrupts,
-    }):
-        resume_events.append(event_to_dict(event))
+    approval_messages = [
+        {
+            "role": "tool",
+            "content": json.dumps({"accepted": decisions[call["id"]]}),
+            "toolCallId": call["id"],
+        }
+        for call in calls
+    ]
+    # This mirrors the upstream issue's minimal reproducer: original assistant
+    # tool-call batch followed by one explicit approval response per call.
+    resume_messages: list[dict[str, Any]] = [
+        {"role": "user", "content": f"Run scenario {case_id}"},
+        initial_tool_call_batch,
+        *approval_messages,
+    ]
 
-    result = {
+    agent = StubAgent(
+        updates=[AgentResponseUpdate(contents=[Content.from_text(text="Resume completed.")], role="assistant")],
+        default_options={"tools": tools},
+    )
+    events: list[dict[str, Any]] = []
+    async for event in run_agent_stream(
+        {
+            "thread_id": f"aurelis-{case_id}",
+            "run_id": f"{case_id}-resume",
+            "messages": resume_messages,
+        },
+        agent,
+        AgentConfig(require_confirmation=False),
+    ):
+        events.append(event_to_dict(event))
+
+    return {
         "caseId": case_id,
         "initialToolCalls": [
             {"id": call["id"], "name": call["name"], "arguments": call["arguments"]}
             for call in calls
         ],
-        "initialEvents": initial_events,
-        "initialInterruptIds": collect_interrupt_ids(initial_events),
+        "initialToolCallBatch": initial_tool_call_batch,
         "resolvedInterrupts": resolved_interrupts,
-        "resumeEvents": resume_events,
+        "approvalMessages": approval_messages,
+        "resumeMessages": resume_messages,
+        "resumeEvents": events,
         "observedExecutions": executed,
-        "initialEventTypes": [event.get("type") for event in initial_events],
-        "resumeEventTypes": [event.get("type") for event in resume_events],
+        "resumeEventTypes": [event.get("type") for event in events],
         "toolResultEvents": [
-            event for event in resume_events
+            event for event in events
             if str(event.get("type", "")).upper() in {"TOOL_CALL_RESULT", "TOOLCALLRESULTEVENT"}
         ],
     }
-    return result
 
 
 async def main() -> None:
@@ -171,7 +167,7 @@ async def main() -> None:
             "frameworkSource": "microsoft/agent-framework",
             "apiCalls": False,
             "externalSideEffects": False,
-            "wrapper": "AgentFrameworkAgent",
+            "entrypoint": "agent_framework_ag_ui._agent_run.run_agent_stream",
         },
     }
     for case_id, calls, decisions in scenarios:
@@ -183,11 +179,10 @@ async def main() -> None:
         summary["scenarios"][case_id] = {
             "capture": str(path),
             "initialCalls": len(result["initialToolCalls"]),
-            "initialInterruptIds": result["initialInterruptIds"],
+            "approvalResponses": len(result["resolvedInterrupts"]),
             "acceptedApprovals": sum(item["payload"]["accepted"] for item in result["resolvedInterrupts"]),
             "rejectedApprovals": sum(not item["payload"]["accepted"] for item in result["resolvedInterrupts"]),
             "observedExecutions": result["observedExecutions"],
-            "initialEventTypes": result["initialEventTypes"],
             "resumeEventTypes": result["resumeEventTypes"],
             "toolResultCount": len(result["toolResultEvents"]),
         }
