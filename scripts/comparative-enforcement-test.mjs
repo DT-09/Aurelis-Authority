@@ -1,5 +1,5 @@
 import { spawnSync } from "node:child_process";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { invokeMockTool } from "../src/policy-gateway.mjs";
@@ -19,7 +19,7 @@ const cases = [
 function opaDecision(testCase) {
   const result = spawnSync(opa, [
     "eval", "--format=json", "--data", policyPath,
-    "--input", "-", "data.aurelis.allow"
+    "--stdin-input", "data.aurelis.allow"
   ], {
     input: JSON.stringify(testCase),
     encoding: "utf8",
