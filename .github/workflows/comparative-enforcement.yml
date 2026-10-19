@@ -1,0 +1,41 @@
+name: Comparative enforcement test
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - comparative-opa-enforcement-test
+
+permissions:
+  contents: read
+
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install pinned OPA
+        shell: bash
+        run: |
+          curl --fail --location --silent --show-error \
+            https://github.com/open-policy-agent/opa/releases/download/v1.21.2/opa_linux_amd64_static \
+            --output opa
+          echo "830ab11f61ffec760b5e19db0d7ad02bf037e13f5ef4d665faeaf17632177527  opa" | sha256sum --check
+          chmod +x opa
+          ./opa version
+      - name: Run repository tests
+        run: npm test
+      - name: Run comparative enforcement test
+        run: node scripts/run-comparative-enforcement.mjs ./opa
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aurelis-comparative-enforcement-results
+          path: artifacts/comparative-enforcement-results.json
+          if-no-files-found: warn
