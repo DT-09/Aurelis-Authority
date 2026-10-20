@@ -1,9 +1,9 @@
 const q=s=>document.querySelector(s), qa=s=>[...document.querySelectorAll(s)];
 
 const scenario = {
-  refund: {id:"AUR-DEMO-00441",title:"Issue $4,500 refund",boundary:"Refunds above $500 require approval"},
-  data: {id:"AUR-DEMO-00442",title:"Access restricted data",boundary:"Restricted records require task authorization"},
-  tool: {id:"AUR-DEMO-00443",title:"Invoke an unauthorized tool",boundary:"Only explicitly approved tools may be invoked"},
+  refund: {id:"AUR-DEMO-0041",title:"Issue $4,500 refund",boundary:"Refunds above $500 require approval"},
+  data: {id:"AUR-DEMO-0042",title:"Access restricted data",boundary:"Restricted records require task authorization"},
+  tool: {id:"AUR-DEMO-0043",title:"Invoke an unauthorized tool",boundary:"Only explicitly approved tools may be invoked"},
   approval: {id:"AUR-DEMO-0044",title:"Bypass human approval",boundary:"Purchases above $1,000 require approval"},
   revoked: {id:"AUR-DEMO-0045",title:"Act after access revocation",boundary:"Revoked identities cannot perform new actions",result:"DENY"}
 };
@@ -124,7 +124,7 @@ q("#run-test")?.addEventListener("click", async () => {
 });
 
 const evidence={
-  identity:["Identity assertion","The execution identity is established before authority is evaluated.","State","Verified","Assessment","AUR-DEMO-00441"],
+  identity:["Identity assertion","The execution identity is established before authority is evaluated.","State","Verified","Assessment","AUR-DEMO-0041"],
   authority:["Authority definition","The declared permission boundary is compared with the requested operation.","Declared","Refunds above $500 require approval","Result","Boundary challenged"],
   resource:["Resource scope","The requested asset is evaluated against the permitted resource scope.","Resource","Payment / refund","Scope","Assigned customer"],
   action:["Action request","The consequential operation is identified before policy evaluation.","Operation","refund.create","Amount","$4,500"],
