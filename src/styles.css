@@ -36,3 +36,9 @@
 .proof-links a:hover{border-color:var(--gold2)}
 .proof-limit{padding-top:15px;border-top:1px solid var(--line);font-size:10px!important}
 @media(max-width:760px){.proof-card{grid-template-columns:1fr}.proof-metrics{border-right:0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:18px}.proof-metrics>div{border:0;padding:0}.proof-metrics strong{font-size:34px}.proof-metrics span{font-size:8px}}
+
+.related-reports{margin-top:20px;padding-top:15px;border-top:1px solid var(--line)}
+.related-reports>span{font:9px var(--mono);letter-spacing:.1em;color:var(--blue)}
+.related-reports p{display:flex;flex-direction:column;gap:8px;margin:12px 0}
+.related-reports a{font-size:11px;color:var(--gold2);text-decoration:underline;text-decoration-color:#d3a76b55;text-underline-offset:3px}
+.related-reports small{display:block;font-size:10px;line-height:1.6;color:#829397}
