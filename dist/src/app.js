@@ -74,6 +74,8 @@ function renderRecordedExecution(report) {
     list.append(li);
   });
   q("#trace-count").textContent = trace.length + " EVENTS";
+  const selectedEvidence = q("[data-evidence].selected");
+  if (selectedEvidence) renderEvidence(selectedEvidence.dataset.evidence);
   if (!trace.length) {
     const li = document.createElement("li");
     li.className = "execution-empty";
@@ -133,13 +135,25 @@ const evidence={
 };
 function renderEvidence(key) {
   const d=evidence[key], panel=q("#evidence-content");
+  if (!d || !panel) return;
+  const record = assessmentCache ? selectedRecord(assessmentCache) : null;
+  const run = record ? (activeMode === "retest" ? record.retest : record) : null;
+  const rows = {
+    identity: ["Execution path", run ? (activeMode === "retest" ? "demo-agent-with-enforcement" : "vulnerable-demo-agent") : "Illustrative execution identity", "Assessment", record ? record.id : "AUR-DEMO-0041", "Environment", "In-memory mock tools only"],
+    authority: ["Declared boundary", record ? record.boundary : d[3], "Expected decision", record ? record.expected : "DENY", "Policy mode", run ? (activeMode === "retest" ? "Enforcement enabled" : "Enforcement disabled") : "Illustrative"],
+    resource: ["Resource scope", record ? (record.args?.scope || record.args?.userId || record.args?.identityStatus || "Mock resource") : "Illustrative mock resource", "External effects", "None", "Scope", "Local simulation"],
+    action: ["Requested operation", record ? record.action : "refund.create", "Arguments", record ? JSON.stringify(record.args || {}) : "amount: 4500; approvalToken: null", "Tool acceptance", run ? ((run.execution?.toolAccepted ?? run.toolAccepted) ? "Accepted by mock tool" : "Blocked by mock tool") : "Not run"],
+    policy: ["Policy evaluation", record ? record.boundary : d[1], "Expected", record ? record.expected : "DENY", "Enforcement gate", run ? (activeMode === "retest" ? "Enabled in mock gateway" : "Disabled in vulnerable baseline") : "Illustrative"],
+    decision: ["Observed result", run ? run.observed : "Not run", "Outcome", run ? run.outcome : "Illustrative only", "Remediation", record ? record.remediation : "Configure and verify enforcement at the tool boundary."]
+  };
+  const values = rows[key] || [d[0], d[1], d[2], d[3], d[4], d[5]];
   panel.replaceChildren();
   const h=document.createElement("h3"); h.textContent=d[0];
-  const p=document.createElement("p"); p.textContent=d[1];
+  const p=document.createElement("p"); p.textContent=run ? "Values below reflect the selected scenario and the most recent local demonstration run. This is not live customer evidence." : d[1];
   const dl=document.createElement("dl");
-  for(let i=2;i<6;i+=2) {
-    const dt=document.createElement("dt"); dt.textContent=d[i];
-    const dd=document.createElement("dd"); dd.textContent=d[i+1];
+  for(let i=0;i<6;i+=2) {
+    const dt=document.createElement("dt"); dt.textContent=values[i];
+    const dd=document.createElement("dd"); dd.textContent=values[i+1];
     dl.append(dt,dd);
   }
   panel.append(h,p,dl);
@@ -150,11 +164,19 @@ qa("[data-evidence]").forEach(b=>b.addEventListener("click",()=>{
 }));
 
 const contact=q("#contact-overlay");
-qa("[data-contact]").forEach(b=>b.addEventListener("click",()=>{
+let previouslyFocused = null;
+function openContact() {
+  previouslyFocused = document.activeElement;
   contact.setAttribute("aria-hidden","false");
   q("#inquiry-feedback").textContent="This opens your email app with a draft. Nothing is sent or stored by this page.";
-}));
-qa("[data-close]").forEach(b=>b.addEventListener("click",()=>contact.setAttribute("aria-hidden","true")));
+  q("#inquiry-type").focus();
+}
+function closeContact() {
+  contact.setAttribute("aria-hidden","true");
+  if (previouslyFocused && typeof previouslyFocused.focus === "function") previouslyFocused.focus();
+}
+qa("[data-contact]").forEach(b=>b.addEventListener("click",openContact));
+qa("[data-close]").forEach(b=>b.addEventListener("click",closeContact));
 q("#inquiry-form")?.addEventListener("submit",event=>{
   event.preventDefault();
   const type=q("#inquiry-type").value;
@@ -182,8 +204,72 @@ q("[data-finding]").addEventListener("click",()=>{
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")}),{threshold:.1});
 qa(".reveal").forEach(e=>io.observe(e));
 window.addEventListener("keydown",e=>{
+  if(contact.getAttribute("aria-hidden") !== "false") return;
   if(e.key==="Escape") {
-    contact.setAttribute("aria-hidden","true");
-    q("#inquiry-feedback").textContent="This opens your email app with a draft. Nothing is sent or stored by this page.";
+    closeContact();
+    return;
+  }
+  if(e.key==="Tab") {
+    const focusable = [...contact.querySelectorAll('button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled])')];
+    if (!focusable.length) return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if(e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
 });
+
+/* Low-density background field: decorative only, with reduced-motion support. */
+const fieldCanvas = q("#field-canvas");
+if (fieldCanvas && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const ctx = fieldCanvas.getContext("2d");
+  let points = [];
+  let frame = 0;
+  let width = 0, height = 0;
+  const resizeField = () => {
+    const rect = fieldCanvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    width = rect.width; height = rect.height;
+    fieldCanvas.width = Math.max(1, Math.floor(width * dpr));
+    fieldCanvas.height = Math.max(1, Math.floor(height * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.min(22, Math.max(10, Math.floor(width / 70)));
+    points = Array.from({length: count}, (_, i) => ({
+      x: (i * 97.3 % Math.max(width, 1)),
+      y: (i * 173.7 % Math.max(height, 1)),
+      vx: ((i % 3) - 1) * 0.07,
+      vy: ((i % 4) - 1.5) * 0.045
+    }));
+  };
+  const drawField = () => {
+    ctx.clearRect(0, 0, width, height);
+    for (let i = 0; i < points.length; i++) {
+      const p = points[i];
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > width) p.vx *= -1;
+      if (p.y < 0 || p.y > height) p.vy *= -1;
+      for (let j = i + 1; j < points.length; j++) {
+        const other = points[j], dx = p.x - other.x, dy = p.y - other.y;
+        const distance = Math.hypot(dx, dy);
+        if (distance < 145) {
+          ctx.strokeStyle = "rgba(101,116,91," + ((1 - distance / 145) * 0.16) + ")";
+          ctx.lineWidth = 0.65;
+          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(other.x, other.y); ctx.stroke();
+        }
+      }
+      ctx.fillStyle = "rgba(101,116,91,0.28)";
+      ctx.beginPath(); ctx.arc(p.x, p.y, 1.35, 0, Math.PI * 2); ctx.fill();
+    }
+    if (!document.hidden) frame = requestAnimationFrame(drawField);
+  };
+  resizeField();
+  drawField();
+  window.addEventListener("resize", () => {
+    cancelAnimationFrame(frame);
+    resizeField();
+    drawField();
+  }, {passive:true});
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) cancelAnimationFrame(frame);
+    else drawField();
+  });
+}

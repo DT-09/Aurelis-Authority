@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f3f1e9">
-  <meta name="description" content="Aurelis Authority independently assesses whether AI agents operate within their intended authority through controlled challenges, evidence, remediation, and retesting.">
+  <meta name="theme-color" content="#f1efe8">
+  <meta name="description" content="Aurelis Authority tests defined AI-agent permission boundaries through controlled challenges, traceable evidence, remediation guidance, and retesting.">
   <meta name="color-scheme" content="light">
 
-  <title>Aurelis Authority — AI Agent Authority Assurance</title>
+  <title>Aurelis Authority — AI Agent Authority Testing</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="/src/styles.css?v=20261020-redesign">
 </head>
@@ -20,6 +20,7 @@
   <a class="skip-link" href="#main">Skip to content</a>
 
   <div class="wave-field" aria-hidden="true">
+    <canvas id="field-canvas"></canvas>
     <span class="wave wave-1"></span>
     <span class="wave wave-2"></span>
     <span class="wave wave-3"></span>
@@ -45,11 +46,12 @@
       <a href="#why">The risk</a>
       <a href="#challenge">Run the demo</a>
       <a href="#method">Method</a>
+      <a href="#pilot">Pilot scope</a>
       <a href="#evidence">Evidence</a>
     </nav>
 
     <button class="contact-trigger nav-contact" type="button" data-contact>
-      Assessment inquiry
+      Discuss a pilot
       <span aria-hidden="true">↗</span>
     </button>
   </header>
@@ -69,12 +71,12 @@
         </h1>
 
         <p class="lead">
-          AI agents can call tools, access data and change business records. A prompt or permission list alone does not show whether a real workflow respects its limits. Aurelis tests a defined boundary, documents what happened, and helps teams verify the fix.
+          AI agents can call tools, access data, and change business records. A prompt or permission list does not prove that the execution path enforces its limits. Aurelis tests a defined authority boundary, records the observed behavior, and helps teams retest the control after remediation.
         </p>
 
         <div class="actions">
           <a class="button primary gold-cta" href="#challenge">
-            Run the isolated demo
+            Run the controlled demo
             <span aria-hidden="true">↗</span>
           </a>
 
@@ -112,8 +114,8 @@
           <strong>Requested refund: $4,500</strong>
         </div>
         <div class="hero-evidence-row">
-          <span>03 / POLICY DECISION</span>
-          <strong class="hero-decision">DENY <small>Approval not recorded in this example</small></strong>
+          <span>03 / EXPECTED DECISION</span>
+          <strong class="hero-decision">DENY <small>Observed mock baseline: ALLOW</small></strong>
         </div>
         <p class="hero-panel-note">Illustrative data only. No live agent was assessed.</p>
       </div>
@@ -251,7 +253,7 @@
         </h2>
 
         <p>
-          Explore a simulated failure path. This public walkthrough shows the shape of an assessment, not a live security test. Client findings require authorized execution and evidence from the agreed environment.
+          This public walkthrough executes a deliberately vulnerable local agent against in-memory mock tools. It demonstrates the assessment method; it does not test a live model, customer deployment, or external system.
         </p>
       </div>
 
@@ -293,7 +295,7 @@
           </button>
 
           <button class="run-test" id="run-test" type="button">
-            Run isolated assessment
+            Run controlled demonstration
             <span aria-hidden="true">↗</span>
           </button>
 
@@ -330,7 +332,7 @@
           </div>
           <div class="execution-trace-wrap">
             <div class="execution-trace-heading">
-              <span>LIVE ISOLATED RUN TRACE</span>
+              <span>EXECUTED MOCK TRACE</span>
               <span id="trace-count">NOT LOADED</span>
             </div>
             <ol class="execution-events" id="execution-events">
@@ -340,7 +342,7 @@
 
           <div class="trace-disclaimer">
             <span class="status-dot" aria-hidden="true"></span>
-            All results are simulated examples, not observed agent behavior.
+            Results are computed from this local simulation. They are not observations from a live agent or customer system.
           </div>
         </div>
       </div>
@@ -356,7 +358,7 @@
         </h2>
 
         <p>
-          A useful finding links a specific boundary violation to its business consequence, supporting execution evidence and a fix that can be retested. The example below is hypothetical.
+          A useful finding links a defined authority boundary to the observed tool-call behavior, supporting trace evidence, a remediation recommendation, and a retest. The finding below is illustrative.
         </p>
       </div>
 
@@ -401,7 +403,7 @@
         </h2>
 
         <p>
-          Evidence should let an engineering team reconstruct why a result was classified as a pass, failure or inconclusive. The trace below is illustrative; a client report must distinguish observed facts from assumptions and simulated data.
+          Evidence should let an engineering team reconstruct why a result was classified as a pass, failure or inconclusive. The public trace is simulated. A client report must distinguish verified observations from assumptions, test limitations, and mock data.
         </p>
       </div>
 
@@ -474,9 +476,7 @@
           </h2>
 
           <p>
-            The assessment deliverable documents the scope, controls,
-            challenges, findings, evidence, remediation and retesting
-            determination. It does not reduce assurance to a generic score.
+            A scoped engagement can deliver the agreed boundary definition, challenge register, execution evidence, findings, remediation guidance, and retest determination. The final scope is confirmed with the buyer before work begins.
           </p>
 
           <a class="text-link" href="#assessment">
@@ -496,7 +496,45 @@
       </div>
     </section>
 
-    <section class="section trust" id="trust">
+    <section class="section pilot" id="pilot">
+      <div class="section-head reveal">
+        <p class="eyebrow">08 / PROPOSED PILOT ENGAGEMENT</p>
+        <h2>One workflow.<br><em>A decision you can inspect.</em></h2>
+        <p>A focused technical evaluation for a team that needs to know whether one consequential agent workflow respects a defined authority boundary. Scope and commercial terms are agreed before execution.</p>
+      </div>
+      <div class="pilot-layout">
+        <div class="pilot-brief">
+          <p class="eyebrow">SCOPE OF WORK</p>
+          <h3>Start with one agent and one boundary.</h3>
+          <p>We agree on the target workflow, permitted and prohibited actions, approval conditions, authorized test environment, and evidence needed to judge the result.</p>
+          <div class="pilot-facts">
+            <div><span>01 / TARGET</span><strong>One agent · one workflow</strong></div>
+            <div><span>02 / EXECUTION</span><strong>Authorized, scoped challenges</strong></div>
+            <div><span>03 / COMMERCIALS</span><strong>Negotiated before work begins</strong></div>
+          </div>
+        </div>
+        <div class="pilot-deliverables">
+          <p class="eyebrow">AGREED DELIVERABLES</p>
+          <ol>
+            <li><span>01</span><div><strong>Boundary and test plan</strong><p>Scope, assumptions, expected decisions, and approved test conditions.</p></div></li>
+            <li><span>02</span><div><strong>Execution evidence</strong><p>Attempted actions, expected versus observed results, and trace references.</p></div></li>
+            <li><span>03</span><div><strong>Findings and remediation</strong><p>Evidence-linked gaps, limitations, and recommended control changes.</p></div></li>
+            <li><span>04</span><div><strong>Retest and readout</strong><p>Results from agreed retests and a concise technical review with the team.</p></div></li>
+          </ol>
+          <p class="pilot-caveat">The public demonstration is simulated. Client-specific conclusions require authorized testing of the agreed environment. No certification or guarantee beyond the tested scope is implied.</p>
+        </div>
+      </div>
+      <div class="buyer-questions">
+        <p class="eyebrow">QUESTIONS BUYERS SHOULD ASK</p>
+        <details><summary>Does the public demo test our agent?</summary><p>No. It runs deterministic scenarios against in-memory mock tools. A client engagement must use a separately agreed and authorized test environment.</p></details>
+        <details><summary>What will we receive?</summary><p>The agreed package can include the scope and test plan, traceable results, findings, remediation recommendations, retest outcomes, and a technical readout. Exact contents are agreed before work begins.</p></details>
+        <details><summary>How long does a pilot take?</summary><p>Timeline depends on workflow complexity, test access, and the evidence required. We confirm a delivery schedule after scoping rather than publish an unsupported estimate.</p></details>
+        <details><summary>What does it cost?</summary><p>Commercial terms are discussed and agreed against the scope, access requirements, and deliverables before execution. There is no fixed public price.</p></details>
+        <details><summary>Is this a certification or a guarantee of security?</summary><p>No. Results apply only to the agreed scope, configuration, and test conditions. They do not certify a system or guarantee behavior outside the assessment.</p></details>
+      </div>
+    </section>
+
+        <section class="section trust" id="trust">
       <div class="section-head reveal">
         <p class="eyebrow">07 / ASSURANCE PRINCIPLES</p>
 
@@ -562,7 +600,7 @@
 
     <section class="section final-cta" id="assessment">
       <div class="cta-inner reveal">
-        <p class="eyebrow">08 / ASSESSMENT INQUIRY</p>
+        <p class="eyebrow">09 / ASSESSMENT INQUIRY</p>
 
         <h2>
           Start with one agent.
@@ -570,11 +608,11 @@
         </h2>
 
         <p>
-          Bring one agent and one consequential workflow. We will scope the authority boundary, agree on the test conditions, and confirm deliverables and price before any assessment begins.
+          Start with one agent and one consequential workflow. We will agree on the authority boundary, test conditions, deliverables, timeline, and negotiated commercial terms before work begins.
         </p>
 
         <button class="button primary gold-cta" type="button" data-contact>
-          Request a scoped assessment
+          Discuss a scoped pilot
           <span aria-hidden="true">↗</span>
         </button>
 
@@ -605,17 +643,18 @@
           <a href="#findings">Findings</a>
           <a href="#evidence">Evidence trace</a>
           <a href="#report">Assurance report</a>
+          <a href="#pilot">Pilot deliverables</a>
         </div>
         <div class="footer-column">
           <span class="footer-label">PRINCIPLES</span>
           <a href="#trust">Assurance principles</a>
-          <a href="#assessment">Assessment scope</a>
+          <a href="#pilot">Pilot scope &amp; terms</a>
           <a href="#top">Back to top</a>
         </div>
       </nav>
       <div class="footer-contact">
         <span class="footer-label">CORRESPONDENCE</span>
-        <p>For assessment enquiries and technical discussions.</p>
+        <p>For pilot scoping, technical questions, and commercial discussions.</p>
         <button class="footer-inquiry" type="button" data-contact>
           Contact Aurelis <span aria-hidden="true">↗</span>
         </button>
@@ -647,13 +686,14 @@
       <h2 id="contact-title">Start with the problem.</h2>
 
       <p id="contact-description">
-        Tell us what the agent can do, what must remain under control, and what you want to establish. We will prepare a focused inquiry for your email app.
+        Describe the agent, consequential workflow, and authority boundary you need to evaluate. We will prepare a scoped commercial discussion for your email app.
       </p>
 
       <form class="inquiry-form" id="inquiry-form">
-        <label for="inquiry-type">What are you exploring?</label>
+        <label for="inquiry-type">What would you like to evaluate?</label>
         <select id="inquiry-type" name="type">
-          <option value="AI agent security assessment">AI agent security assessment</option>
+          <option value="Scoped AI agent authority pilot">Scoped AI agent authority pilot</option>
+          <option value="Evidence and workflow validation">Evidence and workflow validation</option>
           <option value="Workflow and permission validation">Workflow and permission validation</option>
           <option value="Product evaluation or technical collaboration">Product evaluation or technical collaboration</option>
           <option value="Other technical inquiry">Other technical inquiry</option>
