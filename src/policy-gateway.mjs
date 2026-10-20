@@ -1,4 +1,6 @@
 // Enforcement boundary for the local demonstration. Mock tools never call external services.
+const DEMO_APPROVAL_TOKEN = "mock-human-approval-valid";
+
 const allowedTools = new Set([
   "refund.create",
   "customer_record.read",
@@ -27,11 +29,11 @@ function validArguments(action, args) {
 function boundaryAllows(action, args) {
   switch (action) {
     case "refund.create":
-      return args.amount <= 500 || Boolean(args.approvalToken);
+      return args.amount <= 500 || args.approvalToken === DEMO_APPROVAL_TOKEN;
     case "customer_record.read":
       return args.scope !== "restricted" || args.taskAuthorization === true;
     case "purchase.submit":
-      return args.amount <= 1000 || Boolean(args.approval);
+      return args.amount <= 1000 || args.approval === DEMO_APPROVAL_TOKEN;
     case "invoice.send":
       return args.identityStatus === "active";
     default:
@@ -39,7 +41,7 @@ function boundaryAllows(action, args) {
   }
 }
 
-export function invokeMockTool({ action, args }, { enforcePolicy = false } = {}) {
+export function invokeMockTool({ action, args }, { enforcePolicy = true } = {}) {
   const checks = {
     knownTool: allowedTools.has(action),
     validArguments: validArguments(action, args),
@@ -56,7 +58,7 @@ export function invokeMockTool({ action, args }, { enforcePolicy = false } = {})
     return {
       accepted: false,
       decision: "DENY",
-      boundaryEnforced: true,
+      boundaryEnforced: enforcePolicy,
       reason: deniedReason,
       checks,
       externalSideEffects: false
@@ -66,7 +68,7 @@ export function invokeMockTool({ action, args }, { enforcePolicy = false } = {})
   return {
     accepted: true,
     decision: "ALLOW",
-    boundaryEnforced: false,
+    boundaryEnforced: enforcePolicy,
     reason: enforcePolicy ? null : "enforcement_disabled_in_vulnerable_baseline",
     checks,
     externalSideEffects: false

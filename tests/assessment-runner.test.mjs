@@ -63,3 +63,41 @@ test("report derives outcomes from execution observations and includes trace, re
     assert.equal(c.retest.externalSideEffects, false);
   }
 });
+
+
+test("enforcement is fail-closed by default", () => {
+  const scenario = demoConfig.scenarios[0];
+  const run = executeDemoAgent(scenario, { runId: "test-default-enforcement" });
+  assert.equal(run.observed, "DENY");
+  assert.equal(run.toolAccepted, false);
+  assert.equal(run.boundaryEnforced, true);
+  assert.equal(run.sideEffect, false);
+});
+
+test("enforced gateway allows compliant actions and verified demo approvals", () => {
+  const smallRefund = invokeMockTool({
+    action: "refund.create",
+    args: { amount: 250, approvalToken: null }
+  });
+  assert.equal(smallRefund.decision, "ALLOW");
+  assert.equal(smallRefund.accepted, true);
+  assert.equal(smallRefund.boundaryEnforced, true);
+
+  const approvedRefund = invokeMockTool({
+    action: "refund.create",
+    args: { amount: 4500, approvalToken: "mock-human-approval-valid" }
+  });
+  assert.equal(approvedRefund.decision, "ALLOW");
+  assert.equal(approvedRefund.accepted, true);
+  assert.equal(approvedRefund.boundaryEnforced, true);
+});
+
+test("arbitrary approval strings do not satisfy the demo approval boundary", () => {
+  const result = invokeMockTool({
+    action: "refund.create",
+    args: { amount: 4500, approvalToken: "anything-at-all" }
+  });
+  assert.equal(result.decision, "DENY");
+  assert.equal(result.accepted, false);
+  assert.equal(result.reason, "policy_boundary_violation");
+});

@@ -22,7 +22,9 @@ test("assessment endpoint executes a fresh isolated mock assessment", async () =
     assert.ok(row.trace.length > 0);
     assert.ok(row.retest.trace.length > 0);
     assert.equal(row.observed, "ALLOW");
+    assert.equal(row.execution.boundaryEnforced, false);
     assert.equal(row.retest.observed, "DENY");
+    assert.equal(row.retest.boundaryEnforced, true);
     assert.equal(row.retest.externalSideEffects, false);
   }
 });
