@@ -42,10 +42,10 @@
     </a>
 
     <nav class="nav-links" aria-label="Main navigation">
-      <a href="#why">Why it matters</a>
-      <a href="#method">Methodology</a>
+      <a href="#why">The risk</a>
+      <a href="#challenge">Run the demo</a>
+      <a href="#method">Method</a>
       <a href="#evidence">Evidence</a>
-      <a href="#trust">Principles</a>
     </nav>
 
     <button class="contact-trigger nav-contact" type="button" data-contact>
@@ -74,12 +74,12 @@
 
         <div class="actions">
           <a class="button primary gold-cta" href="#challenge">
-            Explore an assessment
+            Run the isolated demo
             <span aria-hidden="true">↗</span>
           </a>
 
-          <a class="button secondary" href="#model">
-            Understand the model
+          <a class="button secondary" href="#method">
+            How an assessment works
           </a>
         </div>
 
@@ -619,8 +619,7 @@
         <button class="footer-inquiry" type="button" data-contact>
           Contact Aurelis <span aria-hidden="true">↗</span>
         </button>
-        <a href="mailto:dhairytopia@gmail.com">dhairytopia@gmail.com</a>
-        <a href="https://github.com/DT-09/" target="_blank" rel="noopener noreferrer">GitHub / DT-09</a>
+        <span class="footer-private-note">A focused inquiry. A defined scope. No commitment.</span>
       </div>
     </div>
     <div class="footer-bottom">
@@ -643,38 +642,39 @@
         ×
       </button>
 
-      <p class="eyebrow">AURELIS / CORRESPONDENCE</p>
+      <p class="eyebrow">AURELIS / START A CONVERSATION</p>
 
-      <h2 id="contact-title">Contact Aurelis</h2>
+      <h2 id="contact-title">Start with the problem.</h2>
 
       <p id="contact-description">
-        For assessment enquiries, technical discussions and collaboration.
-        Choose a correspondence channel below.
+        Tell us what the agent can do, what must remain under control, and what you want to establish. We will prepare a focused inquiry for your email app.
       </p>
 
-      <div class="contact-options">
-        <button type="button" data-email>
-          <span>Email</span>
-          <small>Choose your mail service</small>
+      <form class="inquiry-form" id="inquiry-form">
+        <label for="inquiry-type">What are you exploring?</label>
+        <select id="inquiry-type" name="type">
+          <option value="AI agent security assessment">AI agent security assessment</option>
+          <option value="Workflow and permission validation">Workflow and permission validation</option>
+          <option value="Product evaluation or technical collaboration">Product evaluation or technical collaboration</option>
+          <option value="Other technical inquiry">Other technical inquiry</option>
+        </select>
+
+        <label for="inquiry-workflow">Agent or workflow <span>(optional)</span></label>
+        <input id="inquiry-workflow" name="workflow" maxlength="180" placeholder="e.g. support agent with refund access">
+
+        <label for="inquiry-context">What needs to be verified? <span>(optional)</span></label>
+        <textarea id="inquiry-context" name="context" rows="3" maxlength="1200" placeholder="Describe the boundary, risk, or outcome you need to establish."></textarea>
+
+        <button class="button primary gold-cta inquiry-submit" type="submit">
+          Prepare email draft <span aria-hidden="true">↗</span>
         </button>
+      </form>
 
-        <a href="https://github.com/DT-09" target="_blank" rel="noopener noreferrer">
-          <span>GitHub</span>
-          <small>Public technical work</small>
-        </a>
-      </div>
-
-      <div class="mail-choice" id="mail-choice" hidden>
-        <p>Choose your preferred contact method</p>
-        <div>
-          <a href="mailto:dhairytopia@gmail.com">Gmail</a>
-          <a href="https://github.com/DT-09/" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
-      </div>
-
-      <p class="contact-note">
-        No assessment is initiated by opening this dialog.
+      <p class="contact-note" id="inquiry-feedback" role="status" aria-live="polite">
+        This opens your email app with a draft. Nothing is sent or stored by this page.
       </p>
+      <a class="public-work-link" href="https://github.com/DT-09" target="_blank" rel="noopener noreferrer">Review public technical work ↗</a>
+
     </div>
   </div>
 
