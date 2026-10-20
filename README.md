@@ -22,7 +22,7 @@ Before production deployment, replace the placeholder WhatsApp URL and Gmail/Pro
 All assessment values shown on the public site are explicitly illustrative. No customer, certification, regulatory, security, or performance claims are made.
 
 ## Commercial positioning
-The initial buyer is a team shipping an AI agent that can take consequential actions through tools or APIs. The initial offer is a scoped assessment of one agent and one workflow: define the authority boundary, run authorized challenges, document expected versus observed behavior, recommend remediation, and retest. The public scenario library is simulated and must never be represented as live customer evidence.
+The initial buyer is a team shipping an AI agent that can take consequential actions through tools or APIs. The initial offer is a scoped assessment of one agent and one workflow: define the authority boundary, run authorized challenges, document expected versus observed behavior, recommend remediation, and retest. The public scenario library is simulated and must never be represented as live customer evidence. The mock gateway defaults to enforcement enabled; the intentionally vulnerable baseline must be selected explicitly by the assessment runner. The demo approval token is a fixed fixture for local tests only and is not an authentication mechanism.
 
 
 ## Executable demonstration assessment
