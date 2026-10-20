@@ -166,10 +166,10 @@ q("#inquiry-form")?.addEventListener("submit",event=>{
     "",
     "I would like to discuss: "+type+".",
     workflow ? "Agent / workflow: "+workflow : "",
-    context ? "What I need to verify:\\n"+context : "",
+    context ? "What I need to verify:\n"+context : "",
     "",
     "Please let me know the next steps."
-  ].filter(Boolean).join("\\n");
+  ].filter(Boolean).join("\n");
   const mailto="mailto:dhairytopia@gmail.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
   q("#inquiry-feedback").textContent="Your email draft is ready to open. Review it and send it from your email app when you are satisfied.";
   window.location.href=mailto;
