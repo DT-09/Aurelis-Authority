@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1115">
-  <meta name="description" content="A scoped, evidence-led assessment of whether an AI agent respects its authority boundaries across tools, data, and consequential actions.">
-  <meta property="og:title" content="Aurelis Authority — Test the authority of your AI agent">
+  <meta name="description" content="Reconcile AI agent approvals with actual tool execution. Aurelis tests approval-to-execution integrity and documents missing or inconsistent outcomes.">
+  <meta property="og:title" content="Aurelis Authority — Verify approval-to-execution integrity">
   <meta property="og:description" content="One AI agent. One consequential workflow. Test the boundary, inspect the evidence, and retest the fix.">
   <meta property="og:type" content="website">
   <meta name="color-scheme" content="dark">
@@ -48,6 +48,7 @@
       <a href="#why">Why it matters</a>
       <a href="#method">Methodology</a>
       <a href="#evidence">Evidence</a>
+      <a href="#upstream-proof">Technical proof</a>
       <a href="#trust">Principles</a>
       <a href="#offer">Pilot offer</a>
     </nav>
@@ -560,6 +561,28 @@
           tested configurations and execution conditions. It does not
           guarantee behavior outside those conditions.
         </p>
+      </div>
+    </section>
+
+    <section class="section upstream-proof" id="upstream-proof">
+      <div class="section-head reveal">
+        <p class="eyebrow">TECHNICAL PROOF / REPRODUCIBLE CASE</p>
+        <h2>A green approval is not proof of <em>execution.</em></h2>
+        <p>Aurelis was tested against a reported Microsoft Agent Framework AG-UI approval/resume defect using the affected upstream implementation and deterministic local tools.</p>
+      </div>
+      <div class="proof-card reveal">
+        <div class="proof-metrics">
+          <div><span>APPROVALS ACCEPTED</span><strong>02</strong></div>
+          <div><span>TOOL EXECUTIONS OBSERVED</span><strong class="proof-fail">01</strong></div>
+          <div><span>RESULT EVENTS OBSERVED</span><strong class="proof-fail">01</strong></div>
+        </div>
+        <div class="proof-detail">
+          <p class="eyebrow">OBSERVED IN THE AFFECTED TEST HARNESS</p>
+          <h3>One accepted call had no matching execution result.</h3>
+          <p>Aurelis flagged the missing execution for the second approved call. A single-approved-call control and a mixed accept/reject control passed without falsely flagging the rejected call. Eight upstream regression tests passed at the post-fix revision.</p>
+          <div class="proof-links"><a href="https://github.com/microsoft/agent-framework/issues/7569" target="_blank" rel="noopener noreferrer">Upstream issue <span aria-hidden="true">↗</span></a><a href="https://github.com/DT-09/Aurelis-Authority/actions/runs/39325877231" target="_blank" rel="noopener noreferrer">Reproduction workflow <span aria-hidden="true">↗</span></a><a href="https://github.com/DT-09/Aurelis-Authority/pull/14" target="_blank" rel="noopener noreferrer">Implementation notes <span aria-hidden="true">↗</span></a></div>
+          <p class="proof-limit">Scope: deterministic local tools running through the upstream resume implementation and test harness. This is not a customer deployment or quantified financial-loss case, and Aurelis did not prevent the upstream failure.</p>
+        </div>
       </div>
     </section>
 
