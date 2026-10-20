@@ -152,11 +152,27 @@ qa("[data-evidence]").forEach(b=>b.addEventListener("click",()=>{
 const contact=q("#contact-overlay");
 qa("[data-contact]").forEach(b=>b.addEventListener("click",()=>{
   contact.setAttribute("aria-hidden","false");
-  const choice=q("#mail-choice");choice.hidden=true;choice.classList.remove("open");
+  q("#inquiry-feedback").textContent="This opens your email app with a draft. Nothing is sent or stored by this page.";
 }));
 qa("[data-close]").forEach(b=>b.addEventListener("click",()=>contact.setAttribute("aria-hidden","true")));
-q("[data-email]").addEventListener("click",()=>{
-  const choice=q("#mail-choice");choice.hidden=!choice.hidden;choice.classList.toggle("open",!choice.hidden);
+q("#inquiry-form")?.addEventListener("submit",event=>{
+  event.preventDefault();
+  const type=q("#inquiry-type").value;
+  const workflow=q("#inquiry-workflow").value.trim();
+  const context=q("#inquiry-context").value.trim();
+  const subject="[Aurelis Authority] "+type;
+  const body=[
+    "Hello Aurelis Authority,",
+    "",
+    "I would like to discuss: "+type+".",
+    workflow ? "Agent / workflow: "+workflow : "",
+    context ? "What I need to verify:\\n"+context : "",
+    "",
+    "Please let me know the next steps."
+  ].filter(Boolean).join("\\n");
+  const mailto="mailto:dhairytopia@gmail.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
+  q("#inquiry-feedback").textContent="Your email draft is ready to open. Review it and send it from your email app when you are satisfied.";
+  window.location.href=mailto;
 });
 q("[data-finding]").addEventListener("click",()=>{
   const panel=q("#evidence-content");panel.scrollIntoView({behavior:"smooth",block:"center"});
@@ -168,6 +184,6 @@ qa(".reveal").forEach(e=>io.observe(e));
 window.addEventListener("keydown",e=>{
   if(e.key==="Escape") {
     contact.setAttribute("aria-hidden","true");
-    const choice=q("#mail-choice");if(choice){choice.hidden=true;choice.classList.remove("open")}
+    q("#inquiry-feedback").textContent="This opens your email app with a draft. Nothing is sent or stored by this page.";
   }
 });
