@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f7f4">
+  <meta name="theme-color" content="#080a0a">
   <meta name="description" content="Aurelis Authority independently assesses whether AI agents operate within their intended authority through controlled challenges, evidence, remediation, and retesting.">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="dark">
 
   <title>Aurelis Authority — AI Agent Authority Assurance</title>
 
@@ -42,10 +42,10 @@
     </a>
 
     <nav class="nav-links" aria-label="Main navigation">
-      <a href="#model">Authority</a>
-      <a href="#method">Methodology</a>
+      <a href="#why">The risk</a>
+      <a href="#challenge">Run the demo</a>
+      <a href="#method">Method</a>
       <a href="#evidence">Evidence</a>
-      <a href="#trust">Principles</a>
     </nav>
 
     <button class="contact-trigger nav-contact" type="button" data-contact>
@@ -69,20 +69,17 @@
         </h1>
 
         <p class="lead">
-          Intended permissions tell only part of the story. Aurelis
-          assesses whether an agent's observed capabilities match its
-          intended authority, then documents the evidence, remediation
-          and retest.
+          AI agents can call tools, access data and change business records. A prompt or permission list alone does not show whether a real workflow respects its limits. Aurelis tests a defined boundary, documents what happened, and helps teams verify the fix.
         </p>
 
         <div class="actions">
           <a class="button primary gold-cta" href="#challenge">
-            Explore an assessment
+            Run the isolated demo
             <span aria-hidden="true">↗</span>
           </a>
 
-          <a class="button secondary" href="#model">
-            Understand the model
+          <a class="button secondary" href="#method">
+            How an assessment works
           </a>
         </div>
 
@@ -122,6 +119,20 @@
       </div>
     </section>
 
+        <section class="section why" id="why">
+      <div class="section-head reveal">
+        <p class="eyebrow">WHY AUTHORITY TESTING MATTERS</p>
+        <h2>When an agent can act, <em>permission becomes a business risk.</em></h2>
+        <p>Teams need more than a reassuring answer from a model. They need to know whether the workflow blocks actions that exceed the authority it was given.</p>
+      </div>
+      <div class="why-grid">
+        <article><span class="why-index">01 / FINANCIAL ACTIONS</span><h3>Limits must hold at the point of action.</h3><p>A refund agent may be told to request approval above a threshold. The question is whether the execution path actually prevents an unapproved refund.</p><p class="why-trigger"><b>Useful before:</b> launching payments, refunds, purchasing or account changes.</p></article>
+        <article><span class="why-index">02 / DATA ACCESS</span><h3>Access must match the task.</h3><p>An agent may reach records or tools beyond what its current task requires. Testing checks whether the intended boundary is clear and enforced in the workflow under review.</p><p class="why-trigger"><b>Useful before:</b> connecting internal systems, customer records or new tools.</p></article>
+        <article><span class="why-index">03 / CHANGE &amp; RELEASE</span><h3>Updates can change behavior.</h3><p>A new model, tool, prompt or policy can alter the way an agent acts. Repeatable challenges help teams catch a boundary regression before release.</p><p class="why-trigger"><b>Useful before:</b> a production pilot, major integration or agent update.</p></article>
+      </div>
+      <div class="why-bottom"><div><p class="eyebrow">THE QUESTION AURELIS ANSWERS</p><h3>Does the tested workflow respect the authority we intended to grant?</h3></div><p>We define the boundary with your team, challenge it in an authorized test environment, document expected versus observed behavior, and retest agreed fixes. Findings are limited to the scope and conditions actually tested.</p></div>
+    </section>
+
     <section class="section model" id="model">
       <div class="section-head reveal">
         <p class="eyebrow">01 / THE AUTHORITY MODEL</p>
@@ -132,10 +143,7 @@
         </h2>
 
         <p>
-          An agent's effective authority emerges from the relationship
-          between its identity, reachable resources, requested actions,
-          governing policies and execution context. Each relationship
-          matters when evaluating the final decision.
+          The assessment connects the acting identity, requested operation, target resource, applicable rule and approval context. This makes the control boundary concrete enough to challenge and retest.
         </p>
       </div>
 
@@ -190,8 +198,7 @@
         </h2>
 
         <p>
-          A structured assessment connects the intended control to a
-          reproducible challenge, a documented result and a targeted retest.
+          The deliverable is not a generic safety score. It is a scoped record of what was tested, what the evidence supports, what needs to change, and whether the same challenge passes after remediation.
         </p>
       </div>
 
@@ -244,9 +251,7 @@
         </h2>
 
         <p>
-          Explore illustrative authorization scenarios. These interactions
-          demonstrate the assessment concept; they do not execute against
-          a real AI agent or establish actual security findings.
+          Explore a simulated failure path. This public walkthrough shows the shape of an assessment, not a live security test. Client findings require authorized execution and evidence from the agreed environment.
         </p>
       </div>
 
@@ -288,7 +293,7 @@
           </button>
 
           <button class="run-test" id="run-test" type="button">
-            Run illustrative test
+            Run isolated assessment
             <span aria-hidden="true">↗</span>
           </button>
 
@@ -307,35 +312,30 @@
             <span class="demo-badge">DEMO</span>
           </div>
 
+          <div class="run-mode-switch" role="group" aria-label="Recorded execution mode">
+            <button class="mode-button selected" type="button" data-run-mode="baseline" aria-pressed="true">Vulnerable baseline</button>
+            <button class="mode-button" type="button" data-run-mode="retest" aria-pressed="false">Enforced retest</button>
+          </div>
+
           <div class="trace-flow">
-            <div class="trace-step" data-step="identity">
-              <b>IDENTITY</b>
-              <span>Verified</span>
-            </div>
-
-            <div class="trace-step" data-step="authority">
-              <b>AUTHORITY</b>
-              <span>Threshold $500</span>
-            </div>
-
-            <div class="trace-step" data-step="policy">
-              <b>POLICY</b>
-              <span>Approval required</span>
-            </div>
-
-            <div class="trace-step fail" data-step="boundary">
-              <b>BOUNDARY</b>
-              <span id="trace-result">Not satisfied</span>
-            </div>
-
-            <div class="trace-step" data-step="decision">
-              <b>DECISION</b>
-              <span id="decision">DENY</span>
-            </div>
+            <div class="trace-step" data-step="identity"><b>AGENT</b><span>Awaiting report</span></div>
+            <div class="trace-step" data-step="authority"><b>ATTEMPT</b><span>Awaiting report</span></div>
+            <div class="trace-step" data-step="policy"><b>GATEWAY</b><span>Awaiting report</span></div>
+            <div class="trace-step" data-step="boundary"><b>MOCK TOOL</b><span id="trace-result">Not yet loaded</span></div>
+            <div class="trace-step" data-step="decision"><b>OBSERVED</b><span id="decision">—</span></div>
           </div>
 
           <div class="trace-status" id="trace-status" role="status" aria-live="polite">
-            Illustrative scenario ready. Run the test to inspect its decision trace.
+            Select a scenario and run a fresh isolated assessment. Only in-memory mock tools are used.
+          </div>
+          <div class="execution-trace-wrap">
+            <div class="execution-trace-heading">
+              <span>LIVE ISOLATED RUN TRACE</span>
+              <span id="trace-count">NOT LOADED</span>
+            </div>
+            <ol class="execution-events" id="execution-events">
+              <li class="execution-empty">No trace loaded. Select “Run isolated assessment”.</li>
+            </ol>
           </div>
 
           <div class="trace-disclaimer">
@@ -356,8 +356,7 @@
         </h2>
 
         <p>
-          A finding should explain the violated boundary, its supporting
-          evidence, the expected behavior and the remediation required.
+          A useful finding links a specific boundary violation to its business consequence, supporting execution evidence and a fix that can be retested. The example below is hypothetical.
         </p>
       </div>
 
@@ -402,8 +401,7 @@
         </h2>
 
         <p>
-          A defensible conclusion connects the acting identity, requested
-          action, target resource, applicable policy and final decision.
+          Evidence should let an engineering team reconstruct why a result was classified as a pass, failure or inconclusive. The trace below is illustrative; a client report must distinguish observed facts from assumptions and simulated data.
         </p>
       </div>
 
@@ -447,6 +445,20 @@
               <dd>Illustrative trace only</dd>
             </dl>
           </div>
+        </div>
+      </div>
+
+      <div class="sample-report">
+        <div>
+          <p class="eyebrow">REPRODUCIBLE SAMPLE RUN</p>
+          <h3>Inspect the evidence artifact.</h3>
+          <p>This artifact comes from an actual run of the deliberately vulnerable demo agent against in-memory mock tools. It records the attempted call, gateway observation, execution trace, expected result, remediation, and a second run with enforcement enabled. The mock tools never contact external systems or change real data.</p>
+          <p><b>Baseline:</b> the agent attempts all five actions; the mock gateway accepts them because enforcement is disabled. <b>Retest:</b> the same cases run with the enforcement gate enabled. Results are derived from each execution response, not manually assigned.</p>
+          <p><b>Reproduce locally:</b> clone the repository, run <code>npm test</code>, then <code>npm run demo:assessment</code>. The command writes <code>artifacts/sample-assessment.json</code>. Node.js 20 or later recommended; no third-party packages or credentials are required.</p>
+        </div>
+        <div class="sample-report-actions">
+          <a class="button primary gold-cta" href="/sample-assessment.json" target="_blank" rel="noopener noreferrer">Inspect raw evidence JSON <span aria-hidden="true">↗</span></a>
+          <a class="button secondary" href="https://github.com/DT-09/Aurelis-Authority" target="_blank" rel="noopener noreferrer">Reproduce from source <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </section>
@@ -558,12 +570,11 @@
         </h2>
 
         <p>
-          Identify a consequential workflow, define what the agent should
-          be allowed to do, and determine how that boundary can be tested.
+          Bring one agent and one consequential workflow. We will scope the authority boundary, agree on the test conditions, and confirm deliverables and price before any assessment begins.
         </p>
 
         <button class="button primary gold-cta" type="button" data-contact>
-          Start an assessment inquiry
+          Request a scoped assessment
           <span aria-hidden="true">↗</span>
         </button>
 
@@ -608,8 +619,7 @@
         <button class="footer-inquiry" type="button" data-contact>
           Contact Aurelis <span aria-hidden="true">↗</span>
         </button>
-        <a href="mailto:dhairytopia@gmail.com">dhairytopia@gmail.com</a>
-        <a href="https://github.com/DT-09/" target="_blank" rel="noopener noreferrer">GitHub / DT-09</a>
+        <span class="footer-private-note">A focused inquiry. A defined scope. No commitment.</span>
       </div>
     </div>
     <div class="footer-bottom">
@@ -632,38 +642,39 @@
         ×
       </button>
 
-      <p class="eyebrow">AURELIS / CORRESPONDENCE</p>
+      <p class="eyebrow">AURELIS / START A CONVERSATION</p>
 
-      <h2 id="contact-title">Contact Aurelis</h2>
+      <h2 id="contact-title">Start with the problem.</h2>
 
       <p id="contact-description">
-        For assessment enquiries, technical discussions and collaboration.
-        Choose a correspondence channel below.
+        Tell us what the agent can do, what must remain under control, and what you want to establish. We will prepare a focused inquiry for your email app.
       </p>
 
-      <div class="contact-options">
-        <button type="button" data-email>
-          <span>Email</span>
-          <small>Choose your mail service</small>
+      <form class="inquiry-form" id="inquiry-form">
+        <label for="inquiry-type">What are you exploring?</label>
+        <select id="inquiry-type" name="type">
+          <option value="AI agent security assessment">AI agent security assessment</option>
+          <option value="Workflow and permission validation">Workflow and permission validation</option>
+          <option value="Product evaluation or technical collaboration">Product evaluation or technical collaboration</option>
+          <option value="Other technical inquiry">Other technical inquiry</option>
+        </select>
+
+        <label for="inquiry-workflow">Agent or workflow <span>(optional)</span></label>
+        <input id="inquiry-workflow" name="workflow" maxlength="180" placeholder="e.g. support agent with refund access">
+
+        <label for="inquiry-context">What needs to be verified? <span>(optional)</span></label>
+        <textarea id="inquiry-context" name="context" rows="3" maxlength="1200" placeholder="Describe the boundary, risk, or outcome you need to establish."></textarea>
+
+        <button class="button primary gold-cta inquiry-submit" type="submit">
+          Prepare email draft <span aria-hidden="true">↗</span>
         </button>
+      </form>
 
-        <a href="https://github.com/DT-09" target="_blank" rel="noopener noreferrer">
-          <span>GitHub</span>
-          <small>Public technical work</small>
-        </a>
-      </div>
-
-      <div class="mail-choice" id="mail-choice" hidden>
-        <p>Choose your preferred contact method</p>
-        <div>
-          <a href="mailto:dhairytopia@gmail.com">Gmail</a>
-          <a href="https://github.com/DT-09/" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
-      </div>
-
-      <p class="contact-note">
-        No assessment is initiated by opening this dialog.
+      <p class="contact-note" id="inquiry-feedback" role="status" aria-live="polite">
+        This opens your email app with a draft. Nothing is sent or stored by this page.
       </p>
+      <a class="public-work-link" href="https://github.com/DT-09" target="_blank" rel="noopener noreferrer">Review public technical work ↗</a>
+
     </div>
   </div>
 
