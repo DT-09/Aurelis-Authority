@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0b1115">
-  <meta name="description" content="A scoped, evidence-led assessment of whether an AI agent respects its authority boundaries across tools, data, and consequential actions.">
-  <meta property="og:title" content="Aurelis Authority — Test the authority of your AI agent">
+  <meta name="description" content="Reconcile AI agent approvals with actual tool execution. Aurelis tests approval-to-execution integrity and documents missing or inconsistent outcomes.">
+  <meta property="og:title" content="Aurelis Authority — Verify approval-to-execution integrity">
   <meta property="og:description" content="One AI agent. One consequential workflow. Test the boundary, inspect the evidence, and retest the fix.">
   <meta property="og:type" content="website">
   <meta name="color-scheme" content="dark">
@@ -48,6 +48,7 @@
       <a href="#why">Why it matters</a>
       <a href="#method">Methodology</a>
       <a href="#evidence">Evidence</a>
+      <a href="#upstream-proof">Technical proof</a>
       <a href="#trust">Principles</a>
       <a href="#offer">Pilot offer</a>
     </nav>
@@ -72,7 +73,7 @@
         </h1>
 
         <p class="lead">
-          Before an agent can move money, access sensitive records, or trigger a business action, test the boundary that is supposed to stop it. Aurelis runs a scoped assessment, records expected versus observed behavior, and retests agreed fixes.
+          Before an agent can move money, access sensitive records, or trigger a business action, test the boundary that is supposed to stop it. Aurelis reconciles approval decisions with tool-call execution and result events, then documents missing or inconsistent outcomes.
         </p>
 
         <div class="actions">
@@ -98,27 +99,27 @@
 
       <div class="hero-evidence-panel reveal" aria-label="Illustrative authority trace">
         <div class="hero-panel-top">
-          <span>ILLUSTRATIVE AUTHORITY TRACE</span>
+          <span>REPRODUCED UPSTREAM TEST TRACE</span>
           <span class="demo-badge">DEMO</span>
         </div>
         <div class="hero-panel-intro">
           <span class="hero-panel-index">TRACE / 001</span>
-          <h2>Refund authorization</h2>
-          <p>A structured example of how a consequential action can be evaluated against a declared boundary.</p>
+          <h2>Approval-to-execution integrity</h2>
+          <p>A reproduced approval/resume failure shape: accepted decisions did not all map to observed tool execution.</p>
         </div>
         <div class="hero-evidence-row">
-          <span>01 / DECLARED SCOPE</span>
-          <strong>Refunds above $500 require approval</strong>
+          <span>01 / APPROVAL RESPONSES</span>
+          <strong>Two tool calls accepted</strong>
         </div>
         <div class="hero-evidence-row">
-          <span>02 / OBSERVED EXAMPLE</span>
-          <strong>Requested refund: $4,500</strong>
+          <span>02 / OBSERVED EXECUTION</span>
+          <strong>One tool execution observed</strong>
         </div>
         <div class="hero-evidence-row">
-          <span>03 / POLICY DECISION</span>
-          <strong class="hero-decision">DENY <small>Approval not recorded in this example</small></strong>
+          <span>03 / RECONCILIATION FINDING</span>
+          <strong class="hero-decision">MISSING RESULT <small>Second approved call had no matching execution</small></strong>
         </div>
-        <p class="hero-panel-note">Illustrative data only. No live agent was assessed.</p>
+        <p class="hero-panel-note">Affected upstream test revision; deterministic local tools only. No customer system was assessed.</p>
       </div>
     </section>
 
@@ -563,9 +564,32 @@
       </div>
     </section>
 
+    <section class="section upstream-proof" id="upstream-proof">
+      <div class="section-head reveal">
+        <p class="eyebrow">TECHNICAL PROOF / REPRODUCIBLE CASE</p>
+        <h2>A green approval is not proof of <em>execution.</em></h2>
+        <p>Aurelis was tested against a reported Microsoft Agent Framework AG-UI approval/resume defect using the affected upstream implementation and deterministic local tools.</p>
+      </div>
+      <div class="proof-card reveal">
+        <div class="proof-metrics">
+          <div><span>APPROVALS ACCEPTED</span><strong>02</strong></div>
+          <div><span>TOOL EXECUTIONS OBSERVED</span><strong class="proof-fail">01</strong></div>
+          <div><span>RESULT EVENTS OBSERVED</span><strong class="proof-fail">01</strong></div>
+        </div>
+        <div class="proof-detail">
+          <p class="eyebrow">OBSERVED IN THE AFFECTED TEST HARNESS</p>
+          <h3>One accepted call had no matching execution result.</h3>
+          <p>Aurelis flagged the missing execution for the second approved call. A single-approved-call control and a mixed accept/reject control passed without falsely flagging the rejected call. Eight upstream regression tests passed at the post-fix revision.</p>
+          <div class="proof-links"><a href="https://github.com/microsoft/agent-framework/issues/7569" target="_blank" rel="noopener noreferrer">Upstream issue <span aria-hidden="true">↗</span></a><a href="https://github.com/DT-09/Aurelis-Authority/actions/runs/39325877231" target="_blank" rel="noopener noreferrer">Reproduction workflow <span aria-hidden="true">↗</span></a><a href="https://github.com/DT-09/Aurelis-Authority/pull/14" target="_blank" rel="noopener noreferrer">Implementation notes <span aria-hidden="true">↗</span></a></div>
+          <p class="proof-limit">Scope: deterministic local tools running through the upstream resume implementation and test harness. This is not a customer deployment or quantified financial-loss case, and Aurelis did not prevent the upstream failure.</p>
+          <div class="related-reports"><span>RELATED UPSTREAM REPORTS — DISTINCT FAILURE MODES</span><p><a href="https://github.com/microsoft/agent-framework/issues/7458" target="_blank" rel="noopener noreferrer">Approval consumed before a failed resume can complete (#7458)</a><a href="https://github.com/microsoft/agent-framework/issues/6910" target="_blank" rel="noopener noreferrer">Parallel tool calls lost in AG-UI approval flow (#6910)</a><a href="https://github.com/microsoft/agent-framework/issues/8410" target="_blank" rel="noopener noreferrer">Approval resume depends on context-provider session state (#8410)</a></p><small>These are related approval/resume reliability reports, not three reproductions of the exact #7569 defect.</small></div>
+        </div>
+      </div>
+    </section>
+
     <section class="section offer" id="offer">
-      <div class="section-head reveal"><p class="eyebrow">THE INITIAL ENGAGEMENT</p><h2>One workflow. <em>A decision you can inspect.</em></h2><p>A narrowly scoped paid pilot designed for teams building or deploying agents that can take consequential actions. This is a proposed commercial offer; scope is confirmed with the buyer before payment.</p></div>
-      <div class="offer-card reveal"><div class="offer-main"><p class="eyebrow">FIXED-SCOPE PILOT</p><div class="offer-price">$500 <span>USD / engagement</span></div><p class="offer-subtitle">One AI agent · One consequential workflow · Agreed test boundary</p><ul><li>Scope and authority-boundary definition</li><li>Authorized challenge cases against a test or staging environment</li><li>Expected-versus-observed execution evidence</li><li>Prioritized findings and remediation guidance</li><li>One agreed retest of the same cases</li><li>Written findings report with limitations stated</li></ul><p class="offer-guardrail">Excluded: open-ended penetration testing, production changes, certification, and guarantees that all failure modes are found. Access, scope, schedule, and payment are agreed in writing first.</p></div><div class="offer-side"><span class="offer-number">01 / PILOT</span><h3>Is your workflow a fit?</h3><p>Best fit: an AI agent can call tools or APIs and your team needs evidence that a defined approval, resource, or action boundary is actually enforced.</p><button class="button primary" type="button" data-contact>Discuss fit and scope <span aria-hidden="true">↗</span></button><p class="offer-footnote">No automatic checkout. No work begins before mutual agreement.</p></div></div>
+      <div class="section-head reveal"><p class="eyebrow">THE INITIAL ENGAGEMENT</p><h2>One workflow. <em>A decision you can inspect.</em></h2><p>A narrowly scoped paid pilot for teams using approval-gated AI agent workflows. The initial capability is trace-based reconciliation and evidence review, not runtime blocking. Scope is confirmed with the buyer before payment.</p></div>
+      <div class="offer-card reveal"><div class="offer-main"><p class="eyebrow">FIXED-SCOPE PILOT</p><div class="offer-price">$500 <span>USD / engagement</span></div><p class="offer-subtitle">One AI agent · One consequential workflow · Agreed test boundary</p><ul><li>Scope and authority-boundary definition</li><li>Review of approval, resume, and tool-result traces</li><li>Reconciliation of accepted approvals against observed execution/results</li><li>Prioritized findings and remediation guidance</li><li>One agreed retest of the same cases</li><li>Written findings report with limitations stated</li></ul><p class="offer-guardrail">Excluded: open-ended penetration testing, production changes, certification, and guarantees that all failure modes are found. Access, scope, schedule, and payment are agreed in writing first.</p></div><div class="offer-side"><span class="offer-number">01 / PILOT</span><h3>Is your workflow a fit?</h3><p>Best fit: an agent uses approval-gated tool calls and your team needs to know whether accepted calls actually execute and produce corresponding results.</p><button class="button primary" type="button" data-contact>Discuss fit and scope <span aria-hidden="true">↗</span></button><p class="offer-footnote">No automatic checkout. No work begins before mutual agreement.</p></div></div>
     </section>
 
     <section class="section final-cta" id="assessment">
@@ -578,7 +602,7 @@
         </h2>
 
         <p>
-          Start with one agent and one consequential workflow. The proposed paid pilot is a fixed-scope assessment for $500, subject to a short scope review before payment. No access or testing begins until scope, authorization, deliverables, and payment terms are agreed.
+          Start with one agent and one consequential workflow. The proposed $500 pilot reviews one approval-gated workflow using available traces and agreed test evidence, subject to a short scope review before payment. No access or testing begins until scope, authorization, deliverables, and payment terms are agreed.
         </p>
 
         <button class="button primary gold-cta" type="button" data-contact>
