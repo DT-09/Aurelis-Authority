@@ -57,3 +57,17 @@ npm run authority:check -- --policy tools/authority-trace-check/examples/policy.
 ```
 
 Read the [authority trace checker guide](tools/authority-trace-check/README.md) for the input contract, policy schema, CI usage, and limitations. It audits supplied traces only: it does not intercept or prevent actions, and a passing result is not a security certification.
+
+
+## Trace audit workspace
+
+The deployed `/workspace.html` page lets an assessor submit an exported tool-call trace and an explicit version-1 authority policy to `POST /api/audit-trace`. The endpoint evaluates the supplied decisions using `src/authority-trace-audit.mjs` and returns a JSON report with expected-versus-observed decisions and findings. The request is limited to 1 MB and the endpoint does not persist submitted traces.
+
+This is a real, executable **offline trace audit**, not a live agent integration: it does not invoke or intercept tools, enforce policy inside a customer workflow, authenticate the origin of trace events, or prove trace completeness. Do not submit secrets or unnecessary personal data. A framework-specific live adapter still requires the customer's agreed framework, tool invocation boundary, staging access, and authorization.
+
+Build and tests:
+
+```sh
+npm test
+npm run build
+```

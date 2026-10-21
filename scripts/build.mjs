@@ -4,6 +4,7 @@ import { runSampleAssessment } from "../src/assessment-runner.mjs";
 await rm("dist", { recursive: true, force: true });
 await mkdir("dist", { recursive: true });
 await cp("index.html", "dist/index.html");
+await cp("workspace.html", "dist/workspace.html");
 await cp("src", "dist/src", { recursive: true });
 
 const report = runSampleAssessment();
