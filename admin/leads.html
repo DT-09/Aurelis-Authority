@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#f1efe8">
+<title>Private Lead Monitor | Aurelis Authority</title>
+<link rel="stylesheet" href="/src/styles.css?v=20261102-inbound">
+<style>
+.admin{max-width:1180px;margin:0 auto;padding:120px 24px 80px}.admin h1{font:500 clamp(38px,5vw,62px)/1.04 "Newsreader",Georgia,serif;margin:12px 0 18px}.admin p{color:var(--muted);line-height:1.7}.admin-auth{display:flex;gap:10px;flex-wrap:wrap;max-width:650px;margin:26px 0}.admin-auth input{flex:1;min-width:240px;padding:13px;border:1px solid var(--line);background:var(--white)}.admin-auth button{padding:13px 18px;border:1px solid var(--ink);background:var(--ink);color:var(--white);cursor:pointer}.admin-status{padding:12px 14px;background:rgba(255,255,255,.65);border:1px solid var(--line);margin:18px 0}.admin-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}.admin-metric{border:1px solid var(--line);padding:17px;background:rgba(255,255,255,.65)}.admin-metric span{display:block;font:10px var(--mono);text-transform:uppercase;color:var(--muted)}.admin-metric strong{display:block;font:500 32px "Newsreader",Georgia,serif;margin-top:7px}.admin-section{margin-top:34px}.admin-section h2{font:500 30px "Newsreader",Georgia,serif;margin-bottom:14px}.admin-table-wrap{overflow:auto;border:1px solid var(--line);background:rgba(255,255,255,.65)}table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top;white-space:nowrap}th{font:10px var(--mono);text-transform:uppercase;color:var(--muted)}td.workflow{white-space:normal;min-width:240px;max-width:420px}.admin-empty{padding:18px;color:var(--muted)}@media(max-width:760px){.admin{padding:100px 16px 60px}.admin-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header class="nav"><a class="brand" href="/" aria-label="Aurelis Authority home"><span class="logo" aria-hidden="true">A</span><span class="wordmark"><b>AURELIS</b><small>AUTHORITY</small></span></a><span class="eyebrow">PRIVATE OPERATIONS</span><a class="button secondary" href="/">Public site</a></header>
+<main class="admin">
+<p class="eyebrow">AURELIS / PRIVATE LEAD MONITOR</p><h1>Inbound pipeline.</h1>
+<p>Enter the admin token configured in Cloudflare Pages. The token is held in this page's memory only and is not saved to browser storage.</p>
+<div class="admin-auth"><input id="token" type="password" autocomplete="off" placeholder="LEAD_ADMIN_TOKEN" aria-label="Admin token"><button id="load" type="button">Load last 7 days</button></div>
+<div id="status" class="admin-status" role="status" aria-live="polite">No data loaded.</div>
+<section id="dashboard" hidden>
+<div class="admin-grid" id="summary"></div>
+<section class="admin-section"><h2>Daily funnel</h2><div class="admin-table-wrap"><table><thead><tr><th>Date</th><th>Event</th><th>Source</th><th>Count</th></tr></thead><tbody id="metrics"></tbody></table></div></section>
+<section class="admin-section"><h2>Recent enquiries</h2><div class="admin-table-wrap"><table><thead><tr><th>Received</th><th>Contact</th><th>Company / role</th><th>Buyer type</th><th>Workflow</th><th>Timing</th><th>Trace readiness</th><th>Source</th></tr></thead><tbody id="leads"></tbody></table></div></section>
+</section>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const metricNames={page_view:"Page views",workspace_open:"Workspace opens",audit_success:"Successful audits",lead_form_open:"Form opens",lead_submit:"Enquiries submitted"};
+function cell(row,value,cls){const td=document.createElement("td");td.textContent=value??"";if(cls)td.className=cls;row.append(td);return td;}
+function card(label,value){const d=document.createElement("div");d.className="admin-metric";const s=document.createElement("span");s.textContent=label;const b=document.createElement("strong");b.textContent=String(value??0);d.append(s,b);return d;}
+$("#load").addEventListener("click",async()=>{
+ const token=$("#token").value.trim();if(!token){$("#status").textContent="Enter the admin token.";return;}
+ $("#load").disabled=true;$("#status").textContent="Loading…";
+ try{
+  const response=await fetch("/api/admin/leads?days=7",{headers:{authorization:"Bearer "+token,accept:"application/json"},cache:"no-store"});
+  const data=await response.json();if(!response.ok)throw new Error(data.error||"Could not load data.");
+  const counts=Object.fromEntries((data.metrics||[]).map(x=>[x.event_name,(countsPlaceholder(x.event_count))]));
+  const total=name=>(data.metrics||[]).filter(x=>x.event_name===name).reduce((n,x)=>n+x.event_count,0);
+  const summary=$("#summary");summary.replaceChildren(card("Enquiries",data.summary.total),card("Urgent (7 days)",data.summary.urgent),card("Trace ready",data.summary.trace_ready),card("Page views",total("page_view")),card("Workspace opens",total("workspace_open")),card("Successful audits",total("audit_success")),card("Form opens",total("lead_form_open")),card("Submitted enquiries",total("lead_submit")));
+  const metrics=$("#metrics");metrics.replaceChildren();(data.metrics||[]).forEach(x=>{const tr=document.createElement("tr");cell(tr,x.event_date);cell(tr,metricNames[x.event_name]||x.event_name);cell(tr,x.source);cell(tr,x.event_count);metrics.append(tr);});
+  const leads=$("#leads");leads.replaceChildren();(data.leads||[]).forEach(x=>{const tr=document.createElement("tr");cell(tr,new Date(x.created_at).toLocaleString());const contact=cell(tr,"");const a=document.createElement("a");a.href="mailto:"+encodeURIComponent(x.email);a.textContent=x.name+" · "+x.email;contact.append(a);cell(tr,[x.company,x.role].filter(Boolean).join(" / "));cell(tr,x.buyer_type);cell(tr,x.workflow,"workflow");cell(tr,x.urgency);cell(tr,x.trace_readiness);cell(tr,x.source);leads.append(tr);});
+  $("#dashboard").hidden=false;$("#status").textContent="Loaded "+data.leads.length+" recent enquiry record(s) and aggregate events for "+data.periodDays+" days.";
+ }catch(error){$("#dashboard").hidden=true;$("#status").textContent=error.message;}
+ finally{$("#load").disabled=false;}
+});
+function countsPlaceholder(value){return value;}
+</script>
+</body></html>
