@@ -8,7 +8,7 @@ This change adds server-side enquiry capture to Cloudflare D1, buyer qualificati
 2. Set a strong secret: `npx wrangler pages secret put LEAD_ADMIN_TOKEN --project-name aurelis-authority`
 3. Confirm the Pages D1 binding is named `DB` and points to the existing `aurelis-authority` database.
 4. For inbox alerts, configure `RESEND_API_KEY` as a Pages secret and set `LEAD_NOTIFY_TO` plus `LEAD_FROM_EMAIL` as Pages environment variables. The sender domain must be verified with Resend. Without these values, leads are stored in D1 but no email alert is sent.
-4. Deploy main and submit one test enquiry using an email address you control.
+4. Push/merge main after adding the repository secrets. Confirm the deployment on Cloudflare Pages, then submit one test enquiry using an email address you control.
 
 ### Read enquiries and metrics
 
