@@ -76,6 +76,18 @@
     </section>
 
     <section class="resource-section">
+      <p class="eyebrow">DEVELOPER WORKFLOW / CI</p>
+      <h2>Run policy checks in GitHub Actions.</h2>
+      <p>The open-source trace checker can run in a CI workflow against a policy file and an exported JSON trace. It exits with a non-zero status when an unexpected ALLOW is found or when the input is invalid. This is a self-service check of supplied records, not a live control or independent audit.</p>
+      <pre><code> - name: Check agent authority trace
+   uses: DT-09/Aurelis-Authority@cfc90bcfc0c95f199ef4ac3f1a2c9fd219f12700
+   with:
+     policy: ./audit/authority-policy.json
+     trace: ./audit/tool-call-trace.json</code></pre>
+      <p><a href="https://github.com/DT-09/Aurelis-Authority" target="_blank" rel="noopener noreferrer">Review the source and CI integration ↗</a></p>
+    </section>
+
+    <section class="resource-section">
       <p class="eyebrow">HOW THE AUDIT WORKS</p>
       <h2>Six steps. No production credentials.</h2>
       <ol>
