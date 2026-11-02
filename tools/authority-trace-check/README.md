@@ -54,8 +54,8 @@ See `examples/policy.json`. Policies use version `1` and a `tools` object. An ab
 
 - `enabled`: tool must explicitly be enabled.
 - `amountField`, `maxWithoutApproval`, `approvalField`: deny missing/invalid/negative amounts; require a non-empty approval token above the configured threshold.
-- `scopeField`, `allowedScopes`, `deniedScopes`: constrain resource scopes.
-- `identityStatusField`, `deniedIdentityStatuses`: deny listed identity states, such as `revoked`.
+- `scopeField`, `allowedScopes`, `deniedScopes`: constrain resource scopes; a configured scope check denies missing or blank scope values.
+- `identityStatusField`, `deniedIdentityStatuses`: deny listed identity states, such as `revoked`, and deny missing or blank identity status values.
 
 These are intentionally simple deterministic checks. They do not infer intent from natural language or establish whether the policy itself is correct.
 
@@ -71,6 +71,7 @@ Call the CLI after a test run that produces a trace file. Fail the CI step when 
 - Amount rules must include a non-negative `maxWithoutApproval` threshold.
 - Scope and identity constraints must use non-empty string arrays.
 - A trace is limited to 10,000 events per audit.
+- Configured scope and identity checks fail closed when their required evidence field is missing or blank.
 - Approval checks verify only that a non-empty approval value is present. They do not authenticate the approver or validate the approval against an external authority.
 
 ## How to interpret results
