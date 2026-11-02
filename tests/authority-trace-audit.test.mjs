@@ -46,12 +46,13 @@ test("flags an observed allow when approval is required", () => {
   assert.equal(report.findings[0].severity, "CRITICAL");
 });
 
-test("accepts an above-threshold refund with an approval token", () => {
+test("accepts an above-threshold refund when an approval value is present", () => {
   const report = auditTrace({
     policy,
     trace: [{ tool: "refund.create", args: { amount: 900, approvalToken: "approved-by-human" }, decision: "ALLOW" }]
   });
   assert.equal(report.status, "PASS");
+  assert.match(report.limitations.at(-1), /do not authenticate the approver/);
 });
 
 test("flags restricted data access that was observed as allowed", () => {
@@ -95,4 +96,40 @@ test("rejects malformed trace decisions", () => {
     policy,
     trace: [{ tool: "refund.create", args: { amount: 100 }, decision: "MAYBE" }]
   }), /decision must be ALLOW or DENY/);
+});
+
+test("rejects empty traces instead of returning a vacuous PASS", () => {
+  assert.throws(() => auditTrace({ policy, trace: [] }), /empty trace cannot produce PASS/);
+  assert.throws(() => auditTrace({ policy, trace: { events: [] } }), /empty trace cannot produce PASS/);
+});
+
+test("rejects duplicate event identifiers", () => {
+  assert.throws(() => auditTrace({
+    policy,
+    trace: [
+      { id: "duplicate", tool: "refund.create", args: { amount: 100 }, decision: "ALLOW" },
+      { id: "duplicate", tool: "refund.create", args: { amount: 200 }, decision: "ALLOW" }
+    ]
+  }), /id must be unique/);
+});
+
+test("rejects malformed policy rules rather than silently weakening the policy", () => {
+  assert.throws(() => auditTrace({
+    policy: { version: 1, tools: { "refund.create": { enabled: true, amountField: "amount" } } },
+    trace: [{ tool: "refund.create", args: { amount: 100 }, decision: "ALLOW" }]
+  }), /requires a non-negative maxWithoutApproval/);
+
+  assert.throws(() => auditTrace({
+    policy: { version: 1, tools: { "customer.read": { enabled: true, allowedScopes: "profile" } } },
+    trace: [{ tool: "customer.read", args: { scope: "profile" }, decision: "ALLOW" }]
+  }), /allowedScopes must be a non-empty array of strings/);
+});
+
+test("rejects oversized event collections", () => {
+  const trace = Array.from({ length: 10_001 }, (_, index) => ({
+    tool: "refund.create",
+    args: { amount: 1 },
+    decision: "ALLOW"
+  }));
+  assert.throws(() => auditTrace({ policy, trace }), /more than 10000 events/);
 });
