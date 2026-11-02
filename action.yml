@@ -1,0 +1,24 @@
+name: Aurelis Authority Trace Check
+description: Compare recorded AI-agent tool-call decisions with a versioned authority policy in CI.
+author: Aurelis Authority
+
+inputs:
+  policy:
+    description: Path to the version-1 authority policy JSON file.
+    required: true
+  trace:
+    description: Path to the exported tool-call trace JSON file.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Audit recorded tool-call decisions
+      shell: bash
+      env:
+        POLICY_PATH: ${{ inputs.policy }}
+        TRACE_PATH: ${{ inputs.trace }}
+      run: |
+        node "$GITHUB_ACTION_PATH/tools/authority-trace-check/cli.mjs" \
+          --policy "$POLICY_PATH" \
+          --trace "$TRACE_PATH"
