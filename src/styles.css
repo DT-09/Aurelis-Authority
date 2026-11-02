@@ -512,3 +512,12 @@ h1 em,h2 em{font-weight:400}
 @media(prefers-reduced-motion:reduce){
  *,*:before,*:after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
 }
+
+/* Qualified inbound enquiry form */
+.inquiry-form{max-height:min(68vh,720px);overflow-y:auto;padding-right:5px}
+.inquiry-form .consent-line{display:flex;align-items:flex-start;gap:10px;font:11px/1.6 var(--sans);color:var(--muted);margin:12px 0}
+.inquiry-form .consent-line input{width:16px;height:16px;flex:none;margin:1px 0 0;accent-color:var(--blue)}
+.form-honeypot{position:absolute!important;left:-10000px!important;top:auto!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.inquiry-submit:disabled{opacity:.6;cursor:wait}
+.contact-note.is-success{color:#315a3c;font-weight:600}
+@media(max-width:760px){.inquiry-form{max-height:62vh}.contact-modal{max-height:92vh;overflow-y:auto}}
