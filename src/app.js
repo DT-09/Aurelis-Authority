@@ -168,8 +168,9 @@ let previouslyFocused = null;
 function openContact() {
   previouslyFocused = document.activeElement;
   contact.setAttribute("aria-hidden","false");
-  q("#inquiry-feedback").textContent="This opens your email app with a draft. Nothing is sent or stored by this page.";
-  q("#inquiry-type").focus();
+  q("#inquiry-feedback").textContent="Your details are used only to assess and respond to this enquiry. Do not include sensitive data.";
+  window.aurelisTrack?.("lead_form_open");
+  q("#inquiry-name").focus();
 }
 function closeContact() {
   contact.setAttribute("aria-hidden","true");
@@ -177,24 +178,43 @@ function closeContact() {
 }
 qa("[data-contact]").forEach(b=>b.addEventListener("click",openContact));
 qa("[data-close]").forEach(b=>b.addEventListener("click",closeContact));
-q("#inquiry-form")?.addEventListener("submit",event=>{
+q("#inquiry-form")?.addEventListener("submit",async event=>{
   event.preventDefault();
-  const type=q("#inquiry-type").value;
-  const workflow=q("#inquiry-workflow").value.trim();
-  const context=q("#inquiry-context").value.trim();
-  const subject="[Aurelis Authority] "+type;
-  const body=[
-    "Hello Aurelis Authority,",
-    "",
-    "I would like to discuss: "+type+".",
-    workflow ? "Agent / workflow: "+workflow : "",
-    context ? "What I need to verify:\n"+context : "",
-    "",
-    "Please let me know the next steps."
-  ].filter(Boolean).join("\n");
-  const mailto="mailto:dhairytopia@gmail.com?subject="+encodeURIComponent(subject)+"&body="+encodeURIComponent(body);
-  q("#inquiry-feedback").textContent="Your email draft is ready to open. Review it and send it from your email app when you are satisfied.";
-  window.location.href=mailto;
+  const form=event.currentTarget;
+  const button=form.querySelector('button[type="submit"]');
+  const feedback=q("#inquiry-feedback");
+  const values={
+    name:q("#inquiry-name").value,
+    email:q("#inquiry-email").value,
+    company:q("#inquiry-company").value,
+    role:q("#inquiry-role").value,
+    buyerType:q("#inquiry-buyer").value,
+    workflow:q("#inquiry-workflow").value,
+    urgency:q("#inquiry-urgency").value,
+    traceReadiness:q("#inquiry-readiness").value,
+    website:q("#inquiry-website").value,
+    consent:q("#inquiry-consent").checked,
+    source:(new URLSearchParams(location.search).get("utm_source")||"direct").toLowerCase(),
+    landingPath:location.pathname
+  };
+  button.disabled=true;
+  button.textContent="Sending enquiry…";
+  feedback.textContent="Submitting enquiry…";
+  try{
+    const response=await fetch("/api/lead",{method:"POST",headers:{"content-type":"application/json","accept":"application/json"},cache:"no-store",body:JSON.stringify(values)});
+    const result=await response.json();
+    if(!response.ok)throw new Error(result.error||"Enquiry could not be submitted.");
+    feedback.textContent=result.message||"Enquiry received. We will review it and reply by email.";
+    feedback.classList.add("is-success");
+    form.reset();
+    window.aurelisTrack?.("lead_submit");
+  }catch(error){
+    feedback.textContent=error.message+" You can also email dhairytopia@gmail.com.";
+    feedback.classList.remove("is-success");
+  }finally{
+    button.disabled=false;
+    button.innerHTML='Send enquiry <span aria-hidden="true">↗</span>';
+  }
 });
 q("[data-finding]").addEventListener("click",()=>{
   const panel=q("#evidence-content");panel.scrollIntoView({behavior:"smooth",block:"center"});

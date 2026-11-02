@@ -105,3 +105,7 @@ The repository exposes a dependency-free composite action. After placing an appr
 ```
 
 The step exits with code `1` when it finds an unexpected ALLOW and code `2` for invalid input. It audits the supplied records only; it does not intercept tools, prove trace completeness or enforce policy at runtime. Pin a reviewed release tag or commit SHA in production workflows rather than relying on `@main`.
+
+## Inbound enquiries and measurement
+
+The public enquiry form stores qualified requests in Cloudflare D1. Anonymous aggregate metrics count page views, trace-workspace visits, successful audits and enquiry conversion events. See [lead capture operations](docs/inbound-lead-operations.md) for the D1 migration, private admin endpoint, optional email notification and deployment secrets. Do not submit sensitive data through the enquiry form.

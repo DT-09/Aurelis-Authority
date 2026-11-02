@@ -666,7 +666,7 @@
     </div>
     <div class="footer-bottom">
       <span>Authority · Evidence · Retest</span>
-      <span>© 2026 Aurelis Authority</span>
+      <span><a href="/privacy.html">Privacy</a> · © 2026 Aurelis Authority</span>
     </div>
   </footer>
 
@@ -689,38 +689,58 @@
       <h2 id="contact-title">Start with the problem.</h2>
 
       <p id="contact-description">
-        Describe the agent, consequential workflow, and authority boundary you need to evaluate. We will prepare a scoped commercial discussion for your email app.
+        Tell us what your agent does, when you need a decision, and whether a staging trace is available. Do not send credentials, production data or raw traces here.
       </p>
 
       <form class="inquiry-form" id="inquiry-form">
-        <label for="inquiry-type">What would you like to evaluate?</label>
-        <select id="inquiry-type" name="type">
-          <option value="Scoped AI agent authority pilot">Scoped AI agent authority pilot</option>
-          <option value="Evidence and workflow validation">Evidence and workflow validation</option>
-          <option value="Workflow and permission validation">Workflow and permission validation</option>
-          <option value="Product evaluation or technical collaboration">Product evaluation or technical collaboration</option>
-          <option value="Other technical inquiry">Other technical inquiry</option>
+        <label for="inquiry-name">Your name</label>
+        <input id="inquiry-name" name="name" maxlength="80" autocomplete="name" required>
+        <label for="inquiry-email">Work email</label>
+        <input id="inquiry-email" name="email" type="email" maxlength="254" autocomplete="email" required>
+        <label for="inquiry-company">Company <span>(optional)</span></label>
+        <input id="inquiry-company" name="company" maxlength="120" autocomplete="organization">
+        <label for="inquiry-role">Your role <span>(optional)</span></label>
+        <input id="inquiry-role" name="role" maxlength="100" placeholder="e.g. Engineering lead">
+        <label for="inquiry-buyer">Which best describes your team?</label>
+        <select id="inquiry-buyer" name="buyerType" required>
+          <option value="AI product team">AI product team</option>
+          <option value="AI implementation agency">AI implementation agency</option>
+          <option value="Agent QA or security team">Agent QA or security team</option>
+          <option value="Other">Other</option>
         </select>
-
-        <label for="inquiry-workflow">Agent or workflow <span>(optional)</span></label>
-        <input id="inquiry-workflow" name="workflow" maxlength="180" placeholder="e.g. support agent with refund access">
-
-        <label for="inquiry-context">What needs to be verified? <span>(optional)</span></label>
-        <textarea id="inquiry-context" name="context" rows="3" maxlength="1200" placeholder="Describe the boundary, risk, or outcome you need to establish."></textarea>
-
+        <label for="inquiry-workflow">What agent workflow needs review?</label>
+        <textarea id="inquiry-workflow" name="workflow" rows="3" maxlength="300" required placeholder="e.g. Customer-support agent that can issue refunds and update orders."></textarea>
+        <label for="inquiry-urgency">When do you need a decision?</label>
+        <select id="inquiry-urgency" name="urgency" required>
+          <option value="Within 7 days">Within 7 days</option>
+          <option value="Within 30 days">Within 30 days</option>
+          <option value="Researching">Researching / no fixed date</option>
+        </select>
+        <label for="inquiry-readiness">Can your team export a sanitized staging trace?</label>
+        <select id="inquiry-readiness" name="traceReadiness" required>
+          <option value="Ready to share a sanitized staging export">Yes, it is ready</option>
+          <option value="Can export after setup">We can export it after setup</option>
+          <option value="No trace export yet">Not yet</option>
+        </select>
+        <div class="form-honeypot" aria-hidden="true">
+          <label for="inquiry-website">Leave this field empty</label>
+          <input id="inquiry-website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <label class="consent-line"><input id="inquiry-consent" type="checkbox" required> I agree that Aurelis may use these details to respond to this enquiry. <a href="/privacy.html" target="_blank" rel="noopener noreferrer">Privacy notice</a>.</label>
         <button class="button primary gold-cta inquiry-submit" type="submit">
-          Prepare email draft <span aria-hidden="true">↗</span>
+          Send enquiry <span aria-hidden="true">↗</span>
         </button>
       </form>
 
       <p class="contact-note" id="inquiry-feedback" role="status" aria-live="polite">
-        This opens your email app with a draft. Nothing is sent or stored by this page.
+        Your details are used to assess and respond to this enquiry. Do not include sensitive data.
       </p>
-      <a class="public-work-link" href="https://github.com/DT-09" target="_blank" rel="noopener noreferrer">Review public technical work ↗</a>
+      <a class="public-work-link" href="https://github.com/DT-09/Aurelis-Authority" target="_blank" rel="noopener noreferrer">Review the open-source trace checker ↗</a>
 
     </div>
   </div>
 
+  <script type="module" src="/src/metrics.js"></script>
   <script type="module" src="/src/app.js"></script>
 </body>
 </html>

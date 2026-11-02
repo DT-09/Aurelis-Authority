@@ -168,6 +168,7 @@
         const report = await response.json();
         if (!response.ok) throw new Error((report.error || 'Audit failed (HTTP ' + response.status + ').') + (report.detail ? ': ' + report.detail : ''));
         renderReport(report);
+        window.aurelisTrack?.('audit_success');
         setStatus('Audit completed. ' + report.summary.findings + ' finding(s); ' + report.summary.unexpectedAllows + ' unexpected ALLOW decision(s). This is a trace audit, not live execution evidence.', report.summary.unexpectedAllows ? 'error' : 'success');
       } catch (error) {
         setStatus('Audit not completed: ' + error.message, 'error');
@@ -188,5 +189,6 @@
       document.body.append(anchor); anchor.click(); anchor.remove(); URL.revokeObjectURL(url);
     });
   </script>
+<script type="module" src="/src/metrics.js"></script>
 </body>
 </html>
