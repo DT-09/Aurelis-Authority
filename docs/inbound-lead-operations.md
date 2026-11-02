@@ -12,7 +12,7 @@ This change adds server-side enquiry capture to Cloudflare D1, buyer qualificati
 
 ### Read enquiries and metrics
 
-GET `/api/admin/leads?days=7` with header `Authorization: Bearer YOUR_LEAD_ADMIN_TOKEN`. Keep the URL and token private. The endpoint returns the last 100 leads plus aggregate event counts. It returns 404 if the token is missing or wrong.
+Open `/admin/leads.html`, enter the `LEAD_ADMIN_TOKEN`, and load the last seven days. The page keeps the token in memory only. The underlying endpoint is `GET /api/admin/leads?days=7` with header `Authorization: Bearer YOUR_LEAD_ADMIN_TOKEN`. Keep the URL and token private. It returns the last 100 leads plus aggregate event counts and returns 404 if the token is missing or wrong.
 
 ### Metrics definitions
 
