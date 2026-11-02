@@ -209,7 +209,7 @@ q("#inquiry-form")?.addEventListener("submit",async event=>{
     form.reset();
     window.aurelisTrack?.("lead_submit");
   }catch(error){
-    feedback.textContent=error.message+" You can also email dhairy.topia@gmail.com.";
+    feedback.textContent=error.message+" You can also email dhairytopia@gmail.com.";
     feedback.classList.remove("is-success");
   }finally{
     button.disabled=false;
