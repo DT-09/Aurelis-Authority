@@ -91,3 +91,17 @@ The first-pilot price in the internal scope document is a hypothesis, not valida
 - [Trace audit workspace](https://aurelis-authority.pages.dev/workspace.html) is a public synthetic-data tool for evaluating supplied JSON traces.
 - [AI agent authorization field note](https://aurelis-authority.pages.dev/ai-agent-authorization-testing.html) explains the difference between answer-quality evaluation and action-authorization evidence.
 - [Inbound acquisition plan](docs/inbound-acquisition-plan.md) records the search, developer-discovery and partner channels. Directory inclusion and customer demand are not assumed.
+
+## Run the trace check in GitHub Actions
+
+The repository exposes a dependency-free composite action. After placing an approved policy and a sanitized trace export in the workflow workspace, call it from a Node.js 20+ runner:
+
+```yaml
+- name: Check agent authority trace
+  uses: DT-09/Aurelis-Authority@main
+  with:
+    policy: ./audit/authority-policy.json
+    trace: ./audit/tool-call-trace.json
+```
+
+The step exits with code `1` when it finds an unexpected ALLOW and code `2` for invalid input. It audits the supplied records only; it does not intercept tools, prove trace completeness or enforce policy at runtime. Pin a reviewed release tag or commit SHA in production workflows rather than relying on `@main`.

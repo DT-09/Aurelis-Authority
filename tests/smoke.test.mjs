@@ -5,6 +5,7 @@ import {readFile} from 'node:fs/promises';
 const html=await readFile('index.html','utf8');
 const css=await readFile('src/styles.css','utf8');
 const js=await readFile('src/app.js','utf8');
+const action=await readFile('action.yml','utf8');
 
 test('core buyer-facing sections exist',()=>{for(const id of ['why','model','method','challenge','evidence','pilot','trust','assessment'])assert.ok(html.includes('id="'+id+'"'))});
 test('private inquiry composer is explicit and does not auto-send',()=>{for(const token of ['data-contact','id="inquiry-form"','id="inquiry-type"','id="inquiry-workflow"','id="inquiry-context"','Prepare email draft','Nothing is sent or stored by this page','github.com/DT-09'])assert.ok(html.includes(token));assert.ok(!html.includes('mailto:'));assert.ok(!html.includes('>dhairytopia@gmail.com<'));assert.ok(js.includes('mailto:dhairytopia@gmail.com'));assert.ok(js.includes('addEventListener("submit"'))});
@@ -14,3 +15,5 @@ test('demo limitations are visible and accurate',()=>{assert.ok(html.includes('i
 test('evidence view updates from the selected executed scenario',()=>{for(const token of ['renderEvidence','record.action','record.remediation','record.expected','run.observed','Execution path'])assert.ok(js.includes(token));assert.ok(js.includes('Values below reflect the selected scenario'))});
 test('modal supports keyboard dismissal and focus management',()=>{for(const token of ['openContact','closeContact','previouslyFocused','e.key==="Escape"','e.key==="Tab"'])assert.ok(js.includes(token))});
 test('scenario library and executed assessment remain wired',()=>{for(const token of ['data-scenario','data-evidence','run-test','/api/assessment','IntersectionObserver'])assert.ok(js.includes(token))});
+
+test('GitHub Actions composite action calls the offline trace checker',()=>{for(const token of ['using: composite','inputs.policy','inputs.trace','GITHUB_ACTION_PATH/tools/authority-trace-check/cli.mjs','--policy','--trace'])assert.ok(action.includes(token));});
