@@ -20,6 +20,11 @@ export async function onRequestPost({request,env}){
   if((recent?.total||0)>=3)return json({error:"Too many enquiries from this address. Please try again later."},429);
   const id=crypto.randomUUID();
   await env.DB.prepare("INSERT INTO inbound_leads (id,name,email,company,role,buyer_type,workflow,urgency,trace_readiness,source,landing_path,created_at,consent_at) VALUES (?1,?2,?3,?4,?5,?6,?7,?8,?9,?10,?11,?12,?13)").bind(id,name,email,company,role,buyer,workflow,urgency,readiness,source,path,now,now).run();
+  if(env.RESEND_API_KEY&&env.LEAD_NOTIFY_TO&&env.LEAD_FROM_EMAIL){
+   try{
+    await fetch("https://api.resend.com/emails",{method:"POST",headers:{"authorization":"Bearer "+env.RESEND_API_KEY,"content-type":"application/json"},body:JSON.stringify({from:env.LEAD_FROM_EMAIL,to:[env.LEAD_NOTIFY_TO],subject:"New Aurelis trace-audit enquiry",text:["A new enquiry was submitted.","Name: "+name,"Email: "+email,"Company: "+company,"Role: "+role,"Buyer type: "+buyer,"Workflow: "+workflow,"Urgency: "+urgency,"Trace readiness: "+readiness,"Source: "+source,"Landing path: "+path,"Lead ID: "+id].join("\n")})});
+   }catch{}
+  }
   return json({ok:true,id,message:"Enquiry received. Aurelis will review the workflow and reply using the email you provided."},201);
  }catch{return json({error:"We could not save your enquiry. Please use the email contact link instead."},503);}
 }
