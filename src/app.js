@@ -170,7 +170,7 @@ function openContact() {
   contact.setAttribute("aria-hidden","false");
   q("#inquiry-feedback").textContent="Your details are used only to assess and respond to this enquiry. Do not include sensitive data.";
   window.aurelisTrack?.("lead_form_open");
-  q("#inquiry-type").focus();
+  q("#inquiry-name").focus();
 }
 function closeContact() {
   contact.setAttribute("aria-hidden","true");
@@ -199,7 +199,7 @@ q("#inquiry-form")?.addEventListener("submit",async event=>{
   };
   button.disabled=true;
   button.textContent="Sending enquiry…";
-  feedback.textContent="Submitting securely…";
+  feedback.textContent="Submitting enquiry…";
   try{
     const response=await fetch("/api/lead",{method:"POST",headers:{"content-type":"application/json","accept":"application/json"},cache:"no-store",body:JSON.stringify(values)});
     const result=await response.json();
