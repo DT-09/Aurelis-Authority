@@ -27,6 +27,7 @@ Avoid broad claims such as AI security platform, runtime guardrails, penetration
 
 ### 1. Search discovery
 - Main page: concise description of the service and the offline limitation.
+- Technical article: `/ai-agent-authorization-testing.html` distinguishes answer-quality evaluation from action-authorization evidence and links to the official CERT-In advisory.
 - Dedicated page: `/ai-agent-tool-call-audit.html` with supported checks, required inputs, deliverables, limitations and FAQs.
 - Publish one technical article explaining how to compare recorded tool decisions with a policy. Use examples that are synthetic and reproducible.
 - Add and maintain `robots.txt` and `sitemap.xml`.
