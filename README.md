@@ -98,7 +98,7 @@ The repository exposes a dependency-free composite action. After placing an appr
 
 ```yaml
 - name: Check agent authority trace
-  uses: DT-09/Aurelis-Authority@main
+  uses: DT-09/Aurelis-Authority@cfc90bcfc0c95f199ef4ac3f1a2c9fd219f12700
   with:
     policy: ./audit/authority-policy.json
     trace: ./audit/tool-call-trace.json
