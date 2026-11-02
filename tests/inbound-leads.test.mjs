@@ -12,8 +12,8 @@ function makeDb(){
    return {bind(...values){
     return {
      async first(){
-      if(sql.includes("COUNT(*) AS total"))return {total:leads.filter(x=>x.email===values[0]&&x.created_at>=values[1]).length};
       if(sql.includes("SUM(CASE"))return {total:leads.length,urgent:leads.filter(x=>x.urgency==="Within 7 days").length,trace_ready:leads.filter(x=>x.trace_readiness==="Ready to share a sanitized staging export").length};
+      if(sql.includes("COUNT(*) AS total"))return {total:leads.filter(x=>x.email===values[0]&&x.created_at>=values[1]).length};
       return null;
      },
      async run(){
