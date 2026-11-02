@@ -38,6 +38,15 @@ test("audits supplied decisions and returns an unexpected allow finding", async 
   assert.equal(report.inputHandling.persisted, false);
 });
 
+test("rejects empty traces instead of returning a PASS", async () => {
+  const response = await onRequestPost({
+    request: request(JSON.stringify({ policy, trace: [] }))
+  });
+  assert.equal(response.status, 400);
+  const body = await response.json();
+  assert.match(body.detail, /empty trace cannot produce PASS/);
+});
+
 test("rejects malformed JSON", async () => {
   const response = await onRequestPost({ request: request("{") });
   assert.equal(response.status, 400);

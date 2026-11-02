@@ -71,3 +71,16 @@ Build and tests:
 npm test
 npm run build
 ```
+
+
+## First paid pilot
+
+The current commercial offer is deliberately narrow: one agent, one consequential workflow, one approved authority policy, sanitized staging traces, one initial audit, and one retest. Read [the first paid pilot scope](docs/first-paid-pilot.md) before making any commercial claim. The current product audits supplied traces; it does not connect to or intercept a live agent.
+
+## Initial prospect research
+
+[Initial prospect research and outreach plan](docs/initial-prospect-research.md) records public evidence for a small set of AI-agent implementation firms, the qualification criteria, and the first outreach sequence. These firms are research targets only; no buying intent is implied.
+
+## Commercial and evidence boundary
+
+The first-pilot price in the internal scope document is a hypothesis, not validated willingness to pay. Do not publish it as an established rate. Do not describe simulated examples as customer results, and do not describe offline trace auditing as penetration testing, runtime enforcement, certification, or proof of complete trace coverage.

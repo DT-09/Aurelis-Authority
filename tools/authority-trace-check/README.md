@@ -63,6 +63,16 @@ These are intentionally simple deterministic checks. They do not infer intent fr
 
 Call the CLI after a test run that produces a trace file. Fail the CI step when the process exits with code `1`. Invalid input exits with code `2`. The auditor never executes the recorded tool calls.
 
+## Input validation
+
+- Empty traces are rejected; they cannot produce a vacuous PASS.
+- Supplied event IDs must be non-empty and unique.
+- Policy rules must declare an explicit `enabled` boolean.
+- Amount rules must include a non-negative `maxWithoutApproval` threshold.
+- Scope and identity constraints must use non-empty string arrays.
+- A trace is limited to 10,000 events per audit.
+- Approval checks verify only that a non-empty approval value is present. They do not authenticate the approver or validate the approval against an external authority.
+
 ## How to interpret results
 
 - `FAIL`: at least one event was observed as ALLOW while the configured policy expected DENY.
