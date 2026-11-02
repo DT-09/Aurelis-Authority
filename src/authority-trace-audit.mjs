@@ -88,22 +88,24 @@ function expectedDecision(event, policy) {
     }
   }
 
-  if (rule.allowedScopes) {
+  if (rule.allowedScopes || rule.deniedScopes) {
     const scope = args[rule.scopeField || "scope"];
-    if (!rule.allowedScopes.includes(scope)) {
+    if (typeof scope !== "string" || !scope.trim()) {
+      return { decision: "DENY", reason: "scope_missing" };
+    }
+    if (rule.allowedScopes && !rule.allowedScopes.includes(scope)) {
       return { decision: "DENY", reason: "scope_not_allowed" };
     }
-  }
-
-  if (rule.deniedScopes) {
-    const scope = args[rule.scopeField || "scope"];
-    if (rule.deniedScopes.includes(scope)) {
+    if (rule.deniedScopes && rule.deniedScopes.includes(scope)) {
       return { decision: "DENY", reason: "scope_explicitly_denied" };
     }
   }
 
   if (rule.identityStatusField && rule.deniedIdentityStatuses) {
     const status = args[rule.identityStatusField];
+    if (typeof status !== "string" || !status.trim()) {
+      return { decision: "DENY", reason: "identity_status_missing" };
+    }
     if (rule.deniedIdentityStatuses.includes(status)) {
       return { decision: "DENY", reason: "identity_status_denied" };
     }
