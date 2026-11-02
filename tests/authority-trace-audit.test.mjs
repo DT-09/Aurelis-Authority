@@ -81,6 +81,39 @@ test("flags revoked identity use", () => {
   assert.equal(report.findings[0].policyReason, "identity_status_denied");
 });
 
+test("fails closed when a configured scope field is missing", () => {
+  const scopeOnlyPolicy = {
+    version: 1,
+    tools: {
+      "record.read": { enabled: true, deniedScopes: ["restricted"] }
+    }
+  };
+  const report = auditTrace({
+    policy: scopeOnlyPolicy,
+    trace: [{ tool: "record.read", args: {}, decision: "ALLOW" }]
+  });
+  assert.equal(report.findings[0].policyReason, "scope_missing");
+  assert.equal(report.summary.unexpectedAllows, 1);
+});
+
+test("fails closed when a configured identity status field is missing", () => {
+  const report = auditTrace({
+    policy,
+    trace: [{ tool: "invoice.send", args: {}, decision: "ALLOW" }]
+  });
+  assert.equal(report.findings[0].policyReason, "identity_status_missing");
+  assert.equal(report.summary.unexpectedAllows, 1);
+});
+
+test("allows a non-revoked identity when its status is present", () => {
+  const report = auditTrace({
+    policy,
+    trace: [{ tool: "invoice.send", args: { identityStatus: "active" }, decision: "ALLOW" }]
+  });
+  assert.equal(report.status, "PASS");
+  assert.equal(report.summary.matched, 1);
+});
+
 test("reports an unexpected deny as a review warning, not an authorization breach", () => {
   const report = auditTrace({
     policy,

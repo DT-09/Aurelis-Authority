@@ -5,6 +5,8 @@ await rm("dist", { recursive: true, force: true });
 await mkdir("dist", { recursive: true });
 await cp("index.html", "dist/index.html");
 await cp("workspace.html", "dist/workspace.html");
+await cp("ai-agent-tool-call-audit.html", "dist/ai-agent-tool-call-audit.html");
+await cp("ai-agent-authorization-testing.html", "dist/ai-agent-authorization-testing.html");
 await cp("src", "dist/src", { recursive: true });
 
 const report = runSampleAssessment();

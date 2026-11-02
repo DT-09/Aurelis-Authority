@@ -84,3 +84,10 @@ The current commercial offer is deliberately narrow: one agent, one consequentia
 ## Commercial and evidence boundary
 
 The first-pilot price in the internal scope document is a hypothesis, not validated willingness to pay. Do not publish it as an established rate. Do not describe simulated examples as customer results, and do not describe offline trace auditing as penetration testing, runtime enforcement, certification, or proof of complete trace coverage.
+
+## Public service and discovery pages
+
+- [AI agent tool-call trace audit](https://aurelis-authority.pages.dev/ai-agent-tool-call-audit.html) explains the current service scope, supported policy checks, required inputs, deliverables and limitations.
+- [Trace audit workspace](https://aurelis-authority.pages.dev/workspace.html) is a public synthetic-data tool for evaluating supplied JSON traces.
+- [AI agent authorization field note](https://aurelis-authority.pages.dev/ai-agent-authorization-testing.html) explains the difference between answer-quality evaluation and action-authorization evidence.
+- [Inbound acquisition plan](docs/inbound-acquisition-plan.md) records the search, developer-discovery and partner channels. Directory inclusion and customer demand are not assumed.
