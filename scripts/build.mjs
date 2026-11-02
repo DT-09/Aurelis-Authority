@@ -8,6 +8,8 @@ await cp("workspace.html", "dist/workspace.html");
 await cp("ai-agent-tool-call-audit.html", "dist/ai-agent-tool-call-audit.html");
 await cp("ai-agent-authorization-testing.html", "dist/ai-agent-authorization-testing.html");
 await cp("privacy.html", "dist/privacy.html");
+await mkdir("dist/admin", { recursive: true });
+await cp("admin/leads.html", "dist/admin/leads.html");
 await cp("src", "dist/src", { recursive: true });
 
 const report = runSampleAssessment();
