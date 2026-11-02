@@ -32,7 +32,6 @@ $("#load").addEventListener("click",async()=>{
  try{
   const response=await fetch("/api/admin/leads?days=7",{headers:{authorization:"Bearer "+token,accept:"application/json"},cache:"no-store"});
   const data=await response.json();if(!response.ok)throw new Error(data.error||"Could not load data.");
-  const counts=Object.fromEntries((data.metrics||[]).map(x=>[x.event_name,(countsPlaceholder(x.event_count))]));
   const total=name=>(data.metrics||[]).filter(x=>x.event_name===name).reduce((n,x)=>n+x.event_count,0);
   const summary=$("#summary");summary.replaceChildren(card("Enquiries",data.summary.total),card("Urgent (7 days)",data.summary.urgent),card("Trace ready",data.summary.trace_ready),card("Page views",total("page_view")),card("Workspace opens",total("workspace_open")),card("Successful audits",total("audit_success")),card("Form opens",total("lead_form_open")),card("Submitted enquiries",total("lead_submit")));
   const metrics=$("#metrics");metrics.replaceChildren();(data.metrics||[]).forEach(x=>{const tr=document.createElement("tr");cell(tr,x.event_date);cell(tr,metricNames[x.event_name]||x.event_name);cell(tr,x.source);cell(tr,x.event_count);metrics.append(tr);});
@@ -41,6 +40,5 @@ $("#load").addEventListener("click",async()=>{
  }catch(error){$("#dashboard").hidden=true;$("#status").textContent=error.message;}
  finally{$("#load").disabled=false;}
 });
-function countsPlaceholder(value){return value;}
 </script>
 </body></html>
