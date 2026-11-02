@@ -89,4 +89,5 @@ The first-pilot price in the internal scope document is a hypothesis, not valida
 
 - [AI agent tool-call trace audit](https://aurelis-authority.pages.dev/ai-agent-tool-call-audit.html) explains the current service scope, supported policy checks, required inputs, deliverables and limitations.
 - [Trace audit workspace](https://aurelis-authority.pages.dev/workspace.html) is a public synthetic-data tool for evaluating supplied JSON traces.
+- [AI agent authorization field note](https://aurelis-authority.pages.dev/ai-agent-authorization-testing.html) explains the difference between answer-quality evaluation and action-authorization evidence.
 - [Inbound acquisition plan](docs/inbound-acquisition-plan.md) records the search, developer-discovery and partner channels. Directory inclusion and customer demand are not assumed.
