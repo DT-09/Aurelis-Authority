@@ -81,6 +81,10 @@ The current commercial offer is deliberately narrow: one agent, one consequentia
 
 [Initial prospect research and outreach plan](docs/initial-prospect-research.md) records public evidence for a small set of AI-agent implementation firms, the qualification criteria, and the first outreach sequence. These firms are research targets only; no buying intent is implied.
 
+## First partner candidate
+
+[Tech Inject partner qualification note](docs/first-partner-candidate.md) records the public workflow evidence, the existing controls the firm already advertises, the narrow qualification question, and why this remains a prospect rather than a confirmed buyer.
+
 ## Commercial and evidence boundary
 
 The first-pilot price in the internal scope document is a hypothesis, not validated willingness to pay. Do not publish it as an established rate. Do not describe simulated examples as customer results, and do not describe offline trace auditing as penetration testing, runtime enforcement, certification, or proof of complete trace coverage.
