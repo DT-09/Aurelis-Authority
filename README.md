@@ -85,6 +85,11 @@ The current commercial offer is deliberately narrow: one agent, one consequentia
 
 The first-pilot price in the internal scope document is a hypothesis, not validated willingness to pay. Do not publish it as an established rate. Do not describe simulated examples as customer results, and do not describe offline trace auditing as penetration testing, runtime enforcement, certification, or proof of complete trace coverage.
 
+## Authority Blueprint Studio
+
+- [Authority Blueprint Studio](https://aurelis-authority.pages.dev/authority-blueprint.html) generates a draft version-1 authority policy and expected challenge plan locally in the browser. It is designed to feed the existing offline trace auditor, not replace an authorized staging test or independent review.
+- [Studio commercial plan](docs/blueprint-studio-commercial-plan.md) defines the acquisition path, buyer qualification, measurement and legal boundaries.
+
 ## Public service and discovery pages
 
 - [AI agent tool-call trace audit](https://aurelis-authority.pages.dev/ai-agent-tool-call-audit.html) explains the current service scope, supported policy checks, required inputs, deliverables and limitations.
