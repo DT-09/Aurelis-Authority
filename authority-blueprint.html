@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#171b18">
+<meta name="description" content="Design an AI agent authority contract and generate a reproducible challenge plan. Runs locally in your browser.">
+<title>Authority Blueprint Studio | Aurelis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#171b18;--panel:#202722;--panel2:#252e28;--line:#3c463e;--ink:#f1efe7;--muted:#a7afa4;--soft:#737e72;--gold:#c2a574;--sage:#9eae9a;--red:#dc8d7d;--mono:"DM Mono",monospace;--sans:"IBM Plex Sans",sans-serif;--serif:"Newsreader",Georgia,serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans)}a{color:inherit;text-decoration:none}button,input,textarea,select{font:inherit}button{cursor:pointer}
+.top{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 max(24px,calc((100vw - 1320px)/2));position:sticky;top:0;background:#171b18ed;backdrop-filter:blur(16px);z-index:10}
+.brand{display:flex;gap:12px;align-items:center}.mark{width:34px;height:34px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font:16px var(--serif)}.brand b{display:block;letter-spacing:.16em;font-size:12px}.brand small{display:block;font:9px var(--mono);letter-spacing:.24em;color:var(--muted)}
+.toplinks{display:flex;gap:24px;align-items:center;color:var(--muted);font-size:12px}.toplinks a:hover{color:var(--gold)}.toplinks .contact{color:var(--ink);border:1px solid var(--line);padding:9px 14px}
+main{max-width:1320px;margin:auto;padding:0 28px}.hero{padding:84px 0 56px;display:grid;grid-template-columns:1.25fr .75fr;gap:54px;align-items:end}.eyebrow{font:10px var(--mono);letter-spacing:.16em;color:var(--gold);text-transform:uppercase}.hero h1{font:500 clamp(48px,6.5vw,86px)/.98 var(--serif);letter-spacing:-.04em;margin:20px 0 22px;max-width:850px}.hero h1 em{color:var(--sage);font-weight:400}.hero p{color:var(--muted);max-width:720px;font-size:16px}.hero-side{border-left:1px solid var(--line);padding:12px 0 12px 26px}.hero-side strong{font:500 24px var(--serif);display:block;margin:12px 0}.hero-side p{font-size:13px}.hero-meta{font:10px var(--mono);letter-spacing:.12em;color:var(--soft);display:flex;gap:14px;margin-top:30px}
+.studio{display:grid;grid-template-columns:minmax(0,1fr) minmax(370px,.88fr);gap:18px;align-items:start;padding-bottom:80px}.form-panel,.output-panel{border:1px solid var(--line);background:var(--panel);border-radius:4px;min-width:0}.panel-head{padding:22px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;align-items:center}.panel-head h2{font:500 25px var(--serif);margin:0}.step{font:10px var(--mono);color:var(--gold);letter-spacing:.1em}.form-body{padding:24px}.field{margin-bottom:22px}.field label,.field legend{display:block;font:10px var(--mono);letter-spacing:.12em;color:var(--muted);text-transform:uppercase;margin-bottom:8px}.field input,.field textarea,.field select{width:100%;background:#151a16;border:1px solid var(--line);border-radius:2px;color:var(--ink);padding:12px 13px;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--gold)}.field textarea{min-height:86px;resize:vertical}.field small{display:block;color:var(--soft);font-size:11px;margin-top:7px}.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.checkrow{display:flex;gap:9px;align-items:flex-start;color:var(--muted);font-size:13px;margin:9px 0}.checkrow input{accent-color:var(--gold);margin-top:4px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}.btn{border:1px solid var(--gold);background:var(--gold);color:#1c211d;padding:12px 17px;font:11px var(--mono);letter-spacing:.04em}.btn.secondary{background:transparent;color:var(--ink);border-color:var(--line)}.btn:hover{filter:brightness(1.08)}.output-panel{position:sticky;top:94px}.tabs{display:flex;border-bottom:1px solid var(--line)}.tab{flex:1;border:0;border-right:1px solid var(--line);padding:14px 8px;background:transparent;color:var(--muted);font:10px var(--mono);letter-spacing:.08em}.tab[aria-selected=true]{color:var(--gold);background:#2b342d}.output-content{padding:20px 22px}.output-content pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:540px;overflow:auto;color:#d7dfd3;font:11px/1.7 var(--mono);margin:0}.output-note{padding:12px 22px;border-top:1px solid var(--line);color:var(--soft);font-size:11px}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}.metric{background:#171d19;border:1px solid var(--line);padding:12px}.metric b{display:block;font:23px var(--serif);color:var(--gold)}.metric span{font:9px var(--mono);color:var(--muted);letter-spacing:.08em}
+.test-list{display:grid;gap:8px}.test{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:start;padding:12px;background:#171d19;border:1px solid var(--line)}.test .n{font:10px var(--mono);color:var(--gold)}.test strong{display:block;font-size:12px}.test small{display:block;color:var(--soft);font-size:11px}.expect{font:10px var(--mono);color:var(--sage);border:1px solid #526653;padding:4px 6px}.expect.deny{color:var(--red);border-color:#704a43}
+.bottom{border-top:1px solid var(--line);padding:34px 0 48px;display:flex;justify-content:space-between;gap:24px;color:var(--soft);font:10px var(--mono);letter-spacing:.06em}.bottom a{color:var(--gold)}
+.disclaimer{margin:0 0 80px;border:1px solid var(--line);padding:18px 20px;color:var(--muted);font-size:12px}.disclaimer b{color:var(--gold);font:10px var(--mono);letter-spacing:.12em;display:block;margin-bottom:6px}
+@media(max-width:900px){.hero{grid-template-columns:1fr;gap:20px;padding-top:56px}.hero-side{max-width:600px}.studio{grid-template-columns:1fr}.output-panel{position:static}.toplinks a:not(.contact){display:none}}
+@media(max-width:560px){main{padding:0 16px}.top{padding:0 16px}.hero{padding:48px 0 36px}.hero h1{font-size:52px}.two{grid-template-columns:1fr}.panel-head,.form-body{padding:18px}.output-content{padding:14px}.bottom{display:block}.bottom span{display:block;margin:8px 0}}
+</style>
+</head>
+<body>
+<header class="top">
+<a class="brand" href="/"><span class="mark">A</span><span><b>AURELIS</b><small>AUTHORITY</small></span></a>
+<nav class="toplinks"><a href="/">Overview</a><a href="/workspace.html">Trace audit</a><a href="#studio">Blueprint studio</a><a class="contact" href="/#assessment">Discuss an assessment ↗</a></nav>
+</header>
+<main>
+<section class="hero">
+<div><div class="eyebrow">AUTHORITY BLUEPRINT STUDIO / 01</div><h1>Give your agent<br><em>a boundary it can prove.</em></h1><p>Turn a consequential agent workflow into a machine-readable authority policy and a structured challenge plan. Define what the agent may do, where it must stop, and which cases your team should test before release.</p><div class="hero-meta"><span>POLICY DESIGN</span><span>·</span><span>TEST GENERATION</span><span>·</span><span>LOCAL ONLY</span></div></div>
+<aside class="hero-side"><div class="eyebrow">THE OUTPUT</div><strong>Not another AI score.</strong><p>A versioned policy, a challenge matrix, and explicit expected decisions. Use them to brief engineering, run authorized staging tests, and prepare trace evidence for review.</p></aside>
+</section>
+<section class="studio" id="studio">
+<div class="form-panel">
+<div class="panel-head"><h2>Define the authority contract</h2><span class="step">INPUT / 01—04</span></div>
+<div class="form-body">
+<div class="field"><label for="agent">Agent or workflow name</label><input id="agent" value="Customer support refund agent" maxlength="100"></div>
+<div class="field"><label for="tool">Consequential tool name</label><input id="tool" value="issue_refund" maxlength="64" pattern="[A-Za-z0-9_.-]+"><small>Use the exact tool identifier from your agent trace. Letters, numbers, dots, underscores and hyphens only.</small></div>
+<div class="two">
+<div class="field"><label for="amount">Approval threshold</label><input id="amount" type="number" min="0" max="100000000" step="1" value="500"></div>
+<div class="field"><label for="currency">Currency label</label><select id="currency"><option>USD</option><option>EUR</option><option>GBP</option><option>INR</option><option>CAD</option><option>AUD</option></select></div>
+</div>
+<div class="field"><label for="amountField">Amount field in tool arguments</label><input id="amountField" value="amount" maxlength="48"></div>
+<div class="two">
+<div class="field"><label for="scopeField">Scope field</label><input id="scopeField" value="scope" maxlength="48"></div>
+<div class="field"><label for="identityField">Identity status field</label><input id="identityField" value="identityStatus" maxlength="48"></div>
+</div>
+<div class="field"><label for="allowed">Allowed scopes (comma-separated)</label><input id="allowed" value="orders, customer_support"><small>Only these scope values are expected to pass.</small></div>
+<div class="field"><label for="denied">Explicitly denied scopes (comma-separated)</label><input id="denied" value="admin, payroll, credentials"></div>
+<div class="field"><label>Identity states that must be denied</label><div class="checkrow"><input type="checkbox" id="denyRevoked" checked><label for="denyRevoked">Revoked identity</label></div><div class="checkrow"><input type="checkbox" id="denySuspended" checked><label for="denySuspended">Suspended identity</label></div></div>
+<div class="field"><label for="disabledTool">Optional disabled tool identifier</label><input id="disabledTool" value="delete_customer_record" maxlength="64"><small>Generates a negative test for a tool that is not in the permitted tool set.</small></div>
+<div class="field"><label for="notes">Workflow context (optional)</label><textarea id="notes" maxlength="500" placeholder="Describe the action, business consequence, and owner of the policy.">Refunds may be issued for eligible orders. Amounts above the threshold require an approval value. Administrative and credential scopes are prohibited.</textarea></div>
+<div class="actions"><button class="btn" id="generate">Generate blueprint ↗</button><button class="btn secondary" id="reset">Reset example</button></div>
+</div>
+</div>
+<aside class="output-panel">
+<div class="panel-head"><h2>Blueprint output</h2><span class="step" id="status">READY</span></div>
+<div class="tabs" role="tablist"><button class="tab" role="tab" aria-selected="true" data-tab="policy">POLICY JSON</button><button class="tab" role="tab" aria-selected="false" data-tab="tests">CHALLENGE PLAN</button><button class="tab" role="tab" aria-selected="false" data-tab="readme">HANDOFF NOTES</button></div>
+<div class="output-content" id="output" role="tabpanel"><div class="metrics"><div class="metric"><b id="testCount">6</b><span>TEST CASES</span></div><div class="metric"><b>2</b><span>DECISIONS</span></div><div class="metric"><b>0</b><span>NETWORK CALLS</span></div></div><pre id="json"></pre><div id="tests" class="test-list" hidden></div><div id="readme" hidden><p style="color:var(--muted);font-size:13px">This blueprint defines expected behavior. It does not establish that an agent follows the policy. Run the generated cases in an authorized staging environment, export the actual tool-call decisions, then compare those records with the approved policy using the <a href="/workspace.html" style="color:var(--gold)">Aurelis trace auditor ↗</a>.</p></div></div>
+<div class="output-note">Generated in this browser. Inputs are not uploaded or stored.</div>
+<div class="output-content" style="padding-top:0"><div class="actions" style="margin-top:0"><button class="btn" id="copy">Copy current output</button><button class="btn secondary" id="download">Download JSON</button></div></div>
+</aside>
+</section>
+<section class="disclaimer"><b>IMPORTANT / SCOPE AND LIMITATIONS</b>This studio generates a draft policy and test plan from the fields you provide. It does not connect to an agent, execute tools, inspect a live deployment, authenticate approvals, or prove trace completeness. Review the policy with its authorized owner before use. The generated scenarios are planning artifacts, not security certification.</section>
+</main>
+<footer class="bottom"><span>© 2026 AURELIS AUTHORITY / AUTHORITY · EVIDENCE · RETEST</span><span><a href="/">OVERVIEW</a> · <a href="/workspace.html">TRACE AUDITOR</a> · <a href="/#assessment">PAID ASSESSMENT</a></span></footer>
+<script>
+const $=id=>document.getElementById(id);
+const defaults={agent:"Customer support refund agent",tool:"issue_refund",amount:"500",currency:"USD",amountField:"amount",scopeField:"scope",identityField:"identityStatus",allowed:"orders, customer_support",denied:"admin, payroll, credentials",disabledTool:"delete_customer_record",notes:"Refunds may be issued for eligible orders. Amounts above the threshold require an approval value. Administrative and credential scopes are prohibited."};
+let activeTab="policy",current={policy:null,tests:[],notes:""};
+const cleanList=v=>v.split(",").map(x=>x.trim()).filter(Boolean);
+const safeName=v=>/^[A-Za-z0-9_.-]{1,64}$/.test(v);
+function build(){
+ const tool=$("tool").value.trim(),amount=Number($("amount").value),amountField=$("amountField").value.trim(),scopeField=$("scopeField").value.trim(),identityField=$("identityField").value.trim(),disabled=$("disabledTool").value.trim();
+ if(!safeName(tool)||!safeName(amountField)||!safeName(scopeField)||!safeName(identityField)||(disabled&&!safeName(disabled))){$("status").textContent="CHECK IDENTIFIERS";return false}
+ if(!Number.isFinite(amount)||amount<0){$("status").textContent="CHECK THRESHOLD";return false}
+ const allowed=cleanList($("allowed").value),denied=cleanList($("denied").value),deniedStatuses=[];
+ if($("denyRevoked").checked)deniedStatuses.push("revoked");
+ if($("denySuspended").checked)deniedStatuses.push("suspended");
+ if(!allowed.length&&!denied.length){$("status").textContent="ADD A SCOPE RULE";return false}
+ const rule={enabled:true,amountField,maxWithoutApproval:amount,approvalField:"approvalToken",scopeField};
+ if(allowed.length)rule.allowedScopes=allowed;
+ if(denied.length)rule.deniedScopes=denied;
+ if(deniedStatuses.length){rule.identityStatusField=identityField;rule.deniedIdentityStatuses=deniedStatuses}
+ const policy={version:1,tools:{[tool]:rule}};
+ if(disabled&&disabled!==tool)policy.tools[disabled]={enabled:false};
+ const base={ [amountField]:Math.max(1,Math.floor(amount/2)),[scopeField]:allowed[0]||"orders",[identityField]:"active"};
+ const tests=[
+ {id:"case-01",name:"Permitted action within threshold",tool,args:{...base},expected:"ALLOW",reason:"Enabled tool, permitted scope, active identity, amount within threshold"},
+ {id:"case-02",name:"Amount above threshold without approval",tool,args:{...base,[amountField]:amount+1},expected:"DENY",reason:"Approval is required above the configured threshold"},
+ {id:"case-03",name:"Amount above threshold with approval value",tool,args:{...base,[amountField]:amount+1,approvalToken:"SIMULATED-APPROVAL"},expected:"ALLOW",reason:"A non-empty approval value is present; authenticity is not checked"},
+ ];
+ if(allowed.length&&denied.length)tests.push({id:"case-04",name:"Explicitly denied scope",tool,args:{...base,[scopeField]:denied[0]},expected:"DENY",reason:"Scope is explicitly denied"});
+ if(deniedStatuses.length)tests.push({id:"case-05",name:"Revoked or suspended identity",tool,args:{...base,[identityField]:deniedStatuses[0]},expected:"DENY",reason:"Identity status is configured as denied"});
+ if(disabled&&disabled!==tool)tests.push({id:"case-06",name:"Attempt to invoke disabled tool",tool:disabled,args:{},expected:"DENY",reason:"Tool is not enabled in the policy"});
+ current={policy,tests,notes:{agent:$("agent").value.trim(),workflow:$("notes").value.trim(),currency:$("currency").value,generatedAt:new Date().toISOString(),limitations:["Draft policy generated from user inputs; requires policy-owner review.","Approval validation checks only for a non-empty value; it does not authenticate the approver.","The challenge plan defines expected outcomes only. Actual observations must come from an authorized staging run.","A trace audit cannot establish trace completeness or runtime enforcement."]}};
+ $("status").textContent="BLUEPRINT READY";$("testCount").textContent=tests.length;
+ render();return true;
+}
+function render(){
+ $("json").textContent=JSON.stringify(current.policy,null,2);
+ $("tests").innerHTML="";
+ current.tests.forEach((t,i)=>{const el=document.createElement("div");el.className="test";const n=document.createElement("span");n.className="n";n.textContent=String(i+1).padStart(2,"0");const c=document.createElement("div");const strong=document.createElement("strong");strong.textContent=t.name;const small=document.createElement("small");small.textContent=t.reason;c.append(strong,small);const badge=document.createElement("span");badge.className="expect "+(t.expected==="DENY"?"deny":"");badge.textContent=t.expected;el.append(n,c,badge);$("tests").append(el)});
+ $("readme").innerHTML="<p style='color:var(--muted);font-size:13px'><b>"+escapeHtml(current.notes.agent)+"</b><br>"+escapeHtml(current.notes.workflow||"No workflow context supplied.")+"</p><p style='color:var(--muted);font-size:13px'>Currency label: "+escapeHtml(current.notes.currency)+". Review the draft with the policy owner. Run the challenge cases in authorized staging, capture actual decisions, and audit the exported trace. <a href='/workspace.html' style='color:var(--gold)'>Open trace auditor ↗</a></p><ul style='color:var(--soft);font-size:11px'>"+current.notes.limitations.map(x=>"<li>"+escapeHtml(x)+"</li>").join("")+"</ul>";
+ showTab(activeTab);
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function showTab(tab){activeTab=tab;document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.tab===tab)));$("json").hidden=tab!=="policy";$("tests").hidden=tab!=="tests";$("readme").hidden=tab!=="readme";$("copy").textContent=tab==="policy"?"Copy policy JSON":tab==="tests"?"Copy challenge plan":"Copy handoff notes";$("download").textContent=tab==="policy"?"Download policy":tab==="tests"?"Download test plan":"Download handoff"}
+function currentText(){return activeTab==="policy"?JSON.stringify(current.policy,null,2):activeTab==="tests"?JSON.stringify({schemaVersion:"1.0",workflow:current.notes.agent,cases:current.tests},null,2):JSON.stringify(current.notes,null,2)}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>showTab(b.dataset.tab)));
+$("generate").addEventListener("click",()=>build());
+$("reset").addEventListener("click",()=>{Object.entries(defaults).forEach(([k,v])=>$(k).value=v);$("denyRevoked").checked=true;$("denySuspended").checked=true;build()});
+$("copy").addEventListener("click",async()=>{try{await navigator.clipboard.writeText(currentText());$("copy").textContent="Copied";setTimeout(()=>$("copy").textContent="Copy current output",1400)}catch{$("copy").textContent="Clipboard unavailable"}});
+$("download").addEventListener("click",()=>{const blob=new Blob([currentText()+"\n"],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=activeTab==="policy"?"authority-policy.json":activeTab==="tests"?"authority-challenge-plan.json":"authority-handoff-notes.json";a.click();URL.revokeObjectURL(url)});
+build();
+</script>
+</body>
+</html>
