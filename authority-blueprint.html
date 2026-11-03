@@ -68,38 +68,28 @@ main{max-width:1320px;margin:auto;padding:0 28px}.hero{padding:84px 0 56px;displ
 <section class="disclaimer"><b>IMPORTANT / SCOPE AND LIMITATIONS</b>This studio generates a draft policy and test plan from the fields you provide. It does not connect to an agent, execute tools, inspect a live deployment, authenticate approvals, or prove trace completeness. Review the policy with its authorized owner before use. The generated scenarios are planning artifacts, not security certification.</section>
 </main>
 <footer class="bottom"><span>© 2026 AURELIS AUTHORITY / AUTHORITY · EVIDENCE · RETEST</span><span><a href="/">OVERVIEW</a> · <a href="/workspace.html">TRACE AUDITOR</a> · <a href="/#assessment">PAID ASSESSMENT</a></span></footer>
-<script>
+<script type="module">
+import { createBlueprint } from "/src/authority-blueprint.mjs";
 const $=id=>document.getElementById(id);
 const defaults={agent:"Customer support refund agent",tool:"issue_refund",amount:"500",currency:"USD",amountField:"amount",scopeField:"scope",identityField:"identityStatus",allowed:"orders, customer_support",denied:"admin, payroll, credentials",disabledTool:"delete_customer_record",notes:"Refunds may be issued for eligible orders. Amounts above the threshold require an approval value. Administrative and credential scopes are prohibited."};
 let activeTab="policy",current={policy:null,tests:[],notes:""};
 const cleanList=v=>v.split(",").map(x=>x.trim()).filter(Boolean);
 const safeName=v=>/^[A-Za-z0-9_.-]{1,64}$/.test(v);
 function build(){
- const tool=$("tool").value.trim(),amount=Number($("amount").value),amountField=$("amountField").value.trim(),scopeField=$("scopeField").value.trim(),identityField=$("identityField").value.trim(),disabled=$("disabledTool").value.trim();
- if(!safeName(tool)||!safeName(amountField)||!safeName(scopeField)||!safeName(identityField)||(disabled&&!safeName(disabled))){$("status").textContent="CHECK IDENTIFIERS";return false}
- if(!Number.isFinite(amount)||amount<0){$("status").textContent="CHECK THRESHOLD";return false}
- const allowed=cleanList($("allowed").value),denied=cleanList($("denied").value),deniedStatuses=[];
- if($("denyRevoked").checked)deniedStatuses.push("revoked");
- if($("denySuspended").checked)deniedStatuses.push("suspended");
- if(!allowed.length&&!denied.length){$("status").textContent="ADD A SCOPE RULE";return false}
- const rule={enabled:true,amountField,maxWithoutApproval:amount,approvalField:"approvalToken",scopeField};
- if(allowed.length)rule.allowedScopes=allowed;
- if(denied.length)rule.deniedScopes=denied;
- if(deniedStatuses.length){rule.identityStatusField=identityField;rule.deniedIdentityStatuses=deniedStatuses}
- const policy={version:1,tools:{[tool]:rule}};
- if(disabled&&disabled!==tool)policy.tools[disabled]={enabled:false};
- const base={ [amountField]:Math.max(1,Math.floor(amount/2)),[scopeField]:allowed[0]||"orders",[identityField]:"active"};
- const tests=[
- {id:"case-01",name:"Permitted action within threshold",tool,args:{...base},expected:"ALLOW",reason:"Enabled tool, permitted scope, active identity, amount within threshold"},
- {id:"case-02",name:"Amount above threshold without approval",tool,args:{...base,[amountField]:amount+1},expected:"DENY",reason:"Approval is required above the configured threshold"},
- {id:"case-03",name:"Amount above threshold with approval value",tool,args:{...base,[amountField]:amount+1,approvalToken:"SIMULATED-APPROVAL"},expected:"ALLOW",reason:"A non-empty approval value is present; authenticity is not checked"},
- ];
- if(allowed.length&&denied.length)tests.push({id:"case-04",name:"Explicitly denied scope",tool,args:{...base,[scopeField]:denied[0]},expected:"DENY",reason:"Scope is explicitly denied"});
- if(deniedStatuses.length)tests.push({id:"case-05",name:"Revoked or suspended identity",tool,args:{...base,[identityField]:deniedStatuses[0]},expected:"DENY",reason:"Identity status is configured as denied"});
- if(disabled&&disabled!==tool)tests.push({id:"case-06",name:"Attempt to invoke disabled tool",tool:disabled,args:{},expected:"DENY",reason:"Tool is not enabled in the policy"});
- current={policy,tests,notes:{agent:$("agent").value.trim(),workflow:$("notes").value.trim(),currency:$("currency").value,generatedAt:new Date().toISOString(),limitations:["Draft policy generated from user inputs; requires policy-owner review.","Approval validation checks only for a non-empty value; it does not authenticate the approver.","The challenge plan defines expected outcomes only. Actual observations must come from an authorized staging run.","A trace audit cannot establish trace completeness or runtime enforcement."]}};
- $("status").textContent="BLUEPRINT READY";$("testCount").textContent=tests.length;
- render();return true;
+ const input={
+  agent:$("agent").value.trim(),workflow:$("notes").value.trim(),tool:$("tool").value.trim(),
+  threshold:$("amount").value,currency:$("currency").value,
+  amountField:$("amountField").value.trim(),scopeField:$("scopeField").value.trim(),
+  identityField:$("identityField").value.trim(),approvalField:"approvalToken",
+  allowedScopes:cleanList($("allowed").value),deniedScopes:cleanList($("denied").value),
+  deniedIdentityStatuses:[$("denyRevoked").checked?"revoked":null,$("denySuspended").checked?"suspended":null].filter(Boolean),
+  disabledTool:$("disabledTool").value.trim()
+ };
+ try{
+  current=createBlueprint(input);
+  $("status").textContent="BLUEPRINT READY";$("testCount").textContent=current.tests.length;
+  render();return true;
+ }catch(error){$("status").textContent="CHECK INPUTS";$("trace-count")?.textContent;return false}
 }
 function render(){
  $("json").textContent=JSON.stringify(current.policy,null,2);
