@@ -89,7 +89,7 @@ function build(){
   current=createBlueprint(input);
   $("status").textContent="BLUEPRINT READY";$("testCount").textContent=current.tests.length;
   render();return true;
- }catch(error){$("status").textContent="CHECK INPUTS";$("trace-count")?.textContent;return false}
+ }catch(error){$("status").textContent="CHECK INPUTS";$("json").textContent=error.message;return false}
 }
 function render(){
  $("json").textContent=JSON.stringify(current.policy,null,2);
